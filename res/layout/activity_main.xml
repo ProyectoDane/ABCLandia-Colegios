@@ -1,0 +1,23 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res/com.example.abclandia"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.abclandia.MainActivity"
+    tools:ignore="MergeRootFrame" >
+
+    
+
+	<com.example.abclandia.Rectangle
+	    android:id="@+id/custView"
+   	 	android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    	android:layout_margin="5dp"
+    	custom:circleColor="#ff0099"
+    	custom:circleLabel="Hello"
+    	custom:labelColor="#ffff66"/>
+	
+	</FrameLayout>
+	
+	
