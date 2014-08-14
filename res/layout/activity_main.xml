@@ -14,9 +14,7 @@
    	 	android:layout_width="fill_parent"
     	android:layout_height="fill_parent"
     	android:layout_margin="5dp"
-    	custom:circleColor="#ff0099"
-    	custom:circleLabel="Hello"
-    	custom:labelColor="#ffff66"/>
+    	/>
 	
 	</FrameLayout>
 	
