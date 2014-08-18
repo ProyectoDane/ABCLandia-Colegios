@@ -4,10 +4,10 @@ package com.example.abclandia;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.BlurMaskFilter;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
-import com.example.abclandia.R;
 
 
 public class Rectangle extends View {
@@ -18,7 +18,13 @@ public class Rectangle extends View {
 	//paint for drawing custom view
 	private Paint circlePaint;
 	private  boolean mShowText;
-
+	private Paint mTextPaint;
+	private Paint mPiePaint;
+	private Paint mShadowPaint;
+	private int mTextHeight;
+	private int mTextColor;
+	
+	
 	public Rectangle(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		//paint object for drawing in onDraw
@@ -40,13 +46,13 @@ public class Rectangle extends View {
 	}
 	
 	private void init(){
-		mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);	
 		mTextPaint.setColor(mTextColor);
 		if (mTextHeight == 0) {
-			       mTextHeight = mTextPaint.getTextSize();
-			   } else {
-			       mTextPaint.setTextSize(mTextHeight);
-			   }
+			mTextHeight = (int) mTextPaint.getTextSize();
+		} else {
+			mTextPaint.setTextSize(mTextHeight);
+		}
 
 			   mPiePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 			   mPiePaint.setStyle(Paint.Style.FILL);
