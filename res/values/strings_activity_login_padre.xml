@@ -1,0 +1,15 @@
+<resources>
+
+    <string name="title_activity_login_padre">login_padre</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Usuario o Email</string>
+    <string name="prompt_password">Contraseña</string>
+    <string name="action_sign_in">Iniciar Sesión o Registrarse</string>
+    <string name="action_sign_in_short">Iniciar Sesión</string>
+    <string name="error_invalid_email">La dirección de correo es inválida</string>
+    <string name="error_invalid_password">La contraseña es muy corta</string>
+    <string name="error_incorrect_password">La contraseña es inválida</string>
+    <string name="error_field_required">Este campo es obligatorio</string>
+
+</resources>

@@ -11,19 +11,19 @@
         android:id="@+id/login_maestro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/login_padre"
+        android:layout_above="@+id/btnlogin_padre"
         android:layout_alignParentLeft="true"
-        android:layout_marginBottom="76dp"
+        android:layout_marginBottom="70dp"
         android:onClick="loginMaestro"
         android:text="@string/login_maestro" />
 
     <Button
-        android:id="@+id/login_padre"
+        android:id="@+id/bntlogin_padre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_marginBottom="189dp"
+        android:layout_marginBottom="164dp"
         android:onClick="loginPadre"
         android:text="@string/login_padre" />
 

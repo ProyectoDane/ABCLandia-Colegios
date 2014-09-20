@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+ <string name="actividadesTitulo">Seleccione una de las opciones</string>
+ <string name="reproducirAbecedario">Reproducir Abecedario</string>
+ <string name="reproducirLetra">Reproducir Letra</string>
+ <string name="jugar">Jugar</string>    
+</resources>

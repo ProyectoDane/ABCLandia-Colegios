@@ -1,0 +1,73 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_single"
+    android:gravity="center"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.frba.abclandia.JugarActivity" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/btnEjercicio1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btnEjercicio1"
+                android:onClick="btnEjercicio1" />
+
+            <Button
+                android:id="@+id/btnEjercicio2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btnEjercicio2" 
+                android:onClick="btnEjercicio2"/>
+
+            <Button
+                android:id="@+id/btnEjercicio3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btnEjercicio3" 
+                android:onClick="btnEjercicio3"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/btnEjercicio4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btnEjercicio4"
+                android:onClick="btnEjercicio4" />
+
+            <Button
+                android:id="@+id/btnEjercicio5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btnEjercicio5"
+                android:onClick="btnEjercicio5" />
+
+            <Button
+                android:id="@+id/btnEjercicio6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btnEjercicio6"
+                android:onClick="btnEjercicio6" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
