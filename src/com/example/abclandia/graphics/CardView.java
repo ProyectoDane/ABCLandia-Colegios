@@ -185,7 +185,7 @@ public class CardView extends View implements DragSource, DropTarget {
 			MainActivity mA = (MainActivity) mContext;
 			// Lo comento ahora para que compile, pero sacar
 			
-//			mRenderer = mA.getDefaultRenderer();
+			mRenderer = mA.getDefaultRenderer();
 			this.mAllowDrag = false;
 			invalidate();
 			

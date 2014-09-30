@@ -22,6 +22,7 @@ import java.util.List;
 
 import android.animation.AnimatorSet;
 import android.app.Activity;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
@@ -73,6 +74,11 @@ public class MainActivity extends Activity
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        Intent intent = getIntent();
+        int level = intent.getIntExtra("level", 1);
+        int secuence = intent.getIntExtra("secuence", 2);
+        
 
 
         // Para hacer la pantalla fullscreen

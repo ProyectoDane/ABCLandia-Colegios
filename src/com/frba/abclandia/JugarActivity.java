@@ -23,8 +23,11 @@ public class JugarActivity extends Activity {
 
 	
 	public void btnEjercicio1 (View view){
-		Intent i = new Intent(this, MainActivity.class);
-		startActivity(i);
+		Intent intent = new Intent(this, MainActivity.class);
+		intent.putExtra("level", 1);
+		intent.putExtra("secuence", 1);
+		
+		startActivity(intent);
 	
 	}
 	

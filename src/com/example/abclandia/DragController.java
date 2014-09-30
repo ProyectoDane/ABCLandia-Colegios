@@ -283,7 +283,7 @@ public class DragController {
         	mListener.onDragEnd(dropSuccess);
         	MainActivity mA = (MainActivity) mContext;
         	//Esto lo comento ahora solo para que compile
-//        	mA.onDragEnd(dropSuccess);
+        	mA.onDragEnd(dropSuccess);
         	
         	if (dropSuccess){
         		mDragView.remove();
