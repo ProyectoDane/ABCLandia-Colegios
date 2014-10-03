@@ -1,18 +1,30 @@
 package com.frba.abclandia;
 
+import java.io.IOException;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.SQLException;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.frba.abclandia.db.DataBaseHelper;
+import com.frba.abclandia.dtos.Alumno;
+import com.frba.abclandia.dtos.Maestro;
+
 
 public class StartActivity extends Activity {
+	
 	private static final int DISPLAY = 3000;
 	SharedPreferences prefs = null;
+	DataBaseHelper myDbHelper;
+	
 	
 	protected void callNextActivity(){
 		startActivity(new Intent(this, LoginActivity.class));
@@ -26,7 +38,10 @@ public class StartActivity extends Activity {
 		WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		
 		setContentView(R.layout.activity_splash);
-		// Inicializar servicios
+		
+		
+		//Iniciamos la base de datos
+		iniciarDB();
 		
 		prefs = getSharedPreferences("com.frba.abclandia", MODE_PRIVATE);
 
@@ -41,6 +56,25 @@ public class StartActivity extends Activity {
 		}, DISPLAY);
 	}
 	
+	private void iniciarDB() {
+		// Inicializar servicios
+		myDbHelper = new DataBaseHelper(this);
+		try {
+			myDbHelper.createDatabase();
+		} catch (IOException ioe) {
+			throw new Error("No se pudo crear la base de datos");
+			
+		}
+		
+		try {
+			myDbHelper.openDatabase();
+		}catch (SQLException sqle){
+			Log.d("POOCHIE", "No se pudo abrir la BD");
+			throw sqle;
+		}
+		
+	}
+
 	@Override
     protected void onResume() {
         super.onResume();
@@ -56,6 +90,14 @@ public class StartActivity extends Activity {
             prefs.edit().putBoolean("firstrun", false).commit();
         }
     }
+	
+	@Override
+	protected void onDestroy() {
+	    super.onDestroy();
+	    if (myDbHelper != null) {
+	    	myDbHelper.close();
+	    }
+	}
 }
 
 

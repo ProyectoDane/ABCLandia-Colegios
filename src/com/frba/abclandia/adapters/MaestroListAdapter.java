@@ -20,7 +20,7 @@ public class MaestroListAdapter extends BaseAdapter {
 	public MaestroListAdapter(Context context){
 		
 		this.context = context;
-		//this.maestros = maestros;
+
 	}
 	@Override
 	public int getCount() {
@@ -45,6 +45,8 @@ public class MaestroListAdapter extends BaseAdapter {
 		// TODO Auto-generated method stub
 		LayoutInflater inflater = (LayoutInflater) context
 		        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		
+		
 		    View rowView = inflater.inflate(R.layout.maestro_row, parent, false);
 		    TextView lblMaestroApellido = (TextView) rowView.findViewById(R.id.lblMaestroApellido);
 		    TextView lblMaestroNombre =  (TextView) rowView.findViewById(R.id.lblMaestroNombre);

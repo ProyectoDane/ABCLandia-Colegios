@@ -1,28 +1,38 @@
 package com.frba.abclandia.db;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import com.frba.abclandia.dtos.Alumno;
+import com.frba.abclandia.dtos.Maestro;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 	
-	private static String DB_PATH = "/data/data/com.frba.abclandia/databases/";
-	private static String DB_NAME = "gelemerv1";
+	private  String DB_PATH = "/data/data/"; 
+	private static String DB_NAME = "gelemerv1.sqlite";
 	private static Integer DATABASE_VERSION = 1;
 	private SQLiteDatabase myDataBase;
 	private final Context myContext;
+	private static AbcLandiaContract abcLandia = new AbcLandiaContract();
 
 	// Creamos el constructor llamando a 
 	public DataBaseHelper(Context context) {
 		super(context, DB_NAME, null, DATABASE_VERSION);
 		this.myContext = context;
+		this.DB_PATH = this.DB_PATH + this.myContext.getApplicationContext().getPackageName() +"/databases/";
 		
 	}
 	
@@ -55,8 +65,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		SQLiteDatabase checkDB = null;
 		
 		try {
-			String myPath = DB_PATH + DB_NAME;
-			checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+			File fdb =  this.myContext.getDatabasePath(DB_NAME);
+			checkDB = SQLiteDatabase.openDatabase(fdb.getAbsolutePath(), null, SQLiteDatabase.OPEN_READONLY);
 		} catch (SQLiteException e){
 			// La base de datos no existe todavia
 		}
@@ -99,12 +109,21 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	
 	public void openDatabase() throws SQLException {
 		// Abrimos la DB
-		String myPath = DB_PATH + DB_NAME;
-		myDataBase =  SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+		//String myPath = DB_PATH + DB_NAME;
+		File fdb= this.myContext.getDatabasePath(DB_NAME);
+		myDataBase =  SQLiteDatabase.openDatabase(fdb.getAbsolutePath(), null, SQLiteDatabase.OPEN_READONLY);
 		
 	}
 	
 	
+//	@Override 
+//	public synchronized void close(){
+//		if(myDataBase!= null){
+//			myDataBase.close();
+//		}
+//		super.close();
+//	}
+//	
 	@Override 
 	public synchronized void close(){
 		if(myDataBase!= null){
@@ -112,6 +131,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		}
 		super.close();
 	}
+
 	
 	@Override
 	public void onCreate(SQLiteDatabase arg0) {
@@ -125,8 +145,47 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 	}
 
+
+	
 	// Add your public helper methods to access and get content from the database.
     // You could return cursors by doing "return myDataBase.query(....)" so it'd be easy
     // to you to create adapters for your views.
+	public List<Maestro> getAllMaestros() {
+		List<Maestro> maestros =  new ArrayList<Maestro>();
+		String selectQuery = "Select _id, maestro_apellido, maestro_nombre from maestros";
+		SQLiteDatabase database = this.getWritableDatabase();
+		Cursor cursor =  database.rawQuery(selectQuery, null);
+		if (cursor.moveToFirst()){
+			do {
+				Maestro m1 = new Maestro(cursor.getInt(0), cursor.getString(1), cursor.getString(2));
+				Log.d("DB", cursor.getString(0));
+				Log.d("DB", cursor.getString(1));
+				Log.d("DB", cursor.getString(2));
+				maestros.add(m1);
+			} while (cursor.moveToNext());
+		
+		}
+		cursor.close();
+		return maestros;
+	}
+	
+	public List<Alumno> getAllAlumnos(){
+		List<Alumno> alumnos =  new ArrayList<Alumno>();
+		String selectQuery = "Select _id, nombre, apellido from alumnos";
+		SQLiteDatabase database =  this.getWritableDatabase();
+		Cursor cursor = database.rawQuery(selectQuery, null);
+		if (cursor.moveToFirst()){
+			do{
+				Alumno a1 = new Alumno(cursor.getInt(0), cursor.getString(1), cursor.getString(2), 1);
+				Log.d("DB", cursor.getString(0));
+				Log.d("DB", cursor.getString(1));
+				Log.d("DB", cursor.getString(2));
+				alumnos.add(a1);
+			} while (cursor.moveToNext());
+		}
+		cursor.close();
+		return alumnos;
+	}
+	
 	
 }

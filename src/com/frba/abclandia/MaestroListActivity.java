@@ -75,6 +75,8 @@ public class MaestroListActivity extends ListActivity {
 		
 		public MaestroListAdapter(Context context){
 			mContext = context;
+			
+			// Tenemos que tomar los maestros de la base de datos y/o actualizarla
 			mMaestros = getMaestrosData();
 		}
 
