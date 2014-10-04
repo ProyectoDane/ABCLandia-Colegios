@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import com.frba.abclandia.db.DataBaseHelper;
 import com.frba.abclandia.dtos.Alumno;
-import com.frba.abclandia.dtos.Maestro;
+import com.frba.abclandia.dtos.Categoria;
 
 
 public class StartActivity extends Activity {
@@ -42,6 +42,13 @@ public class StartActivity extends Activity {
 		
 		//Iniciamos la base de datos
 		iniciarDB();
+		
+		List<Alumno> alumnos = myDbHelper.getAlumnosFromMaestro(1);
+		alumnos.clear();
+		
+		Categoria categoria = myDbHelper.getAlumnoCategoria(1);
+		
+		
 		
 		prefs = getSharedPreferences("com.frba.abclandia", MODE_PRIVATE);
 

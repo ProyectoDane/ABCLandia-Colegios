@@ -17,6 +17,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.frba.abclandia.dtos.Alumno;
+import com.frba.abclandia.dtos.Categoria;
 import com.frba.abclandia.dtos.Maestro;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
@@ -150,6 +151,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	// Add your public helper methods to access and get content from the database.
     // You could return cursors by doing "return myDataBase.query(....)" so it'd be easy
     // to you to create adapters for your views.
+	
+	/**
+	 * Devuelve el listado de todos los profesores que hay en la Base
+	 * @return List<Maestro>
+	 */
 	public List<Maestro> getAllMaestros() {
 		List<Maestro> maestros =  new ArrayList<Maestro>();
 		String selectQuery = "Select _id, maestro_apellido, maestro_nombre from maestros";
@@ -158,9 +164,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		if (cursor.moveToFirst()){
 			do {
 				Maestro m1 = new Maestro(cursor.getInt(0), cursor.getString(1), cursor.getString(2));
-				Log.d("DB", cursor.getString(0));
-				Log.d("DB", cursor.getString(1));
-				Log.d("DB", cursor.getString(2));
 				maestros.add(m1);
 			} while (cursor.moveToNext());
 		
@@ -169,6 +172,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		return maestros;
 	}
 	
+	
+	/**
+	 * Devuelve el listado de todos los alumnos que hay en la base
+	 * @return List<Alumno>
+	 */
 	public List<Alumno> getAllAlumnos(){
 		List<Alumno> alumnos =  new ArrayList<Alumno>();
 		String selectQuery = "Select _id, nombre, apellido from alumnos";
@@ -177,15 +185,47 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		if (cursor.moveToFirst()){
 			do{
 				Alumno a1 = new Alumno(cursor.getInt(0), cursor.getString(1), cursor.getString(2), 1);
-				Log.d("DB", cursor.getString(0));
-				Log.d("DB", cursor.getString(1));
-				Log.d("DB", cursor.getString(2));
 				alumnos.add(a1);
 			} while (cursor.moveToNext());
 		}
 		cursor.close();
 		return alumnos;
 	}
+
 	
+	/**
+	 * Dado el id de un maestro devuelve todo el listado de los alumnos de ese maestro.
+	 * @param maestro_id
+	 * @return List<Alumnos>
+	 */
 	
+	public List<Alumno> getAlumnosFromMaestro(Integer maestro_id){
+		List<Alumno> alumnos =  new ArrayList<Alumno>();
+		String selectQuery = "Select A.alumno_id, A.nombre, A.apellido from alumnos A inner join alumnos_maestros AM on (AM.maestro_id =" 
+		+ maestro_id + " and A.alumno_id = AM.alumno_id)";
+
+		SQLiteDatabase database = this.getWritableDatabase();
+		Cursor cursor = database.rawQuery(selectQuery, null);
+		if (cursor.moveToFirst()){
+			do{
+				Log.d("Query",cursor.getString(0));
+				Log.d("Query",cursor.getString(1));
+			} while(cursor.moveToNext());
+		}
+		cursor.close();
+		return alumnos;
+		
+	}
+	
+	public Categoria getAlumnoCategoria(Integer alumno_categoria){
+		//Categoria categoria;
+		String selectQuery =  "Select categoria_id, categoria_nombre, categoria_descripcion from categorias where categoria_id = " + alumno_categoria + " ";
+		SQLiteDatabase database =  this.getWritableDatabase();
+		Cursor cursor =  database.rawQuery(selectQuery, null);
+		if(cursor.moveToFirst()){
+			return new Categoria(cursor.getInt(0),cursor.getString(1), cursor.getString(2));
+		} else {
+			return new Categoria(0,"Default", "Default");
+		}
+	}
 }
