@@ -194,32 +194,36 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 	
 	/**
-	 * Dado el id de un maestro devuelve todo el listado de los alumnos de ese maestro.
-	 * @param maestro_id
+	 * Dado un Maesro devuelve todo el listado de los alumnos de ese maestro.
+	 * @param unMaestro
 	 * @return List<Alumnos>
 	 */
 	
-	public List<Alumno> getAlumnosFromMaestro(Integer maestro_id){
+	public List<Alumno> getAlumnosFromMaestro(Integer unMaestro){
 		List<Alumno> alumnos =  new ArrayList<Alumno>();
 		String selectQuery = "Select A.alumno_id, A.nombre, A.apellido from alumnos A inner join alumnos_maestros AM on (AM.maestro_id =" 
-		+ maestro_id + " and A.alumno_id = AM.alumno_id)";
+		+ unMaestro + " and A.alumno_id = AM.alumno_id)";
 
 		SQLiteDatabase database = this.getWritableDatabase();
 		Cursor cursor = database.rawQuery(selectQuery, null);
 		if (cursor.moveToFirst()){
 			do{
-				Log.d("Query",cursor.getString(0));
-				Log.d("Query",cursor.getString(1));
+				Alumno unAlumno = new Alumno(cursor.getInt(0), cursor.getString(1), cursor.getString(2), unMaestro);
+				alumnos.add(unAlumno);
 			} while(cursor.moveToNext());
 		}
 		cursor.close();
 		return alumnos;
 		
 	}
-	
-	public Categoria getAlumnoCategoria(Integer alumno_categoria){
+	/**
+	 * Un Alumno devuelve la Categoria a la que pertenece el Alumno 
+	 * @param alumno_categoria
+	 * @return Categoria
+	 */
+	public Categoria getAlumnoCategoria(Alumno unAlumno){
 		//Categoria categoria;
-		String selectQuery =  "Select categoria_id, categoria_nombre, categoria_descripcion from categorias where categoria_id = " + alumno_categoria + " ";
+		String selectQuery =  "Select categoria_id, categoria_nombre, categoria_descripcion from categorias where categoria_id = " + unAlumno.getLegajo() + " ";
 		SQLiteDatabase database =  this.getWritableDatabase();
 		Cursor cursor =  database.rawQuery(selectQuery, null);
 		if(cursor.moveToFirst()){

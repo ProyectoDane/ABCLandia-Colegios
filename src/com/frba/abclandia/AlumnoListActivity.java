@@ -1,11 +1,14 @@
 package com.frba.abclandia;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.SQLException;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +19,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.frba.abclandia.db.DataBaseHelper;
 import com.frba.abclandia.dtos.Alumno;
 
 public class AlumnoListActivity extends ListActivity {
+	
+	private DataBaseHelper myDbHelper;
+	private Integer unMaestro = 0;
 	
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
@@ -29,9 +36,34 @@ public class AlumnoListActivity extends ListActivity {
 		
 		setContentView(R.layout.activity_alumno_list);
 		
+		Intent i = getIntent();
+		this.unMaestro = i.getIntExtra("unMaestro", 0);
+		
+		// Iniciar DB
+		iniciarDB();
+		
 		setListAdapter(new AlumnoListAdapter(this));
 	}
 	
+	
+	private void iniciarDB() {
+		// Inicializar servicios
+		myDbHelper = new DataBaseHelper(this);
+		try {
+			myDbHelper.createDatabase();
+		} catch (IOException ioe) {
+			throw new Error("No se pudo crear la base de datos");
+			
+		}
+		
+		try {
+			myDbHelper.openDatabase();
+		}catch (SQLException sqle){
+			Log.d("POOCHIE", "No se pudo abrir la BD");
+			throw sqle;
+		}
+		
+	}
 	
 	
 	@Override
@@ -45,14 +77,8 @@ public class AlumnoListActivity extends ListActivity {
 	}
 	
 	private List<Alumno> getAlumnosData(){
-		Alumno a1 = new Alumno(1,"Lento", "Pedro",1);
-		Alumno a2 = new Alumno(2,"Lenteja","Maria",1);
-		Alumno a3 = new Alumno(3,"Gomez","Luis",2);
 		
-		List<Alumno> alumnos =  new ArrayList<Alumno>();
-		alumnos.add(a1);
-		alumnos.add(a2);
-		alumnos.add(a3);
+		List<Alumno> alumnos =  myDbHelper.getAlumnosFromMaestro(this.unMaestro);
 		
 		return alumnos;
 	}
@@ -62,8 +88,8 @@ public class AlumnoListActivity extends ListActivity {
 		private List<Alumno> mAlumnos;
 		
 		public AlumnoListAdapter(Context context){
-			mContext = context;
-			mAlumnos = getAlumnosData();
+			this.mContext = context;
+			this.mAlumnos = getAlumnosData();
 		}
 
 		@Override
@@ -99,7 +125,7 @@ public class AlumnoListActivity extends ListActivity {
 			TextView lblAlumnoApellido = (TextView)  rowView.findViewById(R.id.lblAlumnoApellido);
 			TextView lblAlumnoNombre = (TextView) rowView.findViewById(R.id.lblAlumnoNombre);
 			
-			Alumno alumno = mAlumnos.get(position);
+			Alumno alumno = this.mAlumnos.get(position);
 			
 			lblAlumnoApellido.setText(alumno.getApellido());
 			lblAlumnoNombre.setText(alumno.getNombre());

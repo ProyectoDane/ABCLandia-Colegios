@@ -5,7 +5,7 @@ public class Maestro {
 	private String apellido;
 	private int legajo;
 	
-	public Maestro(int legajo,String apellido, String nombre){
+	public Maestro(int legajo,String apellido, String nombre) {
 		this.nombre = nombre;
 		this.apellido =  apellido;
 		this.legajo = legajo;

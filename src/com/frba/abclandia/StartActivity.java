@@ -22,8 +22,9 @@ import com.frba.abclandia.dtos.Categoria;
 public class StartActivity extends Activity {
 	
 	private static final int DISPLAY = 3000;
+	private DataBaseHelper myDbHelper;
 	SharedPreferences prefs = null;
-	DataBaseHelper myDbHelper;
+	
 	
 	
 	protected void callNextActivity(){
@@ -42,12 +43,6 @@ public class StartActivity extends Activity {
 		
 		//Iniciamos la base de datos
 		iniciarDB();
-		
-		List<Alumno> alumnos = myDbHelper.getAlumnosFromMaestro(1);
-		alumnos.clear();
-		
-		Categoria categoria = myDbHelper.getAlumnoCategoria(1);
-		
 		
 		
 		prefs = getSharedPreferences("com.frba.abclandia", MODE_PRIVATE);
