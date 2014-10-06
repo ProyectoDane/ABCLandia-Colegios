@@ -15,8 +15,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.frba.abclandia.db.DataBaseHelper;
-import com.frba.abclandia.dtos.Alumno;
-import com.frba.abclandia.dtos.Categoria;
+import com.frba.abclandia.dtos.Palabra;
 
 
 public class StartActivity extends Activity {
@@ -43,7 +42,6 @@ public class StartActivity extends Activity {
 		
 		//Iniciamos la base de datos
 		iniciarDB();
-		
 		
 		prefs = getSharedPreferences("com.frba.abclandia", MODE_PRIVATE);
 

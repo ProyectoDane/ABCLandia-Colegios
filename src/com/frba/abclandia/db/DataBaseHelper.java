@@ -19,6 +19,7 @@ import android.util.Log;
 import com.frba.abclandia.dtos.Alumno;
 import com.frba.abclandia.dtos.Categoria;
 import com.frba.abclandia.dtos.Maestro;
+import com.frba.abclandia.dtos.Palabra;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 	
@@ -117,14 +118,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	}
 	
 	
-//	@Override 
-//	public synchronized void close(){
-//		if(myDataBase!= null){
-//			myDataBase.close();
-//		}
-//		super.close();
-//	}
-//	
 	@Override 
 	public synchronized void close(){
 		if(myDataBase!= null){
@@ -137,7 +130,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase arg0) {
 		// TODO Auto-generated method stub
-
+		/** 
+		 * No tenemos que ejecutar nada aca ya que la base la creamos desde un archivo en los assets
+		 */
 	}
 
 	@Override
@@ -177,6 +172,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	 * Devuelve el listado de todos los alumnos que hay en la base
 	 * @return List<Alumno>
 	 */
+	
 	public List<Alumno> getAllAlumnos(){
 		List<Alumno> alumnos =  new ArrayList<Alumno>();
 		String selectQuery = "Select _id, nombre, apellido from alumnos";
@@ -223,13 +219,36 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	 */
 	public Categoria getAlumnoCategoria(Alumno unAlumno){
 		//Categoria categoria;
+		Categoria unaCategoria;
 		String selectQuery =  "Select categoria_id, categoria_nombre, categoria_descripcion from categorias where categoria_id = " + unAlumno.getLegajo() + " ";
 		SQLiteDatabase database =  this.getWritableDatabase();
 		Cursor cursor =  database.rawQuery(selectQuery, null);
 		if(cursor.moveToFirst()){
-			return new Categoria(cursor.getInt(0),cursor.getString(1), cursor.getString(2));
+			unaCategoria = new Categoria(cursor.getInt(0),cursor.getString(1), cursor.getString(2));
 		} else {
-			return new Categoria(0,"Default", "Default");
+			unaCategoria = new Categoria(0,"Default", "Default");
 		}
+		cursor.close();
+		return unaCategoria;
 	}
+	
+	public List<Palabra> getPalabrasFromCategoria(Integer unaCategoria){
+		List<Palabra> palabras = new ArrayList<Palabra>();
+		String selectQuery = "select palabra_id, categoria_id, palabra_letra, palabra_palabra, imagen_id, sonido_id  from palabras where categoria_id = "
+				+ unaCategoria + " " ;
+		SQLiteDatabase database = this.getWritableDatabase();
+		Cursor cursor = database.rawQuery(selectQuery, null);
+		if (cursor.moveToFirst()){
+			do{
+				Palabra unaPalabra = new Palabra(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), cursor.getString(3), cursor.getString(3),
+						cursor.getString(5));
+				Log.d("Palbras",cursor.getColumnName(3));
+				palabras.add(unaPalabra);
+			} while(cursor.moveToNext());
+		}
+		cursor.close();
+		return palabras;
+	}	
+	
+	
 }
