@@ -1,37 +1,55 @@
 package com.example.abclandia;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 
 import com.frba.abclandia.R;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-
 public class WinActivity extends Activity {
+	int gameLevel;
+	int gameSecuence;
+	Class<?> classLauncher;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_win);
-	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-//		getMenuInflater().inflate(R.menu.win, menu);
-		return true;
-	}
+		Button button = (Button) findViewById(R.id.gadorcha);
+		Bundle extras = getIntent().getExtras();
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
+		if (extras != null) {
+		
+			gameLevel = extras.getInt(GameActivity.INTENT_LEVEL_KEY);
+			gameSecuence = extras.getInt(GameActivity.INTENT_SECUENCE_KEY);
+			gameSecuence = gameSecuence + 1;
+			try {
+				classLauncher = Class.forName(extras
+						.getString(GameActivity.INTENT_CLASS_LAUNCHER_KEY));
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		return super.onOptionsItemSelected(item);
+
+		button.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(WinActivity.this, classLauncher);
+
+				intent.putExtra(GameActivity.INTENT_LEVEL_KEY, gameLevel);
+				intent.putExtra(GameActivity.INTENT_SECUENCE_KEY, gameSecuence);
+
+				startActivity(intent);
+				finish();
+
+			}
+		});
 	}
+
 }

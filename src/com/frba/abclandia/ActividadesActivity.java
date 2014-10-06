@@ -1,5 +1,7 @@
 package com.frba.abclandia;
 
+import com.example.abclandia.CardLetterPlayerActivity;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,10 +31,9 @@ public class ActividadesActivity extends Activity {
 	}
 	
 	public void btnReproducirLetra(View view){
-		//TODO Llamar a ReproducirLetraActivity
-		Toast.makeText(this, "Reproducir Letra Todavia no implementado", Toast.LENGTH_LONG).show();
-		//Intent intent = new Intent(this, ActividadesActivity.class);
-		//startActivity(intent);
+		
+		Intent intent = new Intent(this,CardLetterPlayerActivity.class );
+		startActivity(intent);
 	}
 	
 	public void btnJugar(View view){

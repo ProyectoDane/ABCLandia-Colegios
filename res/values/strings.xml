@@ -26,5 +26,7 @@ Se puede usar como actividad de repaso complementando otras realizadas con difer
     <string name="msgAceptar">Aceptar</string>
     <string name="msgCancelar">Cancelar</string>
     <string name="title_activity_jugar">Juegos</string>
+    <string name="title_activity_juego2">Juego2</string>
+    <string name="title_activity_game">Game</string>
 
 </resources>

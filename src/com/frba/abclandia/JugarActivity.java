@@ -1,6 +1,8 @@
 package com.frba.abclandia;
 
-import com.example.abclandia.MainActivity;
+import com.example.abclandia.GameActivity;
+import com.example.abclandia.GameFourActivity;
+import com.example.abclandia.GameOneActivity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -23,10 +25,9 @@ public class JugarActivity extends Activity {
 
 	
 	public void btnEjercicio1 (View view){
-		Intent intent = new Intent(this, MainActivity.class);
+		Intent intent = new Intent(this, GameOneActivity.class);
 		intent.putExtra("level", 1);
-		intent.putExtra("secuence", 1);
-		
+		intent.putExtra("secuence", 0);
 		startActivity(intent);
 	
 	}
@@ -38,7 +39,10 @@ public class JugarActivity extends Activity {
 		Toast.makeText(this, "Ejercicio 3 no implementado", Toast.LENGTH_LONG).show();
 	}
 	public void btnEjercicio4 (View view){
-		Toast.makeText(this, "Ejercicio 4 no implementado", Toast.LENGTH_LONG).show();
+		Intent intent = new Intent(this, GameFourActivity.class);
+		intent.putExtra(GameActivity.INTENT_LEVEL_KEY, 1);
+		intent.putExtra(GameActivity.INTENT_SECUENCE_KEY, 0);
+		startActivity(intent);
 	}
 	public void btnEjercicio5 (View view){
 		Toast.makeText(this, "Ejercicio 5 no implementado", Toast.LENGTH_LONG).show();

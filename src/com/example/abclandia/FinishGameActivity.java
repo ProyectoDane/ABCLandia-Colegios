@@ -1,5 +1,5 @@
 package com.example.abclandia;
 
-public class Game {
+public class FinishGameActivity {
 
 }
