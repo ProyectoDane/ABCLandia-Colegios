@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.example.abclandia.Card;
+import com.example.abclandia.GameActivity;
 import com.example.abclandia.graphics.CardView;
 import com.example.abclandia.graphics.EmptyRenderer;
 import com.example.abclandia.graphics.Renderer;
@@ -38,10 +39,11 @@ public class CardViewAdapter extends BaseAdapter {
 
 	public CardViewAdapter(List<Card> data, Context context, Renderer renderer) {
 		
-		adaptDataToScreen(data);
+		
 		mContext = context;
+		adaptDataToScreen(data);
 		mRenderer = renderer;
-		mEmptyRenderer = new EmptyRenderer();
+		mEmptyRenderer = new EmptyRenderer(mContext);
 	}
 
 
@@ -92,8 +94,7 @@ public class CardViewAdapter extends BaseAdapter {
 		
 
 		cardView.setOnTouchListener ((View.OnTouchListener) mContext);
-		cardView.setOnClickListener ((View.OnClickListener) mContext);
-		cardView.setOnLongClickListener ((View.OnLongClickListener) mContext);
+		
 	
 		  
 		  
@@ -104,7 +105,10 @@ public class CardViewAdapter extends BaseAdapter {
 		
 	}
 	private void adaptDataToScreen(List<Card> data){
+		
+		if (mContext.getClass().getSuperclass() == GameActivity.class) {
 		Collections.shuffle(data);
+		}
 		if (data.size() == 5){
 			int j = 0;
 			for (int i=0;i <9; i++){

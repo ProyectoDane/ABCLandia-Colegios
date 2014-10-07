@@ -35,11 +35,11 @@ public class DragController {
     /** Indicates the drag is a copy.  */
     public static int DRAG_ACTION_COPY = 1;
 
-    private static final int VIBRATE_DURATION = 35;
+  
 
     private static final boolean PROFILE_DRAWING_DURING_DRAG = false;
 
-    private Context mContext;
+    private GameActivity mContext;
     private Vibrator mVibrator;
 
     // temporaries to avoid gc thrash
@@ -60,6 +60,8 @@ public class DragController {
 
     /** Original view that is being dragged.  */
     private View mOriginator;
+    
+    /** Left-top position to the DragView  */
     private int mYDragSource;
     private int mXDragSource;
 
@@ -122,9 +124,9 @@ public class DragController {
      *
      * @param context The application's context.
      */
-    public DragController(Context context) {
+    public DragController(GameActivity context) {
         mContext = context;
-        mVibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+//        mVibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         mDragShadowAnimator = new DragShadowAnimator(mContext);
 
     }
@@ -147,7 +149,7 @@ public class DragController {
         
         mOriginator = v;
 
-        Bitmap b = getViewBitmap(v);
+        Bitmap b = Util.getViewBitmap(v);
 
         if (b == null) {
             // out of memory?
@@ -164,9 +166,7 @@ public class DragController {
 
         b.recycle();
 
-//        if (dragAction == DRAG_ACTION_MOVE) {
-//            v.setVisibility(View.GONE);
-//        }
+
     }
 
     /**
@@ -221,40 +221,8 @@ public class DragController {
         mDragSource.onDragStarted();
     }
 
-    /**
-     * Draw the view into a bitmap.
-     */
-    private Bitmap getViewBitmap(View v) {
-        v.clearFocus();
-        v.setPressed(false);
+   
 
-        boolean willNotCache = v.willNotCacheDrawing();
-        v.setWillNotCacheDrawing(false);
-
-        // Reset the drawing cache background color to fully transparent
-        // for the duration of this operation
-        int color = v.getDrawingCacheBackgroundColor();
-        v.setDrawingCacheBackgroundColor(0);
-
-        if (color != 0) {
-            v.destroyDrawingCache();
-        }
-        v.buildDrawingCache();
-        Bitmap cacheBitmap = v.getDrawingCache();
-        if (cacheBitmap == null) {
-            Log.e(TAG, "failed getViewBitmap(" + v + ")", new RuntimeException());
-            return null;
-        }
-
-        Bitmap bitmap = Bitmap.createBitmap(cacheBitmap);
-
-        // Restore the view
-        v.destroyDrawingCache();
-        v.setWillNotCacheDrawing(willNotCache);
-        v.setDrawingCacheBackgroundColor(color);
-
-        return bitmap;
-    }
 
     /**
      * Call this from a drag source view like this:
@@ -281,9 +249,9 @@ public class DragController {
         if (mDragging) {
         	mDragging = false;
         	mListener.onDragEnd(dropSuccess);
-        	MainActivity mA = (MainActivity) mContext;
+        	
         	//Esto lo comento ahora solo para que compile
-//        	mA.onDragEnd(dropSuccess);
+        	mContext.onDragEnd(dropSuccess);
         	
         	if (dropSuccess){
         		mDragView.remove();

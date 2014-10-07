@@ -1,7 +1,10 @@
 package com.example.abclandia;
 
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.TranslateAnimation;
 
 public class Util {
@@ -50,6 +53,15 @@ public class Util {
 		  localTranslateAnimation.setFillAfter(false);
 		//  localTranslateAnimation.setAnimationListener(new MyAnimationListener(this));
 		  v.startAnimation(localTranslateAnimation);
+	}
+	
+	public static int getTextSizeDensityDependent(Context context, int textSize){
+		
+		DisplayMetrics dm = new DisplayMetrics();
+		WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        wm.getDefaultDisplay().getMetrics(dm);
+        return  (int) (textSize * dm.scaledDensity); 
+		
 	}
 
 }

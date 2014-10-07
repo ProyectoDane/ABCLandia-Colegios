@@ -10,8 +10,8 @@ public class GameDataStructure {
 	
 
 	 private static final Map<Integer, char[]> e1L1Secuences;
-	 private static final  Map<Integer, char[]> e1L2Secuences;
-	 private static final  Map<Integer, char[]> e1L3Secuences;
+	 private static final Map<Integer, char[]> e1L2Secuences;
+	 private static final Map<Integer, char[]> e1L3Secuences;
 	 private static final Map<Integer, char[]> e45L1Secuences;
 	 private static final Map<Integer, char[]> e45L2Secuences;
 	 private static final Map<Integer, char[]> e45L3Secuences;
@@ -19,7 +19,7 @@ public class GameDataStructure {
 	 
 	 
 	
-	 private static final  Map<Integer, Map<Integer, char[]>> e123Levels;
+	 private static final Map<Integer, Map<Integer, char[]>> e123Levels;
 	 private static final Map<Integer, Map<Integer, char[]>> e45Levels;
 	 private static final Map<Integer, Map<Integer, char[]>> e6Levels;
 	 
@@ -121,5 +121,12 @@ public class GameDataStructure {
 	    	 
 		
 	    	
+	    }
+	    public static boolean isFinalSecuence(int exerciseNumber, int levelNumber, int secuenceNumber){
+	    	 return excercises.get(exerciseNumber).get(levelNumber).containsKey(secuenceNumber);
+	    	
+	    }
+	    public static boolean isFinalLevel(int exerciseNumber, int levelNumber){
+	    	return excercises.get(exerciseNumber).containsKey(levelNumber);
 	    }
 }

@@ -17,7 +17,9 @@ import com.example.abclandia.Card;
 import com.example.abclandia.DragShadow;
 import com.example.abclandia.DragSource;
 import com.example.abclandia.DropTarget;
-import com.example.abclandia.MainActivity;
+import com.example.abclandia.GameActivity;
+import com.example.abclandia.GameOneActivity;
+import com.example.abclandia.Util;
 import com.frba.abclandia.R;
 import com.frba.abclandia.adapters.CardViewAdapter;
 
@@ -36,8 +38,6 @@ public class CardView extends View implements DragSource, DropTarget {
 	private int rectangleWidth, rectangleHeight;
 	private Context mContext;
 	private boolean mAllowDrag = true;
-
-
 
 	private float rectangleSize;
 	private int textSize;
@@ -111,7 +111,8 @@ public class CardView extends View implements DragSource, DropTarget {
         
         mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mTextPaint.setColor(Color.BLACK);
-        mTextPaint.setTextSize(40);
+        mTextPaint.setTextSize(Util.getTextSizeDensityDependent(mContext,Renderer.TEXT_LETTER_SIZE ));
+        mTextPaint.setStrokeWidth(20);
         mTextPaint.setTextAlign(Align.CENTER);
   
 	}
@@ -122,9 +123,8 @@ public class CardView extends View implements DragSource, DropTarget {
 		   
 		   rectangleWidth = getMeasuredWidth();
 		   rectangleHeight = getMeasuredHeight();
-		   mRenderer.Render(canvas, rectangleWidth, rectangleHeight, mRectanglePaint, mTextPaint, mCard, imageBitmap);
-		   
-		   
+		   mRenderer.Render(canvas, rectangleWidth, rectangleHeight, mRectanglePaint, 
+				   	mTextPaint, mCard, imageBitmap);
 	}
 	@Override 
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec){
@@ -139,12 +139,7 @@ public class CardView extends View implements DragSource, DropTarget {
         super.onSizeChanged(w, h, oldw, oldh);
 	}
     
-   
-
-	
-
-
-	@Override
+   @Override
 	public boolean allowDrag() {
 		return mAllowDrag;
 	}
@@ -182,10 +177,14 @@ public class CardView extends View implements DragSource, DropTarget {
 	@Override
 	public void onDrop(DragSource source, int x, int y, int xOffset,
 			int yOffset, DragShadow dragView, Object dragInfo) {
-			MainActivity mA = (MainActivity) mContext;
+		
+		
+			GameActivity mA = (GameActivity) mContext;
+			
+			
 			// Lo comento ahora para que compile, pero sacar
 			
-//			mRenderer = mA.getDefaultRenderer();
+			mRenderer = mA.getDefaultRenderer();
 			this.mAllowDrag = false;
 			invalidate();
 			
