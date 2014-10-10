@@ -104,9 +104,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	myOutput.flush();
 	myOutput.close();
 	myInput.close();
-	
-	
-	
 	}
 	
 	public void openDatabase() throws SQLException {
@@ -114,7 +111,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		//String myPath = DB_PATH + DB_NAME;
 		File fdb= this.myContext.getDatabasePath(DB_NAME);
 		myDataBase =  SQLiteDatabase.openDatabase(fdb.getAbsolutePath(), null, SQLiteDatabase.OPEN_READONLY);
-		
 	}
 	
 	
@@ -172,7 +168,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	 * Devuelve el listado de todos los alumnos que hay en la base
 	 * @return List<Alumno>
 	 */
-	
 	public List<Alumno> getAllAlumnos(){
 		List<Alumno> alumnos =  new ArrayList<Alumno>();
 		String selectQuery = "Select _id, nombre, apellido from alumnos";
@@ -194,7 +189,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	 * @param unMaestro
 	 * @return List<Alumnos>
 	 */
-	
 	public List<Alumno> getAlumnosFromMaestro(Integer unMaestro){
 		List<Alumno> alumnos =  new ArrayList<Alumno>();
 		String selectQuery = "Select A.alumno_id, A.nombre, A.apellido from alumnos A inner join alumnos_maestros AM on (AM.maestro_id =" 
@@ -210,8 +204,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		}
 		cursor.close();
 		return alumnos;
-		
 	}
+	
 	/**
 	 * Un Alumno devuelve la Categoria a la que pertenece el Alumno 
 	 * @param alumno_categoria
@@ -232,6 +226,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		return unaCategoria;
 	}
 	
+	
+	/**
+	 * Dado el id de una Categoria Devuelve una lista de las palabras del Abcdario que pertenecen a esa Categoria
+	 * @param unaCategoria
+	 * @return List<Palabra>
+	 */
 	public List<Palabra> getPalabrasFromCategoria(Integer unaCategoria){
 		List<Palabra> palabras = new ArrayList<Palabra>();
 		String selectQuery = "select palabra_id, categoria_id, palabra_letra, palabra_palabra, imagen_id, sonido_id  from palabras where categoria_id = "

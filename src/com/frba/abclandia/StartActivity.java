@@ -1,7 +1,6 @@
 package com.frba.abclandia;
 
 import java.io.IOException;
-import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,7 +14,6 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.frba.abclandia.db.DataBaseHelper;
-import com.frba.abclandia.dtos.Palabra;
 
 
 public class StartActivity extends Activity {
