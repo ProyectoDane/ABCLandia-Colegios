@@ -62,6 +62,10 @@ public interface DropTarget {
      */
     boolean acceptDrop(DragSource source, int x, int y, int xOffset, int yOffset,
             DragShadow dragView, Object dragInfo);
+    
+    boolean isDropTarget();
+    	
+ 
 
     /**
      * Estimate the surface area where this object would land if dropped at the

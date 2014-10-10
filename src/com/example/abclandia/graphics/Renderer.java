@@ -61,12 +61,10 @@ public abstract class Renderer {
 		 RectF rectangle = new RectF(3, 3, rectangleWidth - 3,rectangleHeight - 3 );
 		 
 		 
-//		 canvas.drawRoundRect ( rectangle, 20.0f, 20.0f, mFillRectPaint);
-//		 canvas.drawRect(rectangle, mFillRectPaint);
+
 		 canvas.drawRoundRect(rectangle, 18.0f, 18f, mFillRectPaint);
 		 canvas.drawRoundRect(rectangle, 18.0f, 18f, rectangleBorderPaint);
-//		 canvas.drawLine(2, (float) (rectangleHeight*0.2), rectangleWidth, (float) (rectangleHeight*0.2), rectangleBorderPaint);
-//		 canvas.drawText(card.getLetter(),rectangleWidth/2, (float) (rectangleHeight*0.18), textPaint);
+
 		
 	}
 	
@@ -88,6 +86,7 @@ public abstract class Renderer {
 	protected void drawLetter(Canvas canvas,Card card, int rectangleWidth, int rectangleHeight){
 		 canvas.drawText(card.getLetter(),(float) (rectangleWidth * 0.5),
 				 (float) (rectangleHeight*0.2), mTextLetterPaint);
+	
 		
 	}
 	protected void drawWord(Canvas canvas,Card card, int rectangleWidth, int rectangleHeight){

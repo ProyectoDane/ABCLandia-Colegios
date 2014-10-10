@@ -23,11 +23,7 @@ public class JustImageRenderer extends Renderer {
 		
 		super.Render(canvas, rectangleWidth, rectangleHeight, borderRectanglePaint, textPaint, card, imageBitmap);
 		
-		RectF rect = new RectF(rectangleHeight*0.25f, rectangleHeight*0.25f, rectangleHeight*0.75f, rectangleHeight*0.75f);
-		   
-		if (imageBitmap !=null){
-			   canvas.drawBitmap(imageBitmap, null, rect, null);
-		}
+		drawImage(canvas, card, rectangleWidth, rectangleHeight, imageBitmap);
 	}
 
 

@@ -1,5 +1,6 @@
 package com.frba.abclandia;
 
+import com.example.abclandia.AbcPlayerActivity;
 import com.example.abclandia.CardLetterPlayerActivity;
 
 import android.app.Activity;
@@ -24,10 +25,8 @@ public class ActividadesActivity extends Activity {
 	
 	public void btnReproducirAbecedario(View view){
 		
-		//TODO: Llamar a ReproducirAbecedarioActivity;
-		Toast.makeText(this, "Reproducir Abecedario Todavia no implementado", Toast.LENGTH_LONG).show();
-		//Intent intent = new Intent(this, ActividadesActivity.class);
-		//startActivity(intent);
+		Intent intent = new Intent(this,AbcPlayerActivity.class );
+		startActivity(intent);
 	}
 	
 	public void btnReproducirLetra(View view){

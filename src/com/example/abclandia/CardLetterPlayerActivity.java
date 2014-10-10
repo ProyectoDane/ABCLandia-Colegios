@@ -81,7 +81,7 @@ implements View.OnTouchListener {
 		
 
 		mGridView.setAdapter(new CardViewAdapter(data, this,
-				new CompleteCardRenderer(this)));
+				new CompleteCardRenderer(this),R.layout.grid_row));
 		
 		mDragShadowAnimator = new LetterPlayerAnimator(this);
 		

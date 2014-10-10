@@ -250,7 +250,7 @@ public class DragController {
         	mDragging = false;
         	mListener.onDragEnd(dropSuccess);
         	
-        	//Esto lo comento ahora solo para que compile
+        
         	mContext.onDragEnd(dropSuccess);
         	
         	if (dropSuccess){

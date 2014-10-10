@@ -3,6 +3,7 @@ package com.frba.abclandia;
 import com.example.abclandia.GameActivity;
 import com.example.abclandia.GameFourActivity;
 import com.example.abclandia.GameOneActivity;
+import com.example.abclandia.GameSixActivity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -48,7 +49,10 @@ public class JugarActivity extends Activity {
 		Toast.makeText(this, "Ejercicio 5 no implementado", Toast.LENGTH_LONG).show();
 	}
 	public void btnEjercicio6 (View view){
-		Toast.makeText(this, "Ejercicio 6 no implementado", Toast.LENGTH_LONG).show();
+		Intent intent = new Intent(this, GameSixActivity.class);
+		intent.putExtra(GameActivity.INTENT_LEVEL_KEY, 1);
+		intent.putExtra(GameActivity.INTENT_SECUENCE_KEY, 0);
+		startActivity(intent);
 	}
 	
 }

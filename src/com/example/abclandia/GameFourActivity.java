@@ -21,7 +21,7 @@ public class GameFourActivity extends GameActivity {
 	
 	
 		public static final int TOTAL_JOINS = 3;
-		private static final String CLASS_NAME = "com.example.abclandia.GameFour";
+		private static final String CLASS_NAME = "com.example.abclandia.GameFourActivity";
 		
 		
 		private DragLayer mDragLayer;
@@ -84,8 +84,8 @@ public class GameFourActivity extends GameActivity {
 	        mGridViewLeft = (GridView) findViewById(R.id.gridViewLeft);
 	        mGridViewRight = (GridView) findViewById(R.id.gridViewRight);
 	        
-	        mGridViewRight.setAdapter(new CardViewAdapter(data, this, new JustWordRenderer(this)));
-	        mGridViewLeft.setAdapter(new CardViewAdapter(data, this, new JustImageRenderer(this)));
+	        mGridViewRight.setAdapter(new CardViewAdapter(data, this, new JustWordRenderer(this), R.layout.grid_row));
+	        mGridViewLeft.setAdapter(new CardViewAdapter(data, this, new JustImageRenderer(this), R.layout.grid_row));
 	        
 	        mDragLayer = (DragLayer) findViewById(R.id.drag_layer);
 	        mDragLayer.setDragController (mDragController);

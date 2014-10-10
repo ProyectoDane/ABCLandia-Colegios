@@ -22,11 +22,10 @@ public class CompleteCardRenderer extends Renderer{
 		
 		
 		super.Render(canvas, rectangleWidth, rectangleHeight, borderRectanglePaint, textPaint, card, imageBitmap);
-		  
-			drawLetter(canvas, card, rectangleWidth, rectangleHeight);
-			drawImage(canvas, card, rectangleWidth, rectangleHeight, imageBitmap);
-			
-			dragWordWordWithoutdAllOccurrencesOfFirstLetter(canvas, card, rectangleWidth, rectangleHeight);
+		
+		drawImage(canvas, card, rectangleWidth, rectangleHeight, imageBitmap);
+		drawLetter(canvas, card, rectangleWidth, rectangleHeight);
+		drawWord(canvas, card, rectangleWidth, rectangleHeight);
 			
 		   
 		

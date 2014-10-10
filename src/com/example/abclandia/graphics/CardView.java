@@ -12,6 +12,7 @@ import android.graphics.Paint.Align;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.GridView;
 
 import com.example.abclandia.Card;
 import com.example.abclandia.DragShadow;
@@ -37,7 +38,11 @@ public class CardView extends View implements DragSource, DropTarget {
 	private Paint mTextPaint, mRectanglePaint;
 	private int rectangleWidth, rectangleHeight;
 	private Context mContext;
+
 	private boolean mAllowDrag = true;
+	private boolean isDropTarget = true;
+	private boolean isDoubleMatching = false;
+	private boolean firstMatching = false;
 
 	private float rectangleSize;
 	private int textSize;
@@ -57,31 +62,18 @@ public class CardView extends View implements DragSource, DropTarget {
 
 	public CardView(Context context) {
 		super(context);
-		init(context);
+		
 	}
 	
 	public CardView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mContext = context;
+//        mContext = (GameActivity) context;
+        mContext =  context;
 
-//        
-//        TypedArray a = context.getTheme().obtainStyledAttributes(
-//                attrs,
-//                R.styleable.CardView,
-//                0, 0
-//        );
 
-        try {
-          
 
-            
 
-         
-         } finally {
-//            a.recycle();
-        }
-
-        init(context);
+     
     }
 	
 	public String getCardId(){
@@ -104,18 +96,18 @@ public class CardView extends View implements DragSource, DropTarget {
 	public void setAllowDrag(boolean allowDrag){
 		mAllowDrag = allowDrag;
 	}
-	
-	
-	
-	private void init(Context context) {
-        
-        mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mTextPaint.setColor(Color.BLACK);
-        mTextPaint.setTextSize(Util.getTextSizeDensityDependent(mContext,Renderer.TEXT_LETTER_SIZE ));
-        mTextPaint.setStrokeWidth(20);
-        mTextPaint.setTextAlign(Align.CENTER);
-  
+	public void setDoubleMatching(boolean flag){
+		isDoubleMatching = flag;
 	}
+	
+	@Override
+	public boolean isDropTarget(){
+		return isDropTarget;
+	}
+	
+	
+	
+
 	
 	@Override
 	protected void onDraw(Canvas canvas) {
@@ -123,8 +115,10 @@ public class CardView extends View implements DragSource, DropTarget {
 		   
 		   rectangleWidth = getMeasuredWidth();
 		   rectangleHeight = getMeasuredHeight();
+		
 		   mRenderer.Render(canvas, rectangleWidth, rectangleHeight, mRectanglePaint, 
 				   	mTextPaint, mCard, imageBitmap);
+	
 	}
 	@Override 
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec){
@@ -170,6 +164,8 @@ public class CardView extends View implements DragSource, DropTarget {
 	public void onDropCompleted(DropTarget target, boolean success) {
 		if (!success){
 			setVisibility(View.VISIBLE);
+		} else {
+			isDropTarget = false;
 		}
 		
 	}
@@ -177,15 +173,13 @@ public class CardView extends View implements DragSource, DropTarget {
 	@Override
 	public void onDrop(DragSource source, int x, int y, int xOffset,
 			int yOffset, DragShadow dragView, Object dragInfo) {
-		
-		
-			GameActivity mA = (GameActivity) mContext;
+	
 			
-			
-			// Lo comento ahora para que compile, pero sacar
-			
-			mRenderer = mA.getDefaultRenderer();
-			this.mAllowDrag = false;
+			mRenderer = ((GameActivity) mContext).getDefaultRenderer();
+			if (isDoubleMatching && !firstMatching)
+				firstMatching = true;
+			else
+				this.mAllowDrag = false;
 			invalidate();
 			
 
@@ -218,12 +212,18 @@ public class CardView extends View implements DragSource, DropTarget {
 	@Override
 	public boolean acceptDrop(DragSource source, int x, int y, int xOffset,
 			int yOffset, DragShadow dragView, Object dragInfo) {
-		
 		CardView cardViewSource = (CardView) source;
-		if (this.getCardId() == cardViewSource.getCardId()){
-			return true;
-		}else {
-			return false;
+		if (isDoubleMatching){
+			return validateMatchingExcersiseSix(cardViewSource);
+		} else {
+			if (this.getCardId() == cardViewSource.getCardId()){
+				return true;
+			}else {
+				return false;
+		}
+		
+		
+		
 		}
 
 	}
@@ -236,9 +236,26 @@ public class CardView extends View implements DragSource, DropTarget {
 		return null;
 	}
 	
+	private boolean validateMatchingExcersiseSix(CardView cardViewSource){
+		if (this.getCardId() != cardViewSource.getCardId()){
+			return false;
+		}else {
+			GridView targetCardContainer = (GridView) this.getParent();
+			GridView sourceCardContainer = (GridView) cardViewSource.getParent();
+			String tagTarget = targetCardContainer.getTag().toString();
+			String tagSource = sourceCardContainer.getTag().toString();
+			if (tagTarget.equals("center") && tagSource.equals("left") || 
+					tagTarget.equals("left") && tagSource.equals("center") ){
+				
+				return true;
+			} else if (this.firstMatching == true || cardViewSource.firstMatching == true){
+					return true;
+			}
+					else return false;
+			
+//		 
+		}
+		
+		}
 	
-
-
-	
-
 }

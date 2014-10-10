@@ -91,11 +91,16 @@ public void setGridView (GridView newValue) {
 
 public void setGridViewLeft (GridView gridViewLeft){
 	mGridViewLeft = gridViewLeft;
-	
+}	
+public void setGridViewCenter (GridView gridViewCenter){
+	mGridViewCenter = gridViewCenter;
 }
+	
+
 public void setGridViewRight (GridView gridViewRight){
 	mGridViewRight = gridViewRight;
 }
+
 
 /**
  */
@@ -116,10 +121,16 @@ public void onDragStart(DragSource source, Object info, int dragAction)
     // Build up a list of DropTargets from the child views of the GridView.
     // Tell the drag controller about them.
 	CardView sourceCardView = (CardView) source;
-	if (sourceCardView.getParent() == mGridViewLeft && mGridViewLeft != null){
+	GridView gridViewContainer = (GridView) sourceCardView.getParent();
+	if (gridViewContainer == mGridViewLeft ){
 		  findDropTargets(mGridViewRight);
-	} else if (sourceCardView.getParent() == mGridViewRight && mGridViewRight != null) {
+		  findDropTargets(mGridViewCenter);
+	} else if (gridViewContainer == mGridViewRight ) {
 		findDropTargets(mGridViewLeft);
+		findDropTargets(mGridViewCenter);
+	} else if (gridViewContainer == mGridViewCenter){
+		findDropTargets(mGridViewLeft);
+		findDropTargets(mGridViewRight);
 	}
   
 
@@ -132,7 +143,8 @@ private void findDropTargets(GridView gridView) {
        int numVisibleChildren = gridView.getChildCount();
        for ( int i = 0; i < numVisibleChildren; i++ ) {
            DropTarget view = (DropTarget) gridView.getChildAt (i);
-           mDragController.addDropTarget (view);
+           if (view.isDropTarget())
+        	   mDragController.addDropTarget (view);
        }
     }
 }

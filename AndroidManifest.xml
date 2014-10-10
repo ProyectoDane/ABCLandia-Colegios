@@ -73,6 +73,10 @@
             android:name="com.example.abclandia.GameFourActivity"
             android:screenOrientation="landscape" >
         </activity>
+         <activity
+            android:name="com.example.abclandia.GameSixActivity"
+            android:screenOrientation="landscape" >
+        </activity>
        	<activity
             android:name=".Game"
             android:label="@string/title_activity_game" >
@@ -85,6 +89,12 @@
             android:name="com.example.abclandia.CardLetterPlayerActivity"
             android:screenOrientation="landscape">
         </activity>
+         <activity
+            android:name="com.example.abclandia.AbcPlayerActivity"
+            android:screenOrientation="landscape">
+        </activity>
+        
+        
     </application>
 
 </manifest>

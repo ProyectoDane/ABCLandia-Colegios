@@ -23,11 +23,8 @@ public class JustLetterRenderer extends Renderer {
 		
 		 super.Render(canvas, rectangleWidth, rectangleHeight, borderRectanglePaint, textPaint, card, imageBitmap);
 	   
-
-			   
-			  
-			   canvas.drawText(card.getLetter(),(float) (rectangleWidth * 0.19), (float) (rectangleHeight*0.2), textPaint);
-
+		 drawLetter(canvas, card, rectangleWidth, rectangleHeight)
+;
 			   
 			   
 		

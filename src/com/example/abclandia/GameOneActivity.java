@@ -63,7 +63,7 @@ public class GameOneActivity extends GameActivity
 	
 	private List<Card> data;
 	
-	private static String CLASS_NAME = "com.example.abclandia.GameOne";
+	private static String CLASS_NAME = "com.example.abclandia.GameOneActivity";
 	private static int GAME_NUMBER = 1;
 
 	
@@ -108,8 +108,7 @@ public class GameOneActivity extends GameActivity
   
      
         
-       setContentView(R.layout.game_one);
-        mDragController = new DragController (this);
+    
         
         loadDataCard();
         
@@ -118,8 +117,8 @@ public class GameOneActivity extends GameActivity
         mGridViewLeft = (GridView) findViewById(R.id.gridViewLeft);
         mGridViewRight = (GridView) findViewById(R.id.gridViewRight);
         
-        mGridViewRight.setAdapter(new CardViewAdapter(data, this, new CompleteCardRenderer(this)));
-        mGridViewLeft.setAdapter(new CardViewAdapter(data, this, new JustImageRenderer(this)));
+        mGridViewRight.setAdapter(new CardViewAdapter(data, this, new JustImageRenderer(this),R.layout.grid_row));
+        mGridViewLeft.setAdapter(new CardViewAdapter(data, this, new JustLetterRenderer(this),R.layout.grid_row));
         
         mDragLayer = (DragLayer) findViewById(R.id.drag_layer);
         mDragLayer.setDragController (mDragController);

@@ -10,17 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.example.abclandia.AbcPlayerActivity;
 import com.example.abclandia.Card;
 import com.example.abclandia.GameActivity;
 import com.example.abclandia.GameSixActivity;
 import com.example.abclandia.graphics.CardView;
 import com.example.abclandia.graphics.EmptyRenderer;
 import com.example.abclandia.graphics.Renderer;
-import com.frba.abclandia.R;
 
-
-
-public class CardViewAdapter extends BaseAdapter {
+public class Adapterprueba extends BaseAdapter {
 	 private List<Card> mData = new ArrayList<Card>();
 	 private Renderer mRenderer;
 	 private Renderer mEmptyRenderer;
@@ -36,10 +34,10 @@ public class CardViewAdapter extends BaseAdapter {
 		this.mData = mData;
 	}
 
-	private Context mContext;
+	private AbcPlayerActivity mContext;
 	private View.OnDragListener mDragListener;
 
-	public CardViewAdapter(List<Card> data, Context context, Renderer renderer, int layoutCardView) {
+	public Adapterprueba(List<Card> data, AbcPlayerActivity context, Renderer renderer, int layoutCardView) {
 		
 		
 		mContext = context;
@@ -82,14 +80,14 @@ public class CardViewAdapter extends BaseAdapter {
 		
 		CardView cardView = (CardView) view;
 		
-		if (mContext.getClass() == GameSixActivity.class){
-			cardView.setDoubleMatching(true);
-			
-		}
+//		if (mContext.getClass() == GameSixActivity.class){
+//			cardView.setDoubleMatching(true);
+//			
+//		}
 		
-		
+//		mContext.prueba();
 		cardView.myCellnumber = position;
-		cardView.mAdapter = this;
+//		cardView.mAdapter = this;
 		cardView.setCard(dataCard);
 		
 		if (dataCard.isEmptyCard()) {
