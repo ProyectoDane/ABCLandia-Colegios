@@ -7,6 +7,7 @@ import java.util.List;
 import com.example.abclandia.audio.Audio;
 import com.example.abclandia.graphics.CardView;
 import com.example.abclandia.graphics.EOneMatchedRenderer;
+import com.example.abclandia.graphics.JustLetterRenderer;
 import com.example.abclandia.graphics.Renderer;
 import com.frba.abclandia.R;
 import com.frba.abclandia.adapters.CardViewAdapter;
@@ -73,30 +74,7 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 
 	}
 
-	private void loadDataCard() {
-		GameDataStructure.getSecuence(1, 1, 1);
-		GameDataStructure.getSecuence(1, 1, 2);
-		GameDataStructure.isFinalSecuence(1, 1, 10);
-		GameDataStructure.isFinalSecuence(1, 1, 9);
-		GameDataStructure.isFinalLevel(1, 6);
 
-		data = new ArrayList<Card>();
-		Card card1 = new Card("A", "Auto",
-				"/storage/emulated/0/Images/Auto.jpg", "Auto.ogg");
-		Card card2 = new Card("B", "Botella",
-				"/storage/emulated/0/Images/Botella.jpg", "Botella.ogg");
-		Card card3 = new Card("C", "Conejo",
-				"storage/emulated/0/Images/Conejo.jpg", "Conejo.ogg");
-		Card card4 = new Card("D", "Dado",
-				"storage/emulated/0/Images/Dado.jpg", "Dado.ogg");
-		Card card5 = new Card("E", "Elefante",
-				"storage/emulated/0/Images/Elefante.jpg", "Elefante.ogg");
-		data.add(card1);
-		data.add(card2);
-		data.add(card3);
-		data.add(card4);
-		data.add(card5);
-	}
 
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
@@ -110,7 +88,10 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 		if (action == MotionEvent.ACTION_DOWN) {
 
 			if (!cardView.isEmptyCard() && cardView.allowDrag()) {
-				mAudio.playSoundWord(cardView.getCardId());
+				if (cardView.getRenderer().getClass() == JustLetterRenderer.class){
+//				mAudio.playSoundLetter(cardView.getCardId());
+				} else 
+					mAudio.playSoundWord(cardView.getCardId());
 
 			}
 
@@ -130,7 +111,7 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 		return true;
 	}
 
-	public Renderer getDefaultRenderer() {
+	public Renderer getMatchedRenderer() {
 		return mDroppedRenderer;
 	}
 

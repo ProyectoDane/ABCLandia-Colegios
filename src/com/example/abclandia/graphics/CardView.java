@@ -20,6 +20,7 @@ import com.example.abclandia.DragSource;
 import com.example.abclandia.DropTarget;
 import com.example.abclandia.GameActivity;
 import com.example.abclandia.GameOneActivity;
+import com.example.abclandia.GameSixActivity;
 import com.example.abclandia.Util;
 import com.frba.abclandia.R;
 import com.frba.abclandia.adapters.CardViewAdapter;
@@ -44,11 +45,7 @@ public class CardView extends View implements DragSource, DropTarget {
 	private boolean isDoubleMatching = false;
 	private boolean firstMatching = false;
 
-	private float rectangleSize;
-	private int textSize;
-	private int widthSize,heightSize;
-	 
-	 private Bitmap imageBitmap; 
+	private Bitmap imageBitmap; 
 	 
 	 public boolean mEmpty = true;
 	 public int myCellnumber;
@@ -67,7 +64,7 @@ public class CardView extends View implements DragSource, DropTarget {
 	
 	public CardView(Context context, AttributeSet attrs) {
         super(context, attrs);
-//        mContext = (GameActivity) context;
+
         mContext =  context;
 
 
@@ -175,11 +172,14 @@ public class CardView extends View implements DragSource, DropTarget {
 			int yOffset, DragShadow dragView, Object dragInfo) {
 	
 			
-			mRenderer = ((GameActivity) mContext).getDefaultRenderer();
-			if (isDoubleMatching && !firstMatching)
+			mRenderer = ((GameActivity) mContext).getMatchedRenderer();
+			if (isDoubleMatching && !firstMatching){
 				firstMatching = true;
+				mRenderer = ((GameSixActivity) mContext).getFirstMatchedRenderer();
+			}
 			else
 				this.mAllowDrag = false;
+			
 			invalidate();
 			
 

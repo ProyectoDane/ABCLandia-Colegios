@@ -72,7 +72,7 @@ implements View.OnTouchListener {
 		mAudio = new Audio(this);
 		mAudio.loadWordSounds(data);
 
-		setContentView(R.layout.card_letter_player);
+		setContentView(R.layout.card_letter_player_activity);
 		
 
 	
@@ -81,7 +81,7 @@ implements View.OnTouchListener {
 		
 
 		mGridView.setAdapter(new CardViewAdapter(data, this,
-				new CompleteCardRenderer(this),R.layout.grid_row));
+				new CompleteCardRenderer(this),R.layout.card_letter_player_card_view));
 		
 		mDragShadowAnimator = new LetterPlayerAnimator(this);
 		
@@ -105,37 +105,37 @@ implements View.OnTouchListener {
 		
 		
 		data = new ArrayList<Card>();
-        Card card1 = new Card("A","AUT_","/storage/emulated/0/Images/Auto.jpg", "Auto.ogg");
-        Card card2 = new Card("B","Botella", "/storage/emulated/0/Images/Botella.jpg","Botella.ogg");
-        Card card3 = new Card("C","Conejo","storage/emulated/0/Images/Conejo.jpg", "Conejo.ogg");
-        Card card4 = new Card("D","Dado","storage/emulated/0/Images/Dado.jpg","Dado.ogg");
-        Card card5 = new Card("E","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg");
+        Card card1 = new Card("A","AUT_","/storage/emulated/0/Images/Auto.jpg", "Auto.ogg", null);
+        Card card2 = new Card("B","Botella", "/storage/emulated/0/Images/Botella.jpg","Botella.ogg", null);
+        Card card3 = new Card("C","Conejo","storage/emulated/0/Images/Conejo.jpg", "Conejo.ogg", null);
+        Card card4 = new Card("D","Dado","storage/emulated/0/Images/Dado.jpg","Dado.ogg", null);
+        Card card5 = new Card("E","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null);
         data.add(card1);
         data.add(card2);
         data.add(card3);
         data.add(card4);
         data.add(card5);
-        data.add(new Card("F","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg"));
-        data.add(new Card("G","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg"));
-        data.add(new Card("H","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg"));
-        data.add(new Card("I","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg"));
-        data.add(new Card("J","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg"));
-        data.add(new Card("L","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg"));
-        data.add(new Card("M","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg"));
-        data.add(new Card("N","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg"));
-        data.add(new Card("Ñ","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg"));
-        data.add(new Card("O","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg"));
-        data.add(new Card("P","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg"));
-        data.add(new Card("Q","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg"));
-        data.add(new Card("R","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg"));
-        data.add(new Card("S","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg"));
-        data.add(new Card("T","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg"));
-        data.add(new Card("U","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg"));
-        data.add(new Card("V","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg"));
-        data.add(new Card("W","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg"));
-        data.add(new Card("X","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg"));
-        data.add(new Card("Y","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg"));
-        data.add(new Card("Z","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg"));
+        data.add(new Card("F","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
+        data.add(new Card("G","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
+        data.add(new Card("H","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
+        data.add(new Card("I","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
+        data.add(new Card("J","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
+        data.add(new Card("L","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
+        data.add(new Card("M","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
+        data.add(new Card("N","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
+        data.add(new Card("Ñ","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
+        data.add(new Card("O","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
+        data.add(new Card("P","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
+        data.add(new Card("Q","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
+        data.add(new Card("R","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
+        data.add(new Card("S","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
+        data.add(new Card("T","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
+        data.add(new Card("U","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
+        data.add(new Card("V","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
+        data.add(new Card("W","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
+        data.add(new Card("X","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
+        data.add(new Card("Y","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
+        data.add(new Card("Z","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
         
         
         

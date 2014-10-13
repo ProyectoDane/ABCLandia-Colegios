@@ -4,17 +4,19 @@ public class Card {
 	private String mWord;
 	private String mLetter;
 	private String mImagePath;
-	private String mSoundName;
+	private String mSoundWordPath;
+	private String mSoundLetterPath;
 	
 	public Card (){
 		
 	}
 	
-	public Card (String letter, String word, String imagePath, String soundName){
+	public Card (String letter, String word, String imagePath, String soundWordPath, String soundLetterPath){
 		mLetter = letter;
 		mWord = word;
 		mImagePath = imagePath;
-		mSoundName = soundName; 
+		mSoundWordPath = soundWordPath; 
+		mSoundLetterPath = soundLetterPath;
 	}
 	
 	public String getLetter() {
@@ -28,8 +30,12 @@ public class Card {
 	public String getImagePath(){
 		return mImagePath;
 	}
-	public String getSoundName(){
-		return mSoundName;
+	public String getSoundWordPath(){
+		return mSoundWordPath;
+	}
+	
+	public String getSoundLetterPath(){
+		return mSoundLetterPath;
 	}
 	
 	public boolean isEmptyCard(){

@@ -117,9 +117,9 @@ public class GameFourActivity extends GameActivity {
 			
 			
 			data = new ArrayList<Card>();
-	        Card card1 = new Card("A","Auto","/storage/emulated/0/Images/Auto.jpg", "Auto.ogg");
-	        Card card2 = new Card("B","Botella", "/storage/emulated/0/Images/Botella.jpg","Botella.ogg");
-	        Card card3 = new Card("C","Conejo","storage/emulated/0/Images/Conejo.jpg", "Conejo.ogg");
+	        Card card1 = new Card("A","Auto","/storage/emulated/0/Images/Auto.jpg", "Auto.ogg", null);
+	        Card card2 = new Card("B","Botella", "/storage/emulated/0/Images/Botella.jpg","Botella.ogg", null);
+	        Card card3 = new Card("C","Conejo","storage/emulated/0/Images/Conejo.jpg", "Conejo.ogg", null);
 	        
 	        data.add(card1);
 	        data.add(card2);
@@ -143,9 +143,6 @@ public class GameFourActivity extends GameActivity {
 		    return true;
 		}
 		
-		public Renderer getDefaultRenderer(){
-			return mDroppedRenderer;
-		}
 
 
 	@Override

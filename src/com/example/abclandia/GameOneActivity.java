@@ -87,10 +87,11 @@ public class GameOneActivity extends GameActivity
         
         mDragController = new DragController (this);
         loadDataCard();
+        int a = 1;
         
         
        
-        setContentView(R.layout.game_one);
+        setContentView(R.layout.game_one_activity);
         mDragLayer = (DragLayer) findViewById(R.id.drag_layer);
         mDragLayer.setDragController (mDragController);
         mDragController.setDragListener (mDragLayer);
@@ -99,6 +100,8 @@ public class GameOneActivity extends GameActivity
         
        mAudio = new Audio(this);
        mAudio.loadWordSounds(data);
+       mAudio.loadLetterSoungs(data);
+       mAudio.loadDefaultSounds();
         
       
         
@@ -109,16 +112,15 @@ public class GameOneActivity extends GameActivity
      
         
     
-        
-        loadDataCard();
+
         
        
         
         mGridViewLeft = (GridView) findViewById(R.id.gridViewLeft);
         mGridViewRight = (GridView) findViewById(R.id.gridViewRight);
         
-        mGridViewRight.setAdapter(new CardViewAdapter(data, this, new JustImageRenderer(this),R.layout.grid_row));
-        mGridViewLeft.setAdapter(new CardViewAdapter(data, this, new JustLetterRenderer(this),R.layout.grid_row));
+        mGridViewRight.setAdapter(new CardViewAdapter(data, this, new JustImageRenderer(this),R.layout.game_one_card_view));
+        mGridViewLeft.setAdapter(new CardViewAdapter(data, this, new JustLetterRenderer(this),R.layout.game_one_card_view));
         
         mDragLayer = (DragLayer) findViewById(R.id.drag_layer);
         mDragLayer.setDragController (mDragController);
@@ -130,8 +132,7 @@ public class GameOneActivity extends GameActivity
         mDroppedRenderer = new EOneMatchedRenderer(this);
         
         
-       mAudio = new Audio(this);
-       mAudio.loadWordSounds(data);
+ 
         
         
        
@@ -142,19 +143,18 @@ public class GameOneActivity extends GameActivity
 
 
 	private void loadDataCard() {
-//		GameDataStructure.getSecuence(1,1, 1);
-//		GameDataStructure.getSecuence(1,1,2);
-//		GameDataStructure.isFinalSecuence(1, 1, 10);
-//		GameDataStructure.isFinalSecuence(1,1,9);
-//		GameDataStructure.isFinalLevel(1,6);
+
 		
 		
 		data = new ArrayList<Card>();
-        Card card1 = new Card("A","Auto","/storage/emulated/0/Images/Auto.jpg", "Auto.ogg");
-        Card card2 = new Card("B","Botella", "/storage/emulated/0/Images/Botella.jpg","Botella.ogg");
-        Card card3 = new Card("C","Conejo","storage/emulated/0/Images/Conejo.jpg", "Conejo.ogg");
-        Card card4 = new Card("D","Dado","storage/emulated/0/Images/Dado.jpg","Dado.ogg");
-        Card card5 = new Card("E","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg");
+        Card card1 = new Card("A","Auto","/storage/emulated/0/Images/Auto.jpg",
+        		"Auto.ogg", "/storage/emulated/0/Sounds/A_fede.ogg");
+        Card card2 = new Card("B","Botella", "/storage/emulated/0/Images/Botella.jpg","Botella.ogg", "");
+        Card card3 = new Card("C","Conejo","storage/emulated/0/Images/Conejo.jpg",
+        		"Conejo.ogg", "/storage/emulated/0/Sounds/C_fede.ogg");
+        Card card4 = new Card("D","Dado","storage/emulated/0/Images/Dado.jpg",
+        		"Dado.ogg", "/storage/emulated/0/Sounds/C_fede.ogg");
+        Card card5 = new Card("E","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", "/storage/emulated/0/Sounds/E_fede.ogg");
         data.add(card1);
         data.add(card2);
         data.add(card3);
@@ -178,14 +178,13 @@ public class GameOneActivity extends GameActivity
 	    return true;
 	}
 	
-	public Renderer getDefaultRenderer(){
-		return mDroppedRenderer;
-	}
+	
 
 
 	@Override
 	public void onDragEnd(boolean success) {
 		if (success) {
+			mAudio.playCorrectSound();
 		countHits++;
 		if (countHits == TOTAL_JOINS) {
 			Intent intent = new Intent(this, WinActivity.class);
@@ -193,7 +192,7 @@ public class GameOneActivity extends GameActivity
 			intent.putExtra(GameActivity.INTENT_SECUENCE_KEY, gadorcha);
 			intent.putExtra(GameActivity.INTENT_CLASS_LAUNCHER_KEY, CLASS_NAME);
 			startActivity(intent);
-			finish();
+//			finish();
 			   
 			
 		}

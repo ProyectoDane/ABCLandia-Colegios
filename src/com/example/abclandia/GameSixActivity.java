@@ -25,10 +25,8 @@ public static final int TOTAL_JOINS = 6;
 	
 	private DragLayer mDragLayer;
 	private GridView mGridViewLeft,mGridViewCenter, mGridViewRight ;
-
-	
 	private List<Card> data;
-	
+	private Renderer mFirstMatchRenderer;
 	private static String CLASS_NAME = "com.example.abclandia.GameOne";
 	private static int GAME_NUMBER = 6;
 
@@ -99,7 +97,7 @@ public static final int TOTAL_JOINS = 6;
 
         mDragController.setDragListener (mDragLayer);
         mDroppedRenderer = new EOneMatchedRenderer(this);
-        
+        mFirstMatchRenderer = new JustLetterRenderer(this);
         
        mAudio = new Audio(this);
        mAudio.loadWordSounds(data);
@@ -117,9 +115,9 @@ public static final int TOTAL_JOINS = 6;
 		
 		
 		data = new ArrayList<Card>();
-        Card card1 = new Card("A","Auto","/storage/emulated/0/Images/Auto.jpg", "Auto.ogg");
-        Card card2 = new Card("B","Botella", "/storage/emulated/0/Images/Botella.jpg","Botella.ogg");
-        Card card3 = new Card("C","Conejo","storage/emulated/0/Images/Conejo.jpg", "Conejo.ogg");
+        Card card1 = new Card("A","Auto","/storage/emulated/0/Images/Auto.jpg", "Auto.ogg", null);
+        Card card2 = new Card("B","Botella", "/storage/emulated/0/Images/Botella.jpg","Botella.ogg", null);
+        Card card3 = new Card("C","Conejo","storage/emulated/0/Images/Conejo.jpg", "Conejo.ogg", null);
     
         data.add(card1);
         data.add(card2);
@@ -143,11 +141,15 @@ public static final int TOTAL_JOINS = 6;
 	    return true;
 	}
 	
-	public Renderer getDefaultRenderer(){
+	public Renderer getMatchedRenderer(){
 		return mDroppedRenderer;
 	}
+	
 
-
+	public Renderer getFirstMatchedRenderer(){
+		return mFirstMatchRenderer;
+		
+	}
 	@Override
 	public void onDragEnd(boolean success) {
 		if (success) {
