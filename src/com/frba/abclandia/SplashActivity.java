@@ -10,6 +10,7 @@ public class SplashActivity extends Activity {
 	private static final int DISPLAY = 3000;
 	
 	protected void callNextActivity(){
+		// Splash Screen
 		startActivity(new Intent(this, LoginActivity.class));
 	}
 	

@@ -1,11 +1,14 @@
 package com.frba.abclandia;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.SQLException;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +19,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.frba.abclandia.db.DataBaseHelper;
 import com.frba.abclandia.dtos.Maestro;
 
 public class MaestroListActivity extends ListActivity {
 
+	private DataBaseHelper myDbHelper;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -30,26 +35,38 @@ public class MaestroListActivity extends ListActivity {
 		
 		setContentView(R.layout.activity_maestro_list);
 		//ListView listView = (ListView) findViewById(R.id.list_maestro);
-			
-			
-		//TODO: Buscar maestros en la DB
-		//maestroListAdapter = new MaestroListAdapter(this);
 		
+		// Iniciamos la BD
+		iniciarDB();
+			
+		//TODO: Buscar maestros en la DB		
 		setListAdapter(new MaestroListAdapter(this));
 		
 		// TODO: Buscar todos los maestros
 	}
 
+	private void iniciarDB() {
+		// Inicializar servicios
+		myDbHelper = new DataBaseHelper(this);
+		try {
+			myDbHelper.createDatabase();
+		} catch (IOException ioe) {
+			throw new Error("No se pudo crear la base de datos");
+			
+		}
+		
+		try {
+			myDbHelper.openDatabase();
+		}catch (SQLException sqle){
+			Log.d("POOCHIE", "No se pudo abrir la BD");
+			throw sqle;
+		}
+		
+	}
 	
 	private List<Maestro >getMaestrosData() {
 		
-		Maestro m1 = new Maestro(1,"Ricco","Gonzalo");
-		Maestro m2 = new Maestro(2,"Ramos","Pablo");
-		Maestro m3 = new Maestro(3, "Orgizovic","Federico");
-		List<Maestro> maestros = new ArrayList<Maestro>();
-		maestros.add(m1);
-		maestros.add(m2);
-		maestros.add(m3);
+		List<Maestro> maestros = myDbHelper.getAllMaestros();
 		return maestros;
 	}
 	
@@ -63,9 +80,8 @@ public class MaestroListActivity extends ListActivity {
 		// Tomar el ID del maestro
 		// Buscar los alumnos del maestro
 		Intent i = new Intent(this, AlumnoListActivity.class);
+		i.putExtra("unMaestro", maestro.getLegajo());
 		startActivity(i);
-	
-		
 	}
 	
 	private class MaestroListAdapter extends BaseAdapter{
@@ -75,6 +91,8 @@ public class MaestroListActivity extends ListActivity {
 		
 		public MaestroListAdapter(Context context){
 			mContext = context;
+			
+			// Tenemos que tomar los maestros de la base de datos y/o actualizarla
 			mMaestros = getMaestrosData();
 		}
 

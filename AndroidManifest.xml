@@ -62,6 +62,7 @@
             android:label="@string/title_activity_jugar" >
         </activity>
         <activity
+
             android:name="com.example.abclandia.GameOneActivity"
             android:screenOrientation="landscape" >
         </activity>
@@ -88,6 +89,7 @@
         <activity
             android:name="com.example.abclandia.CardLetterPlayerActivity"
             android:screenOrientation="landscape">
+
         </activity>
          <activity
             android:name="com.example.abclandia.AbcPlayerActivity"
