@@ -17,33 +17,19 @@ package com.example.abclandia;
 
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-import android.animation.AnimatorSet;
-import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.media.AudioManager;
-import android.media.SoundPool;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
+import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.GridView;
 
-
 import com.example.abclandia.audio.Audio;
-import com.example.abclandia.graphics.CardView;
-import com.example.abclandia.graphics.CompleteCardRenderer;
 import com.example.abclandia.graphics.EOneMatchedRenderer;
 import com.example.abclandia.graphics.JustImageRenderer;
 import com.example.abclandia.graphics.JustLetterRenderer;
-import com.example.abclandia.graphics.JustWordRenderer;
-import com.example.abclandia.graphics.Renderer;
-
 import com.frba.abclandia.R;
 import com.frba.abclandia.adapters.CardViewAdapter;
 
@@ -187,11 +173,19 @@ public class GameOneActivity extends GameActivity
 			mAudio.playCorrectSound();
 		countHits++;
 		if (countHits == TOTAL_JOINS) {
-			Intent intent = new Intent(this, WinActivity.class);
-			intent.putExtra(GameActivity.INTENT_LEVEL_KEY, mCurrrentLevel);
-			intent.putExtra(GameActivity.INTENT_SECUENCE_KEY, gadorcha);
-			intent.putExtra(GameActivity.INTENT_CLASS_LAUNCHER_KEY, CLASS_NAME);
-			startActivity(intent);
+			 Handler handler = new Handler();
+		        handler.postDelayed(new Runnable() {
+		            public void run() {
+		                // acciones que se ejecutan tras los milisegundos
+		            	Intent intent = new Intent(GameOneActivity.this, WinActivity.class);
+		    			intent.putExtra(GameActivity.INTENT_LEVEL_KEY, mCurrrentLevel);
+		    			intent.putExtra(GameActivity.INTENT_SECUENCE_KEY, gadorcha);
+		    			intent.putExtra(GameActivity.INTENT_CLASS_LAUNCHER_KEY, CLASS_NAME);
+		    			startActivity(intent);
+		            }
+		        }, 500);
+		    }
+			
 //			finish();
 			   
 			
@@ -205,5 +199,5 @@ public class GameOneActivity extends GameActivity
 	
    
    
-}
+
 
