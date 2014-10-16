@@ -5,7 +5,7 @@ public class Palabra {
 	private Integer categoria;
 	private String letra;
 	private String palabra;
-	private String imgaen;
+	private String imagen;
 	private String sonido;
 	
 	public Palabra(){
@@ -19,7 +19,7 @@ public class Palabra {
 		this.setCategoria(categoria_id);
 		this.setLetra(palabra_letra);
 		this.setPalabra(palabra_palabra);
-		this.setImgaen(imagen_id);
+		this.setImagen(imagen_id);
 		this.setSonido(sonido_id);
 	
 	}
@@ -32,12 +32,12 @@ public class Palabra {
 		this.sonido = sonido;
 	}
 
-	public String getImgaen() {
-		return imgaen;
+	public String getImagen() {
+		return imagen;
 	}
 
-	public void setImgaen(String imgaen) {
-		this.imgaen = imgaen;
+	public void setImagen(String imgaen) {
+		this.imagen = imgaen;
 	}
 
 	public String getPalabra() {
