@@ -3,6 +3,9 @@ package com.frba.abclandia;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.json.JSONException;
+
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -21,11 +24,13 @@ import android.widget.Toast;
 
 import com.frba.abclandia.db.DataBaseHelper;
 import com.frba.abclandia.dtos.Alumno;
+import com.frba.abclandia.webserver.ABCLandiaRestClientUsage;
 
 public class AlumnoListActivity extends ListActivity {
 	
 	private DataBaseHelper myDbHelper;
 	private Integer unMaestro = 0;
+	private ABCLandiaRestClientUsage server = new ABCLandiaRestClientUsage();
 	
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
@@ -43,6 +48,12 @@ public class AlumnoListActivity extends ListActivity {
 		iniciarDB();
 		
 		setListAdapter(new AlumnoListAdapter(this));
+		
+		try {
+			server.getAlumnosFromMaestro(this.unMaestro);
+		} catch (JSONException e){
+			e.printStackTrace();
+		}
 	}
 	
 	

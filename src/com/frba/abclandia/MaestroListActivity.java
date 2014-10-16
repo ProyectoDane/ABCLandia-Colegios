@@ -3,6 +3,9 @@ package com.frba.abclandia;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.json.JSONException;
+
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -21,10 +24,14 @@ import android.widget.Toast;
 
 import com.frba.abclandia.db.DataBaseHelper;
 import com.frba.abclandia.dtos.Maestro;
+import com.frba.abclandia.webserver.ABCLandiaRestClientUsage;
+
 
 public class MaestroListActivity extends ListActivity {
 
 	private DataBaseHelper myDbHelper;
+	private ABCLandiaRestClientUsage server = new ABCLandiaRestClientUsage();
+	private List<Maestro> serverMaestros =  new ArrayList<Maestro>();
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -43,6 +50,13 @@ public class MaestroListActivity extends ListActivity {
 		setListAdapter(new MaestroListAdapter(this));
 		
 		// TODO: Buscar todos los maestros
+		try {
+			serverMaestros = server.getMaestros();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Log.d("MaestroServer", serverMaestros.toString());
 	}
 
 	private void iniciarDB() {
@@ -64,7 +78,7 @@ public class MaestroListActivity extends ListActivity {
 		
 	}
 	
-	private List<Maestro >getMaestrosData() {
+	private List<Maestro> getMaestrosData() {
 		
 		List<Maestro> maestros = myDbHelper.getAllMaestros();
 		return maestros;
