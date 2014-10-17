@@ -257,12 +257,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	 */
 	public Palabra getPalabraFromLetraAndCategoria(String unaLetra, Integer unaCategoria) {
 		Palabra unaPalabra;
-		String selectQuery = "select palabra_id, categoria_id, palabra_letra, palabra_palabra, imagen_id, sonido_id  from palabras where categoria_id = "
-				+ unaCategoria + " and palabra_letra = " + unaLetra + " ";
+		String selectQuery = "select palabra_id, categoria_id, palabra_letra, palabra_palabra, imagen_id, sonido_id  from palabras where categoria_id = '"
+				+ unaCategoria + "' and palabra_letra = '" + unaLetra + "'";
 		SQLiteDatabase database =  this.getWritableDatabase();
 		Cursor cursor =  database.rawQuery(selectQuery, null);
 		if (cursor.moveToFirst()) {
-			unaPalabra =  new Palabra(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), cursor.getString(3), cursor.getString(3),
+			unaPalabra =  new Palabra(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
 					cursor.getString(5));
 		} else {
 			unaPalabra = new Palabra(0, unaCategoria, unaLetra, unaLetra, "none", "none" );
@@ -279,8 +279,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	 */
 	public String getPalabraStringFromLetraAndCategoria(String unaLetra, Integer unaCategoria) {
 		String unaPalabra = "Null";
-		String selectQuery = "select palabra_palabra from palabras where categoria_id = "
-				+ unaCategoria + " and palabra_letra = " + unaLetra + " ";
+		String selectQuery = "select palabra_palabra from palabras where categoria_id = '"
+				+ unaCategoria + "' and palabra_letra = '" + unaLetra + "' ";
 		SQLiteDatabase database =  this.getWritableDatabase();
 		Cursor cursor =  database.rawQuery(selectQuery, null);
 		if (cursor.moveToFirst()) {
