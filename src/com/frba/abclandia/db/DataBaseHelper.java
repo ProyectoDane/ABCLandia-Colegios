@@ -8,12 +8,14 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Environment;
 import android.util.Log;
 
 import com.frba.abclandia.dtos.Alumno;
@@ -23,14 +25,12 @@ import com.frba.abclandia.dtos.Palabra;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 	
-	private  String DB_PATH = "/data/data/"; 
+	private  String DB_PATH = Environment.getExternalStorageDirectory().getPath();  
 	private static String DB_NAME = "gelemerv1.sqlite";
 	private static Integer DATABASE_VERSION = 1;
 	private SQLiteDatabase myDataBase;
 	private final Context myContext;
-	private static AbcLandiaContract abcLandia = new AbcLandiaContract();
 
-	// Creamos el constructor llamando a 
 	public DataBaseHelper(Context context) {
 		super(context, DB_NAME, null, DATABASE_VERSION);
 		this.myContext = context;
@@ -68,7 +68,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		
 		try {
 			File fdb =  this.myContext.getDatabasePath(DB_NAME);
-			checkDB = SQLiteDatabase.openDatabase(fdb.getAbsolutePath(), null, SQLiteDatabase.OPEN_READONLY);
+			String path = fdb.getAbsolutePath();
+			checkDB = SQLiteDatabase.openDatabase(path	, null, SQLiteDatabase.OPEN_READONLY);
 		} catch (SQLiteException e){
 			// La base de datos no existe todavia
 		}
@@ -84,26 +85,26 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	 *  Se copia transfiriendo un bytestream.
 	 */
 	private void copyDatabase() throws IOException {
-	// Abrimos la db local como un input stream
-	InputStream myInput = myContext.getAssets().open(DB_NAME);
-	
-	// Path a la base que creamos recien
-	String outFileName =  DB_PATH + DB_NAME;
-	
-	// Abrimos la db local vacia como el output stream
-	OutputStream myOutput = new FileOutputStream(outFileName);
-	
-	// Transferimos los bytes desde el inputfile al output file
-	
-	byte [] buffer = new byte[1024];
-	int length;
-	while ((length = myInput.read(buffer))>0) {
-		myOutput.write(buffer,0, length);
-	}
-	//Cerramos los streams
-	myOutput.flush();
-	myOutput.close();
-	myInput.close();
+		// Abrimos la db local como un input stream
+		InputStream myInput = myContext.getAssets().open(DB_NAME);
+		
+		// Path a la base que creamos recien
+		String outFileName =  DB_PATH + "/" + DB_NAME;
+		
+		// Abrimos la db local vacia como el output stream
+		OutputStream myOutput = new FileOutputStream(outFileName);
+		
+		// Transferimos los bytes desde el inputfile al output file
+		
+		byte [] buffer = new byte[1024];
+		int length;
+		while ((length = myInput.read(buffer))>0) {
+			myOutput.write(buffer,0, length);
+		}
+		//Cerramos los streams
+		myOutput.flush();
+		myOutput.close();
+		myInput.close();
 	}
 	
 	public void openDatabase() throws SQLException {
@@ -138,7 +139,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	}
 
 
-	
 	// Add your public helper methods to access and get content from the database.
     // You could return cursors by doing "return myDataBase.query(....)" so it'd be easy
     // to you to create adapters for your views.
@@ -149,7 +149,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	 */
 	public List<Maestro> getAllMaestros() {
 		List<Maestro> maestros =  new ArrayList<Maestro>();
-		String selectQuery = "Select _id, maestro_apellido, maestro_nombre from maestros";
+		String selectQuery = "Select maestro_id, maestro_apellido, maestro_nombre from maestros";
 		SQLiteDatabase database = this.getWritableDatabase();
 		Cursor cursor =  database.rawQuery(selectQuery, null);
 		if (cursor.moveToFirst()){
@@ -290,5 +290,130 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		return unaPalabra;
 	}
 	
+
+	/**
+	 * Inserta un Maestro en la Base de SQLite
+	 * @param unMaestro
+	 */
+	public void insertMaestro(Maestro unMaestro){
+		SQLiteDatabase database =  this.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		values.put("maestro_id", unMaestro.getLegajo());
+		values.put("maestro_nombre", unMaestro.getNombre());
+		values.put("maestro_apellido", unMaestro.getApellido());
+		Cursor cur1= database.query("maestros", null, "maestro_id=" + unMaestro.getLegajo(), null, null, null, null);
+	      cur1.moveToLast();
+	      int count1=cur1.getCount();
+	      if(count1==0)
+	      {
+	    	  database.insert("maestros",null, values);
+
+	      }
+	      else
+	      {
+	        //Maestro id present
+	    	Log.d("Datbase", "Maestro con el ID " + unMaestro.getLegajo() + " ya existe");
+	      }
+		
+		database.close();
+	}
 	
+	/** 
+	 * Inserta un Alumno en la Base de SQLite
+	 * @param unAlumno
+	 */
+	public void insertAlumno(Alumno unAlumno){
+		SQLiteDatabase database = this.getWritableDatabase();
+		ContentValues  values = new ContentValues();
+		values.put("alumno_id", unAlumno.getLegajo());
+		values.put("nombre", unAlumno.getNombre());
+		values.put("apellido", unAlumno.getApellido());
+		// Chequeamos si el valor existe
+		Cursor cur1= database.query("alumnos", null, "alumno_id=" + unAlumno.getLegajo(), null, null, null, null);
+	      cur1.moveToLast();
+	      int count1=cur1.getCount();
+	      if(count1==0)
+	      {
+	    	  database.insert("alumnos",null, values);
+
+	      }
+	      else
+	      {
+	        //course id present
+	    	Log.d("Database", "Alumno con el ID " + unAlumno.getLegajo() + " ya existe");
+	      }
+
+		database.close();
+	}
+	
+	/**
+	 * Inserta una Palabra en la Base de SQLite
+	 * @param unaPalabra
+	 */
+	public void insertPalabra(Palabra unaPalabra){
+		SQLiteDatabase database = this.getWritableDatabase();
+		ContentValues values =  new ContentValues();
+		values.put("palabra_id", unaPalabra.getId());
+		values.put("categoria_id", unaPalabra.getCategoria());
+		values.put("palabra_letra",unaPalabra.getLetra());
+		values.put("palabra_palabra",unaPalabra.getPalabra());
+		values.put("sonido_id",unaPalabra.getSonido());
+		values.put("imagen_id", unaPalabra.getImagen());
+		// Chequeamos si el valor existe
+		Cursor cur1= database.query("palabras", null, "palabra_id=" + unaPalabra.getId() + " and  categoria_id = " + unaPalabra.getCategoria(), null, null, null, null);
+	      cur1.moveToLast();
+	      int count1=cur1.getCount();
+	      if(count1==0)
+	      {
+	    	  database.insert("palabras",null, values);
+
+	      }
+	      else
+	      {
+	        //course id present
+	    	Log.d("Database", "Palabra con el ID " + unaPalabra.getId() + " ya existe");
+	      }
+		database.insert("palabras",null, values);
+		database.close();	
+	}
+	
+	public void insertAlumnoMaestroRelationship(int alumno_id, int maestro_id){
+		SQLiteDatabase database =  this.getWritableDatabase();
+		ContentValues values =  new ContentValues();
+		values.put("maestro_id", maestro_id);
+		values.put("alumno_id", alumno_id);
+		// Chequeamos si el valor existe
+		Cursor cur1= database.query("alumnos_maestros", null, "alumno_id=" + alumno_id + " and maestro_id = " + maestro_id, null, null, null, null);
+	      cur1.moveToLast();
+	      int count1=cur1.getCount();
+	      if(count1==0)
+	      {
+	    	  database.insert("alumnos_maestros",null, values);
+
+	      }
+	      else
+	      {
+	        //course id present
+	    	Log.d("Database", "La relacion entre el alumno " + alumno_id + " y el maestro " + maestro_id + " ya existe.");
+	      }
+		database.close();
+		
+	}
+
+	public List<Palabra> getAllPalabras() {
+		List<Palabra> palabras = new ArrayList<Palabra>();
+		String selectQuery = "select palabra_id, categoria_id, palabra_letra, palabra_palabra, imagen_id, sonido_id  from palabras";
+		SQLiteDatabase database = this.getWritableDatabase();
+		Cursor cursor = database.rawQuery(selectQuery, null);
+		if (cursor.moveToFirst()){
+			do{
+				Palabra unaPalabra = new Palabra(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), cursor.getString(3), cursor.getString(3),
+						cursor.getString(5));
+				Log.d("Palbras",cursor.getColumnName(3));
+				palabras.add(unaPalabra);
+			} while(cursor.moveToNext());
+		}
+		cursor.close();
+		return palabras;
+	}
 }
