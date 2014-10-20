@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="btnNivel1"> Nivel 1</string>
+    <string name="btnNivel2"> Nivel 2</string>
+    <string name="btnNivel3"> Nivel 3</string>
+    <string name="btnNivel4"> Nivel 4</string>
+    <string name="btnNivel5"> Nivel 5</string>
+    <string name="btnNivel6"> Nivel 6</string>
+</resources>

@@ -108,24 +108,7 @@ public class GameFourActivity extends GameActivity {
 
 
 
-		private void loadDataCard() {
-//			GameDataStructure.getSecuence(1,1, 1);
-//			GameDataStructure.getSecuence(1,1,2);
-//			GameDataStructure.isFinalSecuence(1, 1, 10);
-//			GameDataStructure.isFinalSecuence(1,1,9);
-//			GameDataStructure.isFinalLevel(1,6);
-			
-			
-			data = new ArrayList<Card>();
-	        Card card1 = new Card("A","Auto","/storage/emulated/0/Images/Auto.jpg", "Auto.ogg", null);
-	        Card card2 = new Card("B","Botella", "/storage/emulated/0/Images/Botella.jpg","Botella.ogg", null);
-	        Card card3 = new Card("C","Conejo","storage/emulated/0/Images/Conejo.jpg", "Conejo.ogg", null);
-	        
-	        data.add(card1);
-	        data.add(card2);
-	        data.add(card3);
-	        
-		}
+
 	   
 
 		

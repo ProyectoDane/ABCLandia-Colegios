@@ -21,7 +21,7 @@ public class Audio {
 	private Context mContext;
 
 	private AudioManager mAudioManager;
-	private String mdirSoundds = "/storage/emulated/0/Sounds/";
+
 
 	public Audio(Context context) {
 		mAudioManager = (AudioManager) context
@@ -33,21 +33,26 @@ public class Audio {
 
 	public void loadWordSounds(List<Card> cards) {
 		for (Card card : cards) {
-			String soundName = card.getSoundWordPath();
+			String soundPath = card.getSoundWordPath();
 			mSoundMap.put(card.getLetter() + "0",
-					mSoundPool.load(mdirSoundds + soundName, 1));
+					mSoundPool.load(soundPath, 1));
 
 		}
 	}
 
 	public void loadLetterSoungs(List<Card> cards) {
-		for (Card card : cards) {
-			String soundPath = card.getSoundLetterPath();
-			mSoundMap
-					.put(card.getLetter() + "1", mSoundPool.load(soundPath, 1));
-
-		}
-
+		
+			mSoundMap.put("a1",
+					mSoundPool.load(mContext, R.raw.a, 1));
+			mSoundMap.put("b1",
+					mSoundPool.load(mContext, R.raw.c, 1));
+			mSoundMap.put("c1",mSoundPool.load(mContext, R.raw.c, 1));
+			mSoundMap.put("d1",mSoundPool.load(mContext, R.raw.d, 1));
+			mSoundMap.put("e1",mSoundPool.load(mContext, R.raw.e, 1));
+			mSoundMap.put("f1",mSoundPool.load(mContext, R.raw.f, 1));
+			mSoundMap.put("g1",mSoundPool.load(mContext, R.raw.g, 1));
+			mSoundMap.put("h1",mSoundPool.load(mContext, R.raw.h, 1));
+		
 	}
 
 
@@ -66,11 +71,15 @@ public class Audio {
 				.getStreamVolume(AudioManager.STREAM_MUSIC);
 		streamVolume = streamVolume
 				/ mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-		mSoundPool.play(mSoundMap.get(soundId + "1"), streamVolume,
-				streamVolume, 1, 0, 1f);
+		Integer sound = mSoundMap.get(soundId + "1");
+		if (sound != null){
+		
+		mSoundPool.play(sound, streamVolume,streamVolume, 1, 0, 1f);
+		}
 	}
 
 	public void loadDefaultSounds() {
+		
 
 		mSoundMap.put(SOUND_FX_CORRECT,
 				mSoundPool.load(mContext, R.raw.correct, 1));

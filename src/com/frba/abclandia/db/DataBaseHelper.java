@@ -16,6 +16,7 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.example.abclandia.Card;
 import com.frba.abclandia.dtos.Alumno;
 import com.frba.abclandia.dtos.Categoria;
 import com.frba.abclandia.dtos.Maestro;
@@ -232,16 +233,16 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	 * @param unaCategoria
 	 * @return List<Palabra>
 	 */
-	public List<Palabra> getPalabrasFromCategoria(Integer unaCategoria){
-		List<Palabra> palabras = new ArrayList<Palabra>();
-		String selectQuery = "select palabra_id, categoria_id, palabra_letra, palabra_palabra, imagen_id, sonido_id  from palabras where categoria_id = "
+	public List<Card> getPalabrasFromCategoria(int unaCategoria){
+		List<Card> palabras = new ArrayList<Card>();
+		String selectQuery = "select palabra_id, palabra_letra, palabra_palabra, imagen_id, sonido_id  from palabras where categoria_id = "
 				+ unaCategoria + " " ;
 		SQLiteDatabase database = this.getWritableDatabase();
 		Cursor cursor = database.rawQuery(selectQuery, null);
 		if (cursor.moveToFirst()){
 			do{
-				Palabra unaPalabra = new Palabra(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), cursor.getString(3), cursor.getString(3),
-						cursor.getString(5));
+				Card unaPalabra = new Card(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
+			
 				Log.d("Palbras",cursor.getColumnName(3));
 				palabras.add(unaPalabra);
 			} while(cursor.moveToNext());
@@ -255,17 +256,18 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	 * @param unaCategoria
 	 * @return Palabra
 	 */
-	public Palabra getPalabraFromLetraAndCategoria(String unaLetra, Integer unaCategoria) {
-		Palabra unaPalabra;
-		String selectQuery = "select palabra_id, categoria_id, palabra_letra, palabra_palabra, imagen_id, sonido_id  from palabras where categoria_id = '"
-				+ unaCategoria + "' and palabra_letra = '" + unaLetra + "'";
+	public Card getPalabraFromLetraAndCategoria(String unaLetra, Integer unaCategoria) {
+		Card unaPalabra;
+
+		String selectQuery = "select palabra_id, palabra_letra, palabra_palabra, imagen_id, sonido_id  from palabras where categoria_id = '"
+				+ unaCategoria + "'and palabra_letra = '" + unaLetra + "'";
+
 		SQLiteDatabase database =  this.getWritableDatabase();
 		Cursor cursor =  database.rawQuery(selectQuery, null);
 		if (cursor.moveToFirst()) {
-			unaPalabra =  new Palabra(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
-					cursor.getString(5));
+			unaPalabra =  new Card(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
 		} else {
-			unaPalabra = new Palabra(0, unaCategoria, unaLetra, unaLetra, "none", "none" );
+			unaPalabra = new Card(0,  unaLetra, unaLetra, "none", "none" );
 		}
 		cursor.close();
 		return unaPalabra;

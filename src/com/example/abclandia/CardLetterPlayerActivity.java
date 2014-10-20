@@ -1,15 +1,18 @@
 package com.example.abclandia;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
 import android.content.res.Configuration;
+import android.database.SQLException;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -26,6 +29,7 @@ import com.example.abclandia.graphics.CompleteCardRenderer;
 import com.example.abclandia.graphics.Renderer;
 import com.frba.abclandia.R;
 import com.frba.abclandia.adapters.CardViewAdapter;
+import com.frba.abclandia.db.DataBaseHelper;
 
 public class CardLetterPlayerActivity extends Activity
 implements View.OnTouchListener {
@@ -36,6 +40,7 @@ implements View.OnTouchListener {
 	private WindowManager mWindowManager;
 	private int mCenterScreenX, mCenterScreenY;
 	private LetterPlayerAnimator mDragShadowAnimator;
+	private DataBaseHelper myDbHelper;
 	
 	
 	@Override
@@ -66,11 +71,11 @@ implements View.OnTouchListener {
 
 		
 
-		
+		iniciarDB();
 		loadDataCard();
 		
-		mAudio = new Audio(this);
-		mAudio.loadWordSounds(data);
+//		mAudio = new Audio(this);
+//		mAudio.loadWordSounds(data);
 
 		setContentView(R.layout.card_letter_player_activity);
 		
@@ -96,55 +101,7 @@ implements View.OnTouchListener {
 	}
 	
 	
-	private void loadDataCard() {
-//		GameDataStructure.getSecuence(1,1, 1);
-//		GameDataStructure.getSecuence(1,1,2);
-//		GameDataStructure.isFinalSecuence(1, 1, 10);
-//		GameDataStructure.isFinalSecuence(1,1,9);
-//		GameDataStructure.isFinalLevel(1,6);
-		
-		
-		data = new ArrayList<Card>();
-        Card card1 = new Card("A","AUT_","/storage/emulated/0/Images/Auto.jpg", "Auto.ogg", null);
-        Card card2 = new Card("B","Botella", "/storage/emulated/0/Images/Botella.jpg","Botella.ogg", null);
-        Card card3 = new Card("C","Conejo","storage/emulated/0/Images/Conejo.jpg", "Conejo.ogg", null);
-        Card card4 = new Card("D","Dado","storage/emulated/0/Images/Dado.jpg","Dado.ogg", null);
-        Card card5 = new Card("E","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null);
-        data.add(card1);
-        data.add(card2);
-        data.add(card3);
-        data.add(card4);
-        data.add(card5);
-        data.add(new Card("F","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
-        data.add(new Card("G","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
-        data.add(new Card("H","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
-        data.add(new Card("I","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
-        data.add(new Card("J","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
-        data.add(new Card("L","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
-        data.add(new Card("M","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
-        data.add(new Card("N","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
-        data.add(new Card("Ñ","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
-        data.add(new Card("O","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
-        data.add(new Card("P","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
-        data.add(new Card("Q","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
-        data.add(new Card("R","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
-        data.add(new Card("S","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
-        data.add(new Card("T","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
-        data.add(new Card("U","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
-        data.add(new Card("V","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
-        data.add(new Card("W","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
-        data.add(new Card("X","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
-        data.add(new Card("Y","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
-        data.add(new Card("Z","Elefante","storage/emulated/0/Images/Elefante.jpg","Elefante.ogg", null));
-        
-        
-        
-        
-        
-        
-        
-        
-	}
+	
 
 
 	@Override
@@ -231,7 +188,7 @@ implements View.OnTouchListener {
 	}
 	
 	public void reproduceSoundCard(CardView cardView){
-		mAudio.playSoundWord(cardView.getCardId());
+//		mAudio.playSoundWord(cardView.getCardId());
 		
 		
 	}
@@ -244,5 +201,41 @@ implements View.OnTouchListener {
 		mCenterScreenX = size.x / 2;
 		mCenterScreenY = size.y / 2;
 		
+	}
+	
+	private void iniciarDB() {
+		// Inicializar servicios
+		myDbHelper = new DataBaseHelper(this);
+		try {
+			myDbHelper.createDatabase();
+		} catch (IOException ioe) {
+			throw new Error("No se pudo crear la base de datos");
+			
+		}
+		
+		try {
+			myDbHelper.openDatabase();
+		}catch (SQLException sqle){
+			Log.d("POOCHIE", "No se pudo abrir la BD");
+			throw sqle;
+		}
+		
+	}
+
+	private void loadDataCard() {
+
+		data = new ArrayList<Card>();
+		data = myDbHelper.getPalabrasFromCategoria(1);
+//		Card card1 = new Card(1, "A",
+//				"Auto", "/storage/emulated/0/Images/Auto.jpg", "Auto.ogg", "");
+//		Card card2 = new Card(1, "B",
+//				"Botella", "/storage/emulated/0/Images/Botella.jpg", "Botella.ogg", "");
+//		Card card3 = new Card(1, "C",
+//				"Conejo", "storage/emulated/0/Images/Conejo.jpg", "Conejo.ogg", "");
+//
+//		data.add(card1);
+//		data.add(card2);
+//		data.add(card3);
+
 	}
 }

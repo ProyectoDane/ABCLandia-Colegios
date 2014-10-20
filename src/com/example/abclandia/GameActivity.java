@@ -1,5 +1,6 @@
 package com.example.abclandia;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,11 +12,14 @@ import com.example.abclandia.graphics.JustLetterRenderer;
 import com.example.abclandia.graphics.Renderer;
 import com.frba.abclandia.R;
 import com.frba.abclandia.adapters.CardViewAdapter;
+import com.frba.abclandia.db.DataBaseHelper;
 
 import android.app.Activity;
 import android.content.res.Configuration;
+import android.database.SQLException;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -29,6 +33,7 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 	public static final String INTENT_LEVEL_KEY = "level";
 	public static final String INTENT_SECUENCE_KEY = "secuence";
 	public static final String INTENT_CLASS_LAUNCHER_KEY = "class_launcher";
+	public static final String INTENT_EXERCISE_NUMBER = "exercise";
 
 	protected int countHits = 0;
 
@@ -41,10 +46,13 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 	private WindowManager.LayoutParams mWindowParams;
 	private WindowManager mWindowManager;
 	protected Audio mAudio;
+	protected DataBaseHelper myDbHelper;
 
 	protected int mCurrrentLevel = 0;
 	protected int mCurrentSecuence = 0;
-	protected int gadorcha = 0;
+	protected int mGameNumber = 0;
+	protected int secuence = 0;
+
 
 	/**
 	 * Called when the activity is first created.
@@ -52,6 +60,10 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setFullScreen();
+		setSizes();
+		
+		iniciarDB();
 
 	}
 
@@ -74,6 +86,41 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 
 	}
 
+	protected void loadDataCard() {
+		data = new ArrayList<Card>();
+		char[] secuences = GameDataStructure.getSecuence(mGameNumber,
+				mCurrrentLevel, secuence);
+		for (int i = 0; i < secuences.length; i++) {
+			String letter = String.valueOf(secuences[i]).toUpperCase();
+			Card card = myDbHelper.getPalabraFromLetraAndCategoria(letter, 1);
+			card.setLetterType(2);
+			data.add(card);
+		}
+	}
+	
+		private void iniciarDB() {
+			// Inicializar servicios
+			myDbHelper = new DataBaseHelper(this);
+			try {
+				myDbHelper.createDatabase();
+			} catch (IOException ioe) {
+				throw new Error("No se pudo crear la base de datos");
+				
+			}
+			
+			try {
+				myDbHelper.openDatabase();
+			}catch (SQLException sqle){
+				Log.d("POOCHIE", "No se pudo abrir la BD");
+				throw sqle;
+			}
+			
+		}
+		
+	protected void getExtraData(){
+		
+	}
+
 
 
 	@Override
@@ -89,7 +136,7 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 
 			if (!cardView.isEmptyCard() && cardView.allowDrag()) {
 				if (cardView.getRenderer().getClass() == JustLetterRenderer.class){
-//				mAudio.playSoundLetter(cardView.getCardId());
+				mAudio.playSoundLetter(cardView.getCardId().toLowerCase());
 				} else 
 					mAudio.playSoundWord(cardView.getCardId());
 

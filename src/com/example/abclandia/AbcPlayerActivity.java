@@ -1,5 +1,6 @@
 package com.example.abclandia;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,8 +10,10 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.database.SQLException;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.Display;
@@ -33,6 +36,7 @@ import com.example.abclandia.graphics.Renderer;
 import com.frba.abclandia.R;
 import com.frba.abclandia.adapters.Adapterprueba;
 import com.frba.abclandia.adapters.CardViewAdapter;
+import com.frba.abclandia.db.DataBaseHelper;
 
 public class AbcPlayerActivity extends Activity implements View.OnTouchListener {
 
@@ -49,6 +53,7 @@ public class AbcPlayerActivity extends Activity implements View.OnTouchListener 
 	private ObjectAnimator mInAnimator, mOutAnimator;
 	private Audio mAudio;
 	AnimatorListener mAnimatorListener;
+	DataBaseHelper myDbHelper;
 
 	@SuppressWarnings("deprecation")
 	private final GestureDetector detector = new GestureDetector(
@@ -75,6 +80,7 @@ public class AbcPlayerActivity extends Activity implements View.OnTouchListener 
 	
 		mAdapterViewFlipper = (AdapterViewFlipper) this
 				.findViewById(R.id.view_flipper);
+		iniciarDB();
 		loadDataCard();
 		mAudio = new Audio(this);
 		mAudio.loadWordSounds(data);
@@ -154,22 +160,23 @@ public class AbcPlayerActivity extends Activity implements View.OnTouchListener 
 	public void onWindowFocusChanged(boolean focus) {
 		super.onWindowFocusChanged(focus);
 		width = mAdapterViewFlipper.getWidth();
-		mAudio.playSoundWord(data.get(0).getLetter());
+//		mAudio.playSoundWord(data.get(0).getLetter());
 	}
 
 	private void loadDataCard() {
 
 		data = new ArrayList<Card>();
-		Card card1 = new Card("A", "Auto",
-				"/storage/emulated/0/Images/Auto.jpg", "Auto.ogg", null);
-		Card card2 = new Card("B", "Botella",
-				"/storage/emulated/0/Images/Botella.jpg", "Botella.ogg", null);
-		Card card3 = new Card("C", "Conejo",
-				"storage/emulated/0/Images/Conejo.jpg", "Conejo.ogg", null);
-
-		data.add(card1);
-		data.add(card2);
-		data.add(card3);
+		data = myDbHelper.getPalabrasFromCategoria(1);
+//		Card card1 = new Card(1, "A",
+//				"Auto", "/storage/emulated/0/Images/Auto.jpg", "Auto.ogg", "");
+//		Card card2 = new Card(1, "B",
+//				"Botella", "/storage/emulated/0/Images/Botella.jpg", "Botella.ogg", "");
+//		Card card3 = new Card(1, "C",
+//				"Conejo", "storage/emulated/0/Images/Conejo.jpg", "Conejo.ogg", "");
+//
+//		data.add(card1);
+//		data.add(card2);
+//		data.add(card3);
 
 	}
 
@@ -228,6 +235,25 @@ public class AbcPlayerActivity extends Activity implements View.OnTouchListener 
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
 		return false;
+	}
+	
+	private void iniciarDB() {
+		// Inicializar servicios
+		myDbHelper = new DataBaseHelper(this);
+		try {
+			myDbHelper.createDatabase();
+		} catch (IOException ioe) {
+			throw new Error("No se pudo crear la base de datos");
+			
+		}
+		
+		try {
+			myDbHelper.openDatabase();
+		}catch (SQLException sqle){
+			Log.d("POOCHIE", "No se pudo abrir la BD");
+			throw sqle;
+		}
+		
 	}
 
 }

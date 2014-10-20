@@ -26,21 +26,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/btnEjercicio1"
-                android:onClick="btnEjercicio1" />
+                 />
 
             <Button
                 android:id="@+id/btnEjercicio2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/btnEjercicio2" 
-                android:onClick="btnEjercicio2"/>
+                />
 
             <Button
                 android:id="@+id/btnEjercicio3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/btnEjercicio3" 
-                android:onClick="btnEjercicio3"/>
+                />
 
         </LinearLayout>
 
@@ -54,21 +54,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/btnEjercicio4"
-                android:onClick="btnEjercicio4" />
+                 />
 
             <Button
                 android:id="@+id/btnEjercicio5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/btnEjercicio5"
-                android:onClick="btnEjercicio5" />
+                 />
 
             <Button
                 android:id="@+id/btnEjercicio6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/btnEjercicio6"
-                android:onClick="btnEjercicio6" />
+                />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

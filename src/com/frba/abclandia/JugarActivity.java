@@ -1,24 +1,37 @@
 package com.frba.abclandia;
 
-import com.example.abclandia.GameActivity;
-import com.example.abclandia.GameFourActivity;
-import com.example.abclandia.GameOneActivity;
-import com.example.abclandia.GameSixActivity;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
-public class JugarActivity extends Activity {
+import com.example.abclandia.GameActivity;
+import com.example.abclandia.GameFourActivity;
+import com.example.abclandia.GameSixActivity;
+
+public class JugarActivity extends Activity implements View.OnClickListener{
+	private Button btnEjercicio1, btnEjercicio2, btnEjercicio3,
+			btnEjercicio4, btnEjercicio5, btnEjercicio6;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_jugar);
+		btnEjercicio1 = (Button) findViewById(R.id.btnEjercicio1);
+		btnEjercicio2 = (Button) findViewById(R.id.btnEjercicio2);
+		btnEjercicio3 = (Button) findViewById(R.id.btnEjercicio3);
+		btnEjercicio4 = (Button) findViewById(R.id.btnEjercicio4);
+		btnEjercicio5 = (Button) findViewById(R.id.btnEjercicio5);
+		btnEjercicio6 = (Button) findViewById(R.id.btnEjercicio6);
+		
+		btnEjercicio1.setOnClickListener(this);
+		btnEjercicio2.setOnClickListener(this);
+		btnEjercicio3.setOnClickListener(this);
+		btnEjercicio4.setOnClickListener(this);
+		btnEjercicio5.setOnClickListener(this);
+		btnEjercicio6.setOnClickListener(this);
 	}
 
 
@@ -26,10 +39,13 @@ public class JugarActivity extends Activity {
 
 	
 	public void btnEjercicio1 (View view){
-		Intent intent = new Intent(this, GameOneActivity.class);
-		intent.putExtra("level", 1);
-		intent.putExtra("secuence", 0);
+		
+		Intent intent = new Intent(this,NivelesActivity.class );
 		startActivity(intent);
+//		Intent intent = new Intent(this, GameOneActivity.class);
+//		intent.putExtra(GameActivity.INTENT_LEVEL_KEY, 1);
+//		intent.putExtra(GameActivity.INTENT_SECUENCE_KEY, 1);
+//		startActivity(intent);
 	
 	}
 	
@@ -42,7 +58,7 @@ public class JugarActivity extends Activity {
 	public void btnEjercicio4 (View view){
 		Intent intent = new Intent(this, GameFourActivity.class);
 		intent.putExtra(GameActivity.INTENT_LEVEL_KEY, 1);
-		intent.putExtra(GameActivity.INTENT_SECUENCE_KEY, 0);
+		intent.putExtra(GameActivity.INTENT_SECUENCE_KEY, 1);
 		startActivity(intent);
 	}
 	public void btnEjercicio5 (View view){
@@ -51,8 +67,50 @@ public class JugarActivity extends Activity {
 	public void btnEjercicio6 (View view){
 		Intent intent = new Intent(this, GameSixActivity.class);
 		intent.putExtra(GameActivity.INTENT_LEVEL_KEY, 1);
-		intent.putExtra(GameActivity.INTENT_SECUENCE_KEY, 0);
+		intent.putExtra(GameActivity.INTENT_SECUENCE_KEY, 1);
 		startActivity(intent);
+	}
+	
+	private void startNivelesActivity(int exerciseNumber){
+		Intent intent = new Intent(this, NivelesActivity.class);
+		intent.putExtra(GameActivity.INTENT_EXERCISE_NUMBER, exerciseNumber);
+		startActivity(intent);
+		
+	}
+
+
+	@Override
+	public void onClick(View v) {
+		int exerciseNumber = 0;
+		if (v == btnEjercicio1){
+			exerciseNumber = 1;
+		}
+		if (v == btnEjercicio2){
+			exerciseNumber = 2;
+		}
+		if (v == btnEjercicio3){
+			exerciseNumber = 3;
+		}
+		if (v == btnEjercicio4){
+			exerciseNumber = 4;
+		}
+		if (v == btnEjercicio5){
+			exerciseNumber = 5;
+		}
+		if (v == btnEjercicio6){
+			Intent intent = new Intent(this, GameSixActivity.class);
+			intent.putExtra(GameActivity.INTENT_LEVEL_KEY, 1);
+			intent.putExtra(GameActivity.INTENT_SECUENCE_KEY, 1);
+			startActivity(intent);
+			return;
+		}
+		
+		Intent intent = new Intent(this,NivelesActivity.class );
+		intent.putExtra(GameActivity.INTENT_EXERCISE_NUMBER, exerciseNumber);
+		startActivity(intent);
+		
+		
+		
 	}
 	
 }

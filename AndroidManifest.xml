@@ -7,8 +7,8 @@
     <uses-sdk
         android:minSdkVersion="13"
         android:targetSdkVersion="19" />
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -66,9 +66,22 @@
             android:name=".JugarActivity"
             android:label="@string/title_activity_jugar" >
         </activity>
+         <activity
+            android:name=".NivelesActivity"
+            android:label="@string/title_activity_jugar" >
+        </activity>
+        
+        
         <activity
-
             android:name="com.example.abclandia.GameOneActivity"
+            android:screenOrientation="landscape" >
+        </activity>
+         <activity
+            android:name="com.example.abclandia.GameTwoActivity"
+            android:screenOrientation="landscape" >
+        </activity>
+         <activity
+            android:name="com.example.abclandia.GameThreeActivity"
             android:screenOrientation="landscape" >
         </activity>
         <activity
@@ -79,11 +92,11 @@
             android:name="com.example.abclandia.GameFourActivity"
             android:screenOrientation="landscape" >
         </activity>
-         <activity
+        <activity
             android:name="com.example.abclandia.GameSixActivity"
             android:screenOrientation="landscape" >
         </activity>
-       	<activity
+        <activity
             android:name=".Game"
             android:label="@string/title_activity_game" >
         </activity>
@@ -93,15 +106,12 @@
         </activity>
         <activity
             android:name="com.example.abclandia.CardLetterPlayerActivity"
-            android:screenOrientation="landscape">
-
+            android:screenOrientation="landscape" >
         </activity>
-         <activity
+        <activity
             android:name="com.example.abclandia.AbcPlayerActivity"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape" >
         </activity>
-        
-        
     </application>
 
 </manifest>

@@ -1,10 +1,13 @@
 package com.example.abclandia;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Intent;
+import android.database.SQLException;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.GridView;
@@ -17,6 +20,7 @@ import com.example.abclandia.graphics.JustLetterRenderer;
 import com.example.abclandia.graphics.Renderer;
 import com.frba.abclandia.R;
 import com.frba.abclandia.adapters.CardViewAdapter;
+import com.frba.abclandia.db.DataBaseHelper;
 
 public class GameSixActivity extends GameActivity {
 	
@@ -42,7 +46,7 @@ public static final int TOTAL_JOINS = 6;
         Bundle extras = getIntent().getExtras();
         if (extras !=null) {
         	mCurrrentLevel = extras.getInt(GameActivity.INTENT_LEVEL_KEY);
-            gadorcha= extras.getInt(INTENT_SECUENCE_KEY);
+          
         }
        
         setFullScreen();
@@ -110,20 +114,7 @@ public static final int TOTAL_JOINS = 6;
 
 
 
-	private void loadDataCard() {
 
-		
-		
-		data = new ArrayList<Card>();
-        Card card1 = new Card("A","Auto","/storage/emulated/0/Images/Auto.jpg", "Auto.ogg", null);
-        Card card2 = new Card("B","Botella", "/storage/emulated/0/Images/Botella.jpg","Botella.ogg", null);
-        Card card3 = new Card("C","Conejo","storage/emulated/0/Images/Conejo.jpg", "Conejo.ogg", null);
-    
-        data.add(card1);
-        data.add(card2);
-        data.add(card3);
-      
-	}
    
 
 	
@@ -157,7 +148,7 @@ public static final int TOTAL_JOINS = 6;
 		if (countHits == TOTAL_JOINS) {
 			Intent intent = new Intent(this, WinActivity.class);
 			intent.putExtra(GameActivity.INTENT_LEVEL_KEY, mCurrrentLevel);
-			intent.putExtra(GameActivity.INTENT_SECUENCE_KEY, gadorcha);
+			intent.putExtra(GameActivity.INTENT_SECUENCE_KEY, secuence);
 			intent.putExtra(GameActivity.INTENT_CLASS_LAUNCHER_KEY, CLASS_NAME);
 			startActivity(intent);
 			finish();
@@ -167,6 +158,26 @@ public static final int TOTAL_JOINS = 6;
 		}
 		
 	}
+	
+//	private void iniciarDB() {
+//		// Inicializar servicios
+//		myDbHelper = new DataBaseHelper(this);
+//		try {
+//			myDbHelper.createDatabase();
+//		} catch (IOException ioe) {
+//			throw new Error("No se pudo crear la base de datos");
+//			
+//		}
+//		
+//		try {
+//			myDbHelper.openDatabase();
+//		}catch (SQLException sqle){
+//			Log.d("POOCHIE", "No se pudo abrir la BD");
+//			throw sqle;
+//		}
+//		
+//	}
+	
 
 	
 

@@ -23,9 +23,16 @@ public class CompleteCardRenderer extends Renderer{
 		
 		super.Render(canvas, rectangleWidth, rectangleHeight, borderRectanglePaint, textPaint, card, imageBitmap);
 		
-		drawImage(canvas, card, rectangleWidth, rectangleHeight, imageBitmap);
-		drawLetter(canvas, card, rectangleWidth, rectangleHeight);
-		drawWord(canvas, card, rectangleWidth, rectangleHeight);
+		 if (!card.isLowerUpperLetter()){
+			 drawImage(canvas, card, rectangleWidth, rectangleHeight, imageBitmap);
+			 drawLetterLowerAndUpper(canvas, card, rectangleWidth, rectangleHeight);
+			 drawWordLowerAndUpper(canvas, card, rectangleWidth, rectangleHeight);
+		 }	else {
+			 drawImage(canvas, card, rectangleWidth, rectangleHeight, imageBitmap);
+			 drawLetterLowerAndUpper(canvas, card, rectangleWidth, rectangleHeight);
+			 drawWordLowerAndUpper(canvas, card, rectangleWidth, rectangleHeight);
+			}
+			 
 			
 		   
 		

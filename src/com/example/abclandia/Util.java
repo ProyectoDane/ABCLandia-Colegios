@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.TranslateAnimation;
 
@@ -63,5 +64,12 @@ public class Util {
         return  (int) (textSize * dm.scaledDensity); 
 		
 	}
+	
+//	public static void setFullScreen(Context context){
+//		context.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//		mWindowManager = (WindowManager) getSystemService("window");
+//	}
 
 }

@@ -23,8 +23,14 @@ public class JustLetterRenderer extends Renderer {
 		
 		 super.Render(canvas, rectangleWidth, rectangleHeight, borderRectanglePaint, textPaint, card, imageBitmap);
 	   
-		 drawLetter(canvas, card, rectangleWidth, rectangleHeight)
-;
+//		 drawLetterLowerAndUpper(canvas, card, rectangleWidth, rectangleHeight);
+		 if (!card.isLowerUpperLetter())
+			 drawLetter(canvas, card, rectangleWidth, rectangleHeight);
+		else 
+			 drawLetterLowerAndUpper(canvas, card, rectangleWidth, rectangleHeight);
+		
+		 
+
 			   
 			   
 		

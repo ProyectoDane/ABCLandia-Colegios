@@ -1,22 +1,47 @@
 package com.example.abclandia;
 
 public class Card {
+	
+	
+	private static int UPPERCASE_LETTER = 1;
+	private static int LOWERCASE_LETTER = 2;
+	private static int UPPERlOWERCASE_LETTER = 3;
+	
+	private int mId;
 	private String mWord;
 	private String mLetter;
 	private String mImagePath;
 	private String mSoundWordPath;
 	private String mSoundLetterPath;
 	
+	private boolean isLowerUpperLetter = false;
+	
+	
+
+	
+
+	
+	
+	
 	public Card (){
 		
 	}
 	
-	public Card (String letter, String word, String imagePath, String soundWordPath, String soundLetterPath){
+	public Card (int id, String letter, String word, String imagePath, String soundWordPath, String soundLetterPath){
+		mId = id;
 		mLetter = letter;
 		mWord = word;
 		mImagePath = imagePath;
 		mSoundWordPath = soundWordPath; 
 		mSoundLetterPath = soundLetterPath;
+	}
+	public Card (int id, String letter, String word, String imagePath, String soundWordPath){
+		mId = id;
+		mLetter = letter;
+		mWord = word;
+		mImagePath = imagePath;
+		mSoundWordPath = soundWordPath; 
+		
 	}
 	
 	public String getLetter() {
@@ -43,6 +68,20 @@ public class Card {
 			return true;
 		}
 		return false;
+	}
+	public boolean isLowerUpperLetter(){
+		return isLowerUpperLetter;
+	}
+	
+	//Se considera que todas las letras y palabras vienen de la BD en minuscula
+	public void setLetterType(int letterType ){
+		if (letterType == UPPERlOWERCASE_LETTER){
+			isLowerUpperLetter = true;
+			
+		} else if (letterType == UPPERCASE_LETTER){
+			mLetter = mLetter.toUpperCase();
+			mWord = mWord.toUpperCase();
+		}
 	}
 
 	

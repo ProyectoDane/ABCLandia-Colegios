@@ -26,7 +26,7 @@ public class WinActivity extends Activity {
 		
 			gameLevel = extras.getInt(GameActivity.INTENT_LEVEL_KEY);
 			gameSecuence = extras.getInt(GameActivity.INTENT_SECUENCE_KEY);
-			gameSecuence = gameSecuence + 1;
+
 			try {
 				classLauncher = Class.forName(extras
 						.getString(GameActivity.INTENT_CLASS_LAUNCHER_KEY));
@@ -40,16 +40,31 @@ public class WinActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				nextSecuence();
 				Intent intent = new Intent(WinActivity.this, classLauncher);
 
 				intent.putExtra(GameActivity.INTENT_LEVEL_KEY, gameLevel);
 				intent.putExtra(GameActivity.INTENT_SECUENCE_KEY, gameSecuence);
 
 				startActivity(intent);
-				finish();
+				
 
 			}
 		});
+	}
+	
+	private void nextSecuence(){
+		
+		
+		if (GameDataStructure.isLevelComplete(1, gameLevel, gameSecuence)){
+			gameLevel ++;
+			gameSecuence =1;
+		}else {
+			gameSecuence++;
+		}
+		
+			
+			
 	}
 
 }
