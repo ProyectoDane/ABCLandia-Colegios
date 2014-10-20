@@ -103,7 +103,7 @@ public class StartActivity extends Activity {
         	prefs.edit().putBoolean("firstrun", false).commit();
         	// Conectarse al server y descargar todos los datos
         	// All
-        	//synSQLiteToServer();      	
+        	synSQLiteToServer();      	
         	Log.d("ABCLandia", "Primer Ejecucion");   
         }
     }
