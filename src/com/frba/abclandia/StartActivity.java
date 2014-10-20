@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import org.json.JSONException;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,19 +19,18 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.frba.abclandia.db.DataBaseHelper;
+import com.frba.abclandia.webserver.ABCLandiaRestServer;
 
 
 public class StartActivity extends Activity {
 	
 	private static final int DISPLAY = 3000;
 	private DataBaseHelper myDbHelper;
+	private ABCLandiaRestServer server;
 	SharedPreferences prefs = null;
 	String TARGET_BASE_PATH;
-	
-	
 	
 	protected void callNextActivity(){
 		startActivity(new Intent(this, LoginActivity.class));
@@ -37,19 +38,21 @@ public class StartActivity extends Activity {
 	
 	protected void onCreate(Bundle paramBundle){
 		super.onCreate(paramBundle);
-		
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
 		WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		
 		setContentView(R.layout.activity_splash);
 		
-		
 		//Iniciamos la base de datos
 		iniciarDB();
 		
-		prefs = getSharedPreferences("com.frba.abclandia", MODE_PRIVATE);
+		// Creamos una instancia del Server
+		server =  new ABCLandiaRestServer(getApplicationContext());
 
+		
+		prefs = getSharedPreferences("com.frba.abclandia", MODE_PRIVATE);
+		
 		new Handler().postDelayed(new Runnable() {
 			
 			@Override
@@ -59,7 +62,10 @@ public class StartActivity extends Activity {
 				
 			}
 		}, DISPLAY);
+		
+
 	}
+	
 	
 	private void iniciarDB() {
 		// Inicializar servicios
@@ -77,14 +83,15 @@ public class StartActivity extends Activity {
 			Log.d("ABCLandia", "No se pudo abrir la BD");
 			throw sqle;
 		}
-		
 	}
+	
+
 
 	@Override
     protected void onResume() {
         super.onResume();
         TARGET_BASE_PATH = getExternalFilesDir(null).toString() + "/";
-//        String b = Environment.getExternalStoragePublicDirectory(null).toString();
+        //String b = Environment.getExternalStoragePublicDirectory(null).toString();
         String c = Environment.getExternalStorageDirectory().toString();
         
         copyFileOrDir("default_sounds");
@@ -93,16 +100,15 @@ public class StartActivity extends Activity {
         if (prefs.getBoolean("firstrun", true)) {
             // Do first run stuff here then set 'firstrun' as false
             // using the following line to edit/commit prefs
-        	
-        	// Crear base de datos
-        	// Inicializar maestros
-        	// Algo mas?
-        	Toast.makeText(this, "Primera ejecucion", Toast.LENGTH_LONG).show();
-            prefs.edit().putBoolean("firstrun", false).commit();
-            
+        	prefs.edit().putBoolean("firstrun", false).commit();
+        	// Conectarse al server y descargar todos los datos
+        	// All
+        	//synSQLiteToServer();      	
+        	Log.d("ABCLandia", "Primer Ejecucion");   
         }
     }
 	
+
 	@Override
 	protected void onDestroy() {
 	    super.onDestroy();
@@ -111,14 +117,6 @@ public class StartActivity extends Activity {
 	    }
 	}
 	
-	
-	
-
-	
-
-
-	
-
 	private void copyFileOrDir(String path) {
 	    AssetManager assetManager = this.getAssets();
 	    String assets[] = null;
@@ -180,6 +178,20 @@ public class StartActivity extends Activity {
 
 	}
 	
+	/**
+	 * Realiza la primer sincronizacion de la APP con todos los datos que hay en el server.
+	 */
+	private void synSQLiteToServer() {
+		try {
+			server.syncDBMaestrosAndAlumnos();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+
 
 }
 

@@ -24,13 +24,15 @@ import android.widget.Toast;
 
 import com.frba.abclandia.db.DataBaseHelper;
 import com.frba.abclandia.dtos.Alumno;
-import com.frba.abclandia.webserver.ABCLandiaRestClientUsage;
+import com.frba.abclandia.dtos.Palabra;
+import com.frba.abclandia.webserver.ABCLandiaRestServer;
 
 public class AlumnoListActivity extends ListActivity {
 	
 	private DataBaseHelper myDbHelper;
 	private Integer unMaestro = 0;
-	private ABCLandiaRestClientUsage server = new ABCLandiaRestClientUsage();
+	private ABCLandiaRestServer server = new ABCLandiaRestServer();
+	private ArrayList<Palabra> palabras = new ArrayList<Palabra>();
 	
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
@@ -54,6 +56,14 @@ public class AlumnoListActivity extends ListActivity {
 		} catch (JSONException e){
 			e.printStackTrace();
 		}
+		
+		try{
+			palabras = server.getCategoriaFromAlumno(1);
+			
+		} catch (JSONException e){
+			e.printStackTrace();
+		}
+		Log.d("Palabras", palabras.toString());
 	}
 	
 	
