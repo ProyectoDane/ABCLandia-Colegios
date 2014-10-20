@@ -25,12 +25,14 @@ import com.frba.abclandia.dtos.Palabra;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 	
-	private  String DB_PATH = Environment.getExternalStorageDirectory().getPath();  
+	private  String DB_PATH = "/data/data/"; 
 	private static String DB_NAME = "gelemerv1.sqlite";
 	private static Integer DATABASE_VERSION = 1;
 	private SQLiteDatabase myDataBase;
 	private final Context myContext;
+	private static AbcLandiaContract abcLandia = new AbcLandiaContract();
 
+	// Creamos el constructor llamando a 
 	public DataBaseHelper(Context context) {
 		super(context, DB_NAME, null, DATABASE_VERSION);
 		this.myContext = context;
@@ -68,8 +70,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		
 		try {
 			File fdb =  this.myContext.getDatabasePath(DB_NAME);
-			String path = fdb.getAbsolutePath();
-			checkDB = SQLiteDatabase.openDatabase(path	, null, SQLiteDatabase.OPEN_READONLY);
+			checkDB = SQLiteDatabase.openDatabase(fdb.getAbsolutePath(), null, SQLiteDatabase.OPEN_READONLY);
 		} catch (SQLiteException e){
 			// La base de datos no existe todavia
 		}
@@ -85,26 +86,29 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	 *  Se copia transfiriendo un bytestream.
 	 */
 	private void copyDatabase() throws IOException {
-		// Abrimos la db local como un input stream
-		InputStream myInput = myContext.getAssets().open(DB_NAME);
-		
-		// Path a la base que creamos recien
-		String outFileName =  DB_PATH + "/" + DB_NAME;
-		
-		// Abrimos la db local vacia como el output stream
-		OutputStream myOutput = new FileOutputStream(outFileName);
-		
-		// Transferimos los bytes desde el inputfile al output file
-		
-		byte [] buffer = new byte[1024];
-		int length;
-		while ((length = myInput.read(buffer))>0) {
-			myOutput.write(buffer,0, length);
-		}
-		//Cerramos los streams
-		myOutput.flush();
-		myOutput.close();
-		myInput.close();
+	// Abrimos la db local como un input stream
+	InputStream myInput = myContext.getAssets().open(DB_NAME);
+	
+	// Path a la base que creamos recien
+	String outFileName =  DB_PATH + DB_NAME;
+	
+	// Abrimos la db local vacia como el output stream
+	OutputStream myOutput = new FileOutputStream(outFileName);
+	
+	// Transferimos los bytes desde el inputfile al output file
+	
+	byte [] buffer = new byte[1024];
+	int length;
+	while ((length = myInput.read(buffer))>0) {
+		myOutput.write(buffer,0, length);
+	}
+	//Cerramos los streams
+	myOutput.flush();
+	myOutput.close();
+	myInput.close();
+	
+	
+	
 	}
 	
 	public void openDatabase() throws SQLException {
@@ -112,6 +116,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		//String myPath = DB_PATH + DB_NAME;
 		File fdb= this.myContext.getDatabasePath(DB_NAME);
 		myDataBase =  SQLiteDatabase.openDatabase(fdb.getAbsolutePath(), null, SQLiteDatabase.OPEN_READONLY);
+		
 	}
 	
 	
