@@ -1,5 +1,7 @@
 package com.frba.abclandia;
 
+import org.json.JSONException;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -9,19 +11,49 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.frba.abclandia.webserver.ABCLandiaRestServer;
+
 public class LoginActivity extends Activity {
 	
 	enum Answer { YES, NO, ERROR, NULL};
 	Answer respuesta = Answer.NULL;
+	ABCLandiaRestServer server;
 	
 	
 	protected void onCreate(Bundle paramBundle){
 		super.onCreate(paramBundle);
 		requestWindowFeature(1);
-		setContentView(R.layout.activity_login);			
+		setContentView(R.layout.activity_login);	
+		
+		// Iniciamos una instancia del server 
+		server =  new ABCLandiaRestServer(getApplicationContext());
+		
+		// Actualizar listado maestros
+//		try {
+//			server.syncDBMaestros();
+//		} catch (JSONException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		try {
+			server.syncDBMaestrosAndAlumnos();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
 		}
 	
 	public void loginMaestro(View view){
+		// Actualizar listado maestros
+		try {
+			server.syncDBMaestros();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		showMsgDialogMaestro(this);
 	}
 	
@@ -76,5 +108,6 @@ public class LoginActivity extends Activity {
 		dlgMensaje.create().show();
 		
 	}
+	
 
 }

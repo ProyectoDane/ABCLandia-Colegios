@@ -1,7 +1,6 @@
 package com.frba.abclandia;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONException;
@@ -23,15 +22,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.frba.abclandia.db.DataBaseHelper;
+import com.frba.abclandia.dtos.Alumno;
 import com.frba.abclandia.dtos.Maestro;
-import com.frba.abclandia.webserver.ABCLandiaRestClientUsage;
+import com.frba.abclandia.dtos.Palabra;
+import com.frba.abclandia.webserver.ABCLandiaRestServer;
 
 
 public class MaestroListActivity extends ListActivity {
 
 	private DataBaseHelper myDbHelper;
-	private ABCLandiaRestClientUsage server = new ABCLandiaRestClientUsage();
-	private List<Maestro> serverMaestros =  new ArrayList<Maestro>();
+	private ABCLandiaRestServer server;
+	
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -45,18 +46,30 @@ public class MaestroListActivity extends ListActivity {
 		
 		// Iniciamos la BD
 		iniciarDB();
-			
+		
+		// Iniciamos la conexion con el server
+		server =  new ABCLandiaRestServer(getApplicationContext());
+		// Buscamos todas las palabras de los Alumnos y las descargamos para popular la base.
+//		List<Alumno> alumnos = myDbHelper.getAllAlumnos();
+//		for (int i = 0; i< alumnos.size(); i++){
+//			try {
+//				server.syncCategoriasAndPalabrasFromAlumno(alumnos.get(i).getLegajo());
+//			} catch (JSONException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
+//		
+//		List<Palabra> palabras = myDbHelper.getAllPalabras();
+//		for (int i = 0; i< palabras.size(); i++){
+//			server.syncImagenFromServer(palabras.get(i).getImagen());
+//			Log.d("Buscando Imagen", palabras.get(i).getImagen());
+//			server.syncSonidoFromServer(palabras.get(i).getSonido());
+//			Log.d("Buscando Sonido", palabras.get(i).getSonido());
+//		}
+		
 		//TODO: Buscar maestros en la DB		
 		setListAdapter(new MaestroListAdapter(this));
-		
-		// TODO: Buscar todos los maestros
-		try {
-			serverMaestros = server.getMaestros();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Log.d("MaestroServer", serverMaestros.toString());
 	}
 
 	private void iniciarDB() {
@@ -95,6 +108,14 @@ public class MaestroListActivity extends ListActivity {
 		// Buscar los alumnos del maestro
 		Intent i = new Intent(this, AlumnoListActivity.class);
 		i.putExtra("unMaestro", maestro.getLegajo());
+		
+		// Chequeamos en el server si hay un nuevo alumno
+		try {
+			server.syncAlumnosDBForMaestro(maestro.getLegajo());
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		startActivity(i);
 	}
 	
