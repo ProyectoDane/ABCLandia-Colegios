@@ -36,8 +36,8 @@ public class Palabra {
 		return imagen;
 	}
 
-	public void setImagen(String imgaen) {
-		this.imagen = imgaen;
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
 	}
 
 	public String getPalabra() {
