@@ -14,6 +14,7 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.database.SQLException;
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Base64;
 import android.util.Log;
@@ -165,10 +166,26 @@ public class ABCLandiaRestServer {
 	public void syncAll() throws JSONException {
 		this.syncDBMaestrosAndAlumnos();
 		
-		//Sync Categorias
-		//Sync Palabras
-		//Sync Imagenes
-		//Sync Sonidos
+		List<Alumno> alumnos = myDbHelper.getAllAlumnos();
+		for (int j = 0; j< alumnos.size(); j++){
+			this.syncCategoriasAndPalabrasFromAlumno(alumnos.get(j).getLegajo());
+		}
+		List<Palabra> palabras  = myDbHelper.getAllPalabrasUniques();
+		for (int i =0; i< palabras.size(); i++){
+			Log.d("Palabra", palabras.get(i).getImagen());
+			if (palabras.get(i).getImagen() != "null"){
+				this.syncImagenFromServer(palabras.get(i).getImagen());
+			}
+			if (palabras.get(i).getSonido() != "null"){
+				this.syncSonidoFromServer(palabras.get(i).getSonido());
+			}
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	
@@ -300,6 +317,7 @@ public class ABCLandiaRestServer {
 	public void syncImagenFromServer(final String imagenId){
 		
 		final String PATH_TO_IMAGES = getImagePath();	
+		Log.d("Imagen",	 PATH_TO_IMAGES+imagenId+ ".jpg");
 		if (fileExists(PATH_TO_IMAGES+imagenId +".jpg")){
 			// Existe
 			Log.d("ABCLandia - Server", "La imagen " + imagenId + "ya existe");
@@ -309,9 +327,7 @@ public class ABCLandiaRestServer {
 					final String PATH_TO_IMAGES = Environment.getExternalStorageDirectory().getPath() + "/imagenes/";
 					String  nuevaImagenNombre = imagenId+".jpg";
 					File unaImagen = new File(PATH_TO_IMAGES,nuevaImagenNombre);
-					Log.d("ABCLandia", PATH_TO_IMAGES);
 					// Bajar la Imagen
-					Log.d("ABCLandia - Server", response);
 					byte[] decodedImage = Base64.decode(response, Base64.DEFAULT);
 					
 					try {						
@@ -385,6 +401,7 @@ public class ABCLandiaRestServer {
 						Log.d("ABCLandia - Server", "Something went wrong at server end");
 					} else {
 						Log.d("ABCLandia - Server", "Unexpected Error occcured! [Most common Error: Device might not be connected to Internet]");
+						Log.d("Peto", statusCode + " " );
 					}
 				}
 			});
@@ -458,6 +475,41 @@ public class ABCLandiaRestServer {
 		}
 	}
 
-	
+	private class MediaSync extends AsyncTask<List<Alumno>, Void, Void>{
+
+		@Override
+		protected Void doInBackground(List<Alumno>... arg0) {
+			
+			List<Alumno> alumnos = myDbHelper.getAllAlumnos();
+			for (int j = 0; j< alumnos.size(); j++){
+				try {
+					ABCLandiaRestServer.this.syncCategoriasAndPalabrasFromAlumno(alumnos.get(j).getLegajo());
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			List<Palabra> palabras  = myDbHelper.getAllPalabras();
+			for (int i =0; i< palabras.size(); i++){
+				Log.d("Palabra", palabras.get(i).getImagen());
+				if (palabras.get(i).getImagen() != "null"){
+					ABCLandiaRestServer.this.syncImagenFromServer(palabras.get(i).getImagen());
+				}
+				if (palabras.get(i).getSonido() != "null"){
+					ABCLandiaRestServer.this.syncSonidoFromServer(palabras.get(i).getSonido());
+				}
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			return null;
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
 	
 }

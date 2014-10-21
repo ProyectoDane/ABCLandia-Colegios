@@ -278,6 +278,24 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		return unaPalabra;
 	}
 	
+	
+	public Palabra getPalabraFromLetraAndCategoria1(String unaLetra, Integer unaCategoria) {
+		Palabra unaPalabra;
+
+		String selectQuery = "select palabra_id, palabra_letra, palabra_palabra, imagen_id, sonido_id  from palabras where categoria_id = '"
+				+ unaCategoria + "'and palabra_letra = '" + unaLetra + "'";
+
+		SQLiteDatabase database =  this.getWritableDatabase();
+		Cursor cursor =  database.rawQuery(selectQuery, null);
+		if (cursor.moveToFirst()) {
+			unaPalabra =  new Palabra(cursor.getInt(0), unaCategoria, cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
+		} else {
+			unaPalabra = new Palabra(0,  unaCategoria, unaLetra, unaLetra, "none", "none" );
+		}
+		cursor.close();
+		return unaPalabra;
+	}
+	
 	/**
 	 * Dada una Letra y un Categoria ID devuelve un String con la Palabra asociada a esa letra para esa Categoria
 	 * @param unaLetra
@@ -414,7 +432,24 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		Cursor cursor = database.rawQuery(selectQuery, null);
 		if (cursor.moveToFirst()){
 			do{
-				Palabra unaPalabra = new Palabra(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), cursor.getString(3), cursor.getString(3),
+				Palabra unaPalabra = new Palabra(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
+						cursor.getString(5));
+				Log.d("Palbras",cursor.getColumnName(3));
+				palabras.add(unaPalabra);
+			} while(cursor.moveToNext());
+		}
+		cursor.close();
+		return palabras;
+	}
+	
+	public List<Palabra> getAllPalabrasUniques() {
+		List<Palabra> palabras = new ArrayList<Palabra>();
+		String selectQuery = "select palabra_id, categoria_id, palabra_letra, palabra_palabra, imagen_id, sonido_id  from palabras   where imagen_id not like 'null' and sonido_id not like 'null' group by 1,2,3,4,5,6";
+		SQLiteDatabase database = this.getWritableDatabase();
+		Cursor cursor = database.rawQuery(selectQuery, null);
+		if (cursor.moveToFirst()){
+			do{
+				Palabra unaPalabra = new Palabra(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
 						cursor.getString(5));
 				Log.d("Palbras",cursor.getColumnName(3));
 				palabras.add(unaPalabra);

@@ -50,6 +50,7 @@ public class StartActivity extends Activity {
 		// Creamos una instancia del Server
 		server =  new ABCLandiaRestServer(getApplicationContext());
 
+
 		
 		prefs = getSharedPreferences("com.frba.abclandia", MODE_PRIVATE);
 		

@@ -49,24 +49,15 @@ public class MaestroListActivity extends ListActivity {
 		
 		// Iniciamos la conexion con el server
 		server =  new ABCLandiaRestServer(getApplicationContext());
-		// Buscamos todas las palabras de los Alumnos y las descargamos para popular la base.
-//		List<Alumno> alumnos = myDbHelper.getAllAlumnos();
-//		for (int i = 0; i< alumnos.size(); i++){
-//			try {
-//				server.syncCategoriasAndPalabrasFromAlumno(alumnos.get(i).getLegajo());
-//			} catch (JSONException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
-//		
-//		List<Palabra> palabras = myDbHelper.getAllPalabras();
-//		for (int i = 0; i< palabras.size(); i++){
-//			server.syncImagenFromServer(palabras.get(i).getImagen());
-//			Log.d("Buscando Imagen", palabras.get(i).getImagen());
-//			server.syncSonidoFromServer(palabras.get(i).getSonido());
-//			Log.d("Buscando Sonido", palabras.get(i).getSonido());
-//		}
+		
+		try {
+			server.syncAll();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			Log.d("EL Negro", "rompio todo");
+		}
+
 		
 		//TODO: Buscar maestros en la DB		
 		setListAdapter(new MaestroListAdapter(this));
