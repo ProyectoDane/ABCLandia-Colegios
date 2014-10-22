@@ -24,36 +24,13 @@ public class LoginActivity extends Activity {
 		super.onCreate(paramBundle);
 		requestWindowFeature(1);
 		setContentView(R.layout.activity_login);	
-		
-		// Iniciamos una instancia del server 
-		server =  new ABCLandiaRestServer(getApplicationContext());
-		
-		// Actualizar listado maestros
-//		try {
-//			server.syncDBMaestros();
-//		} catch (JSONException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		try {
-			server.syncDBMaestrosAndAlumnos();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 		
 		
 		
 		}
 	
 	public void loginMaestro(View view){
-		// Actualizar listado maestros
-		try {
-			server.syncDBMaestros();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		showMsgDialogMaestro(this);
 	}
 	
@@ -97,10 +74,8 @@ public class LoginActivity extends Activity {
 		dlgMensaje.setTitle(R.string.app_name);
 		dlgMensaje.setPositiveButton(R.string.msgAceptar,  new DialogInterface.OnClickListener() {
 	        public void onClick(DialogInterface dialog, int which) {
-	    		//TODO: Usuario acepta el mensaje
 	        	respuesta = Answer.YES;
 	        	Intent intent = new Intent(self, MaestroListActivity.class);
-	    		//TODO Pasamos datos si hay que pasarlos.
 	    		startActivity(intent);
 	          }
 	      });

@@ -60,7 +60,10 @@ public class GameOneActivity extends GameActivity
 	private static int GAME_NUMBER = 1;
 	
 
-
+	// Definimos las variables para saber que Maestro, Alumno y Categoria estan involucrados. 
+	private int unMaestro = 0;
+	private int unAlumno = 0;
+	private int unaCategoria = 0;
 	
 
     /**
@@ -78,6 +81,12 @@ public class GameOneActivity extends GameActivity
 			secuence = extras.getInt(INTENT_SECUENCE_KEY);
 		}
 
+		// Recuperamos los valores de Maestro, Alumno y Categoria
+		Intent i = getIntent();
+		this.unMaestro = i.getIntExtra("unMaestro", 0);
+		this.unAlumno = i.getIntExtra("unAlumno", 0);
+		this.unaCategoria = i.getIntExtra("unaCategoria", 0);
+		
 		mDragController = new DragController(this);
 
 		loadDataCard();

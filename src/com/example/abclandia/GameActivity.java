@@ -15,6 +15,7 @@ import com.frba.abclandia.adapters.CardViewAdapter;
 import com.frba.abclandia.db.DataBaseHelper;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.SQLException;
 
@@ -52,6 +53,12 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 	protected int mCurrentSecuence = 0;
 	protected int mGameNumber = 0;
 	protected int secuence = 0;
+	
+	// Definimos las variables para saber que Maestro, Alumno y Categoria estan involucrados. 
+	private int unMaestro = 0;
+	private int unAlumno = 0;
+	private int unaCategoria = 0;
+
 
 
 	/**
@@ -62,6 +69,8 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 		super.onCreate(savedInstanceState);
 		setFullScreen();
 		setSizes();
+		
+
 		
 		iniciarDB();
 
@@ -92,7 +101,7 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 				mCurrrentLevel, secuence);
 		for (int i = 0; i < secuences.length; i++) {
 			String letter = String.valueOf(secuences[i]).toUpperCase();
-			Card card = myDbHelper.getPalabraFromLetraAndCategoria(letter, 1);
+			Card card = myDbHelper.getPalabraFromLetraAndCategoria(letter, unaCategoria);
 			card.setLetterType(2);
 			data.add(card);
 		}

@@ -2,6 +2,7 @@ package com.frba.abclandia.webserver;
 
 import android.util.Log;
 
+import com.frba.abclandia.R;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;

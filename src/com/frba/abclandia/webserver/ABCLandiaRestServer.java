@@ -46,7 +46,7 @@ public class ABCLandiaRestServer {
 	 */
     public ArrayList<Maestro> getMaestros() throws JSONException{
     	final ArrayList<Maestro> maestros = new ArrayList<Maestro>();
-	ABCLandiaRestClient.get("index.php/api/maestros", null, new JsonHttpResponseHandler() {
+	ABCLandiaRestClient.get("api/maestros", null, new JsonHttpResponseHandler() {
         
     	@Override
         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -88,7 +88,7 @@ public class ABCLandiaRestServer {
      */
 	public ArrayList<Alumno> getAlumnosFromMaestro(final Integer unMaestroId) throws JSONException {
 		final ArrayList<Alumno> alumnos = new ArrayList<Alumno>();
-		ABCLandiaRestClient.get("index.php/api/maestros/"+ unMaestroId.toString() + "/alumnos", null, new JsonHttpResponseHandler() {
+		ABCLandiaRestClient.get("api/maestros/"+ unMaestroId.toString() + "/alumnos", null, new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess (int statusCode, Header[] headers, JSONObject response){
 				// Si en lugar de un array nos responde con un unico JSONObject
@@ -130,7 +130,7 @@ public class ABCLandiaRestServer {
 	 */
 	public ArrayList<Palabra> getCategoriaFromAlumno(final Integer unAlumnoId) throws JSONException{
 		final ArrayList<Palabra> alumnoPalabras = new ArrayList<Palabra>();
-		ABCLandiaRestClient.get("index.php/api/alumnos/"+unAlumnoId.toString(), null, new JsonHttpResponseHandler(){
+		ABCLandiaRestClient.get("api/alumnos/"+unAlumnoId.toString(), null, new JsonHttpResponseHandler(){
 			@Override
 			public void onSuccess (int statusCCode, Header [] headers, JSONObject alumnoCategoriaWeb){
 			try {
@@ -142,7 +142,7 @@ public class ABCLandiaRestServer {
 					if (palabras != null){
 						for (int i=0; i< palabras.length(); i++){
 							JSONObject unaPalabra =  palabras.getJSONObject(i);
-							alumnoPalabras.add(new Palabra(unaPalabra.getInt("id"), categoria.getInt("id"), unaPalabra.getString("letra").toUpperCase(),
+							alumnoPalabras.add(new Palabra(unaPalabra.getString("id"), categoria.getString("id"), unaPalabra.getString("letra").toUpperCase(),
 									unaPalabra.getString("palabra"), unaPalabra.getString("imagen_id"), unaPalabra.getString("sonido_id")));
 						}
 					}
@@ -196,7 +196,7 @@ public class ABCLandiaRestServer {
      * @throws JSONException
      */
     public void syncDBMaestros() throws JSONException{    	
-	ABCLandiaRestClient.get("index.php/api/maestros", null, new JsonHttpResponseHandler() {
+	ABCLandiaRestClient.get("api/maestros", null, new JsonHttpResponseHandler() {
         
     	@Override
         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -237,7 +237,7 @@ public class ABCLandiaRestServer {
      * @throws JSONException
      */
     public void syncDBMaestrosAndAlumnos() throws JSONException{    	
-	ABCLandiaRestClient.get("index.php/api/maestros", null, new JsonHttpResponseHandler() {
+	ABCLandiaRestClient.get("api/maestros", null, new JsonHttpResponseHandler() {
         
     	@Override
         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -279,7 +279,7 @@ public class ABCLandiaRestServer {
      * @throws JSONException
      */
 	public void syncAlumnosDBForMaestro (final Integer unMaestroId) throws JSONException {
-		ABCLandiaRestClient.get("index.php/api/maestros/"+ unMaestroId.toString() + "/alumnos", null, new JsonHttpResponseHandler() {
+		ABCLandiaRestClient.get("api/maestros/"+ unMaestroId.toString() + "/alumnos", null, new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess (int statusCode, Header[] headers, JSONObject response){
 				// Si en lugar de un array nos responde con un unico JSONObject
@@ -322,7 +322,7 @@ public class ABCLandiaRestServer {
 			// Existe
 			Log.d("ABCLandia - Server", "La imagen " + imagenId + "ya existe");
 		} else {
-			ABCLandiaRestClient.get("index.php/api/imagenes/" + imagenId, null, new AsyncHttpResponseHandler() {
+			ABCLandiaRestClient.get("api/imagenes/" + imagenId, null, new AsyncHttpResponseHandler() {
 				public void onSuccess(String response) {
 					final String PATH_TO_IMAGES = Environment.getExternalStorageDirectory().getPath() + "/imagenes/";
 					String  nuevaImagenNombre = imagenId+".jpg";
@@ -370,7 +370,7 @@ public class ABCLandiaRestServer {
 			// Existe
 			Log.d("ABCLandia - Server", "El sonido" + sonido_id + "ya existe");
 		} else {
-			ABCLandiaRestClient.get("index.php/api/sonidos/" + sonido_id, null, new AsyncHttpResponseHandler() {
+			ABCLandiaRestClient.get("api/sonidos/" + sonido_id, null, new AsyncHttpResponseHandler() {
 				public void onSuccess(String response) {
 					final String PATH_TO_IMAGES = Environment.getExternalStorageDirectory().getPath() + "/sonidos/";
 					String  nuevaImagenNombre = sonido_id+".ogg";
@@ -410,7 +410,7 @@ public class ABCLandiaRestServer {
 	
 	
 	public void syncCategoriasAndPalabrasFromAlumno(final Integer unAlumnoId) throws JSONException{
-		ABCLandiaRestClient.get("index.php/api/alumnos/"+unAlumnoId.toString(), null, new JsonHttpResponseHandler(){
+		ABCLandiaRestClient.get("api/alumnos/"+unAlumnoId.toString(), null, new JsonHttpResponseHandler(){
 			@Override
 			public void onSuccess (int statusCCode, Header [] headers, JSONObject alumnoCategoriaWeb){
 			try {
@@ -424,7 +424,7 @@ public class ABCLandiaRestServer {
 							JSONObject unaPalabra =  palabras.getJSONObject(i);
 							//alumnoPalabras.add(new Palabra(unaPalabra.getInt("id"), categoria.getInt("id"), unaPalabra.getString("letra").toUpperCase(),
 									//unaPalabra.getString("palabra"), unaPalabra.getString("imagen_id"), unaPalabra.getString("sonido_id")));
-							myDbHelper.insertPalabra(new Palabra(unaPalabra.getInt("id"), categoria.getInt("id"), unaPalabra.getString("letra").toUpperCase(),
+							myDbHelper.insertPalabra(new Palabra(unaPalabra.getString("id"), categoria.getString("id"), unaPalabra.getString("letra").toUpperCase(),
 									unaPalabra.getString("palabra"), unaPalabra.getString("imagen_id"), unaPalabra.getString("sonido_id")));
 						}
 					}

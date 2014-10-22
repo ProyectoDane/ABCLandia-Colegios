@@ -3,9 +3,13 @@ package com.frba.abclandia;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.http.Header;
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.SQLException;
@@ -22,16 +26,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.frba.abclandia.db.DataBaseHelper;
-import com.frba.abclandia.dtos.Alumno;
 import com.frba.abclandia.dtos.Maestro;
-import com.frba.abclandia.dtos.Palabra;
 import com.frba.abclandia.webserver.ABCLandiaRestServer;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 
 public class MaestroListActivity extends ListActivity {
 
 	private DataBaseHelper myDbHelper;
 	private ABCLandiaRestServer server;
+	ProgressDialog prgDialog;
 	
 	
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,20 +53,19 @@ public class MaestroListActivity extends ListActivity {
 		// Iniciamos la BD
 		iniciarDB();
 		
-		// Iniciamos la conexion con el server
-		server =  new ABCLandiaRestServer(getApplicationContext());
-		
-		try {
-			server.syncAll();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			Log.d("EL Negro", "rompio todo");
-		}
-
+		// Iniciar ProgressDialog
+		iniciarPrgDialog();
 		
 		//TODO: Buscar maestros en la DB		
-		setListAdapter(new MaestroListAdapter(this));
+		syncMaestros();
+	}
+
+	private void iniciarPrgDialog() {
+		// Iniciamos las propiedades del Progress Dialog
+		prgDialog = new ProgressDialog(this);
+		prgDialog.setMessage("Sincronizando la informacion de los Maestros");
+		prgDialog.setCancelable(false);
+		
 	}
 
 	private void iniciarDB() {
@@ -88,6 +93,71 @@ public class MaestroListActivity extends ListActivity {
 		return maestros;
 	}
 	
+	private void syncMaestros() {
+		// TODO Auto-generated method stub
+		// Create AsycHttpClient object
+		AsyncHttpClient client = new AsyncHttpClient();
+		// Http Request Params Object
+		RequestParams params = new RequestParams();
+		// Show ProgressBar
+		prgDialog.show();
+		client.get("http://yaars.com.ar/abclandia/public/index.php/api/maestros", params, new JsonHttpResponseHandler() {
+	       
+	    	@Override
+	        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+	            // If the response is JSONObject instead of expected JSONArray
+	    		try {
+					Maestro unMaestro = new Maestro(response.getInt("id"), response.getString("apellido"), response.getString("nombre"));
+					myDbHelper.insertMaestro(unMaestro);
+					prgDialog.hide();
+					setListAdapter(new MaestroListAdapter(getApplicationContext()));
+					//syncAlumnosDBForMaestro(unMaestro.getLegajo());
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	        }
+	    	
+	        
+	        @Override
+	        public void onSuccess(int statusCode, Header[] headers, JSONArray serverMaestros) {
+	            // maestros es un array con todos los maestros que devuelve el server.
+				try {
+					if (serverMaestros != null){
+						for (int i=0; i< serverMaestros.length(); i++){
+							JSONObject unMaestro =  (JSONObject) serverMaestros.get(i);
+							Maestro maestroDb = new Maestro(unMaestro.getInt("id"), unMaestro.getString("apellido"), unMaestro.getString("nombre"));
+							myDbHelper.insertMaestro(maestroDb);
+							prgDialog.hide();
+							setListAdapter(new MaestroListAdapter(getApplicationContext()));
+							
+						}
+					}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	        	}
+	        
+			@Override
+			public void onFailure(int statusCode, Throwable error, String content) {
+				// TODO Auto-generated method stub
+				// Hide ProgressBar
+				prgDialog.hide();
+				if (statusCode == 404) {
+					Toast.makeText(getApplicationContext(), "Requested resource not found", Toast.LENGTH_LONG).show();
+				} else if (statusCode == 500) {
+					Toast.makeText(getApplicationContext(), "Something went wrong at server end", Toast.LENGTH_LONG).show();
+				} else {
+					Toast.makeText(getApplicationContext(), "Unexpected Error occcured! [Most common Error: Device might not be connected to Internet]",
+							Toast.LENGTH_LONG).show();
+				}
+				setListAdapter(new MaestroListAdapter(getApplicationContext()));
+			}
+	    	});
+		
+	}
+
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id ) {
 		//TODO: Agregar accion cuando se selecciona un profesor.
@@ -100,13 +170,6 @@ public class MaestroListActivity extends ListActivity {
 		Intent i = new Intent(this, AlumnoListActivity.class);
 		i.putExtra("unMaestro", maestro.getLegajo());
 		
-		// Chequeamos en el server si hay un nuevo alumno
-		try {
-			server.syncAlumnosDBForMaestro(maestro.getLegajo());
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		startActivity(i);
 	}
 	
@@ -162,7 +225,5 @@ public class MaestroListActivity extends ListActivity {
 			    
 			    return rowView;
 		}
-
-		
 	}
 }

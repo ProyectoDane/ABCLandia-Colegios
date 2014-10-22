@@ -1,8 +1,8 @@
 package com.frba.abclandia.dtos;
 
 public class Palabra {
-	private Integer id;
-	private Integer categoria;
+	private String id;
+	private String categoria;
 	private String letra;
 	private String palabra;
 	private String imagen;
@@ -12,10 +12,9 @@ public class Palabra {
 		
 	}
 
-	public Palabra(int palabra_id, int categoria_id, String palabra_letra, String palabra_palabra,
+	public Palabra(String palabra_id, String categoria_id, String palabra_letra, String palabra_palabra,
 			String imagen_id, String sonido_id) {
-		// TODO Auto-generated constructor stub
-		this.setId(categoria_id);
+		this.setId(palabra_id);
 		this.setCategoria(categoria_id);
 		this.setLetra(palabra_letra);
 		this.setPalabra(palabra_palabra);
@@ -23,6 +22,9 @@ public class Palabra {
 		this.setSonido(sonido_id);
 	
 	}
+	
+	
+
 
 	public String getSonido() {
 		return sonido;
@@ -56,19 +58,19 @@ public class Palabra {
 		this.letra = letra;
 	}
 
-	public Integer getCategoria() {
+	public String getCategoria() {
 		return categoria;
 	}
 
-	public void setCategoria(Integer categoria) {
+	public void setCategoria(String categoria) {
 		this.categoria = categoria;
 	}
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setId(String categoria_id) {
+		this.id = categoria_id;
 	}
 }

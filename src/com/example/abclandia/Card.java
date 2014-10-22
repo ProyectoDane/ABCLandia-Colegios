@@ -15,14 +15,7 @@ public class Card {
 	private String mSoundLetterPath;
 	
 	private boolean isLowerUpperLetter = false;
-	
-	
-
-	
-
-	
-	
-	
+		
 	public Card (){
 		
 	}

@@ -30,12 +30,17 @@ public class GameFourActivity extends GameActivity {
 		
 		private List<Card> data;
 		
-		
 
 		
 		private int mCurrrentLevel = 0;
 		private int mCurrentSecuence = 0;
 		private int gadorcha = 0;
+		
+		// Definimos las variables para saber que Maestro, Alumno y Categoria estan involucrados. 
+		private int unMaestro = 0;
+		private int unAlumno = 0;
+		private int unaCategoria = 0;
+		
 	    /**
 	     * Called when the activity is first created.
 	     */
@@ -48,6 +53,12 @@ public class GameFourActivity extends GameActivity {
 	        	mCurrrentLevel = extras.getInt("level");
 	            gadorcha= extras.getInt("secuence");
 	        }
+	        
+			// Recuperamos los valores de Maestro, Alumno y Categoria
+			Intent i = getIntent();
+			this.unMaestro = i.getIntExtra("unMaestro", 0);
+			this.unAlumno = i.getIntExtra("unAlumno", 0);
+			this.unaCategoria = i.getIntExtra("unaCategoria", 0);
 	       
 	        setFullScreen();
 	        

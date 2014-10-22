@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.SQLException;
 import android.graphics.Bitmap;
@@ -42,6 +43,11 @@ implements View.OnTouchListener {
 	private LetterPlayerAnimator mDragShadowAnimator;
 	private DataBaseHelper myDbHelper;
 	
+	// Definimos las variables para saber que Maestro, Alumno y Categoria estan involucrados. 
+	private int unMaestro = 0;
+	private int unAlumno = 0;
+	private int unaCategoria = 11;
+	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -52,7 +58,14 @@ implements View.OnTouchListener {
 	        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
 	                                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 	        mWindowManager = (WindowManager)getSystemService("window");
+	    
 	        
+			Intent i = getIntent();
+			this.unMaestro = i.getIntExtra("unMaestro", 0);
+			this.unAlumno = i.getIntExtra("unAlumno", 0);
+			this.unaCategoria = i.getIntExtra("unaCategoria", 0);
+			
+			
 	        setScreenPointSenter();
 		
 		
@@ -225,7 +238,7 @@ implements View.OnTouchListener {
 	private void loadDataCard() {
 
 		data = new ArrayList<Card>();
-		data = myDbHelper.getPalabrasFromCategoria(1);
+		data = myDbHelper.getPalabrasFromCategoria(unaCategoria);
 //		Card card1 = new Card(1, "A",
 //				"Auto", "/storage/emulated/0/Images/Auto.jpg", "Auto.ogg", "");
 //		Card card2 = new Card(1, "B",

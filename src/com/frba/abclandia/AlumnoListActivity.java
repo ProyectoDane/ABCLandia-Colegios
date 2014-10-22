@@ -1,12 +1,15 @@
 package com.frba.abclandia;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.Header;
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.SQLException;
@@ -24,15 +27,18 @@ import android.widget.Toast;
 
 import com.frba.abclandia.db.DataBaseHelper;
 import com.frba.abclandia.dtos.Alumno;
-import com.frba.abclandia.dtos.Palabra;
 import com.frba.abclandia.webserver.ABCLandiaRestServer;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 public class AlumnoListActivity extends ListActivity {
 	
 	private DataBaseHelper myDbHelper;
 	private Integer unMaestro = 0;
 	private ABCLandiaRestServer server = new ABCLandiaRestServer();
-	private ArrayList<Palabra> palabras = new ArrayList<Palabra>();
+	ProgressDialog prgDialog;
+	
 	
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
@@ -49,24 +55,86 @@ public class AlumnoListActivity extends ListActivity {
 		// Iniciar DB
 		iniciarDB();
 		
-		setListAdapter(new AlumnoListAdapter(this));
+		// Iniciar ProgressDialog
+		iniciarPrgDialog();
 		
-		try {
-			server.getAlumnosFromMaestro(this.unMaestro);
-		} catch (JSONException e){
-			e.printStackTrace();
-		}
+		//Sincronizamos los Alumnos
+		syncAlumnos();
 		
-		try{
-			palabras = server.getCategoriaFromAlumno(1);
-			
-		} catch (JSONException e){
-			e.printStackTrace();
-		}
-		Log.d("Palabras", palabras.toString());
+		
+	}
+	
+	private void iniciarPrgDialog() {
+		// Iniciamos las propiedades del Progress Dialog
+		prgDialog = new ProgressDialog(this);
+		prgDialog.setMessage("Sincronizando la informacion de los Alumnos para el Maestro " + this.unMaestro);
+		prgDialog.setCancelable(false);
+		
 	}
 	
 	
+	private void syncAlumnos() {
+		// TODO Auto-generated method stub
+		// Create AsycHttpClient object
+		AsyncHttpClient client = new AsyncHttpClient();
+		// Http Request Params Object
+		RequestParams params = new RequestParams();
+		// Show ProgressBar
+		prgDialog.show();
+		client.get("http://yaars.com.ar/abclandia/public/index.php/api/maestros/"+unMaestro+"/alumnos", params, new JsonHttpResponseHandler() {
+			@Override
+			public void onSuccess (int statusCode, Header[] headers, JSONObject response){
+				// Si en lugar de un array nos responde con un unico JSONObject
+				try {
+					Alumno unAlumno = new Alumno(response.getInt("id"), response.getString("apellido"), response.getString("nombre"), (Integer) unMaestro);
+					myDbHelper.insertAlumno(unAlumno);
+					myDbHelper.insertAlumnoMaestroRelationship(unAlumno.getLegajo(), unMaestro);
+					prgDialog.hide();
+					setListAdapter(new AlumnoListAdapter(getApplicationContext()));
+					
+					} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}				
+			}
+			
+			@Override
+			public void onSuccess (int statusCode, Header[] headers, JSONArray serverAlumnos) {
+				try {
+					if (serverAlumnos != null){
+						for (int i = 0; i < serverAlumnos.length(); i++){
+							JSONObject unAlumno = (JSONObject) serverAlumnos.get(i);
+							myDbHelper.insertAlumno(new Alumno(unAlumno.getInt("id"), unAlumno.getString("apellido"), unAlumno.getString("nombre"), unMaestro));	
+							myDbHelper.insertAlumnoMaestroRelationship(unAlumno.getInt("id"), unMaestro);
+							prgDialog.hide();
+							setListAdapter(new AlumnoListAdapter(getApplicationContext()));
+						}
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			};
+			
+			@Override
+			public void onFailure(int statusCode, Throwable error, String content) {
+				// TODO Auto-generated method stub
+				// Hide ProgressBar
+				prgDialog.hide();
+				if (statusCode == 404) {
+					Toast.makeText(getApplicationContext(), "Requested resource not found", Toast.LENGTH_LONG).show();
+				} else if (statusCode == 500) {
+					Toast.makeText(getApplicationContext(), "Something went wrong at server end", Toast.LENGTH_LONG).show();
+				} else {
+					Toast.makeText(getApplicationContext(), "Unexpected Error occcured! [Most common Error: Device might not be connected to Internet]",
+							Toast.LENGTH_LONG).show();
+				}
+				setListAdapter(new AlumnoListAdapter(getApplicationContext()));
+			}
+		});
+		
+	}
+
+
 	private void iniciarDB() {
 		// Inicializar servicios
 		myDbHelper = new DataBaseHelper(this);
@@ -94,13 +162,14 @@ public class AlumnoListActivity extends ListActivity {
 		Alumno alumno =  (Alumno) getListAdapter().getItem(position);
 		Toast.makeText(this,  alumno.getNombre() + " " + alumno.getApellido() + " Seleccionado", Toast.LENGTH_LONG).show();
 		Intent i = new Intent(this, ActividadesActivity.class);
+		i.putExtra("unMaestro", unMaestro);
+		i.putExtra("unAlumno", alumno.getLegajo());
 		startActivity(i);
 	}
 	
 	private List<Alumno> getAlumnosData(){
 		
 		List<Alumno> alumnos =  myDbHelper.getAlumnosFromMaestro(this.unMaestro);
-		
 		return alumnos;
 	}
 	

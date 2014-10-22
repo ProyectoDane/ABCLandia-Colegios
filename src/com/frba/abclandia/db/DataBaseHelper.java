@@ -97,7 +97,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	OutputStream myOutput = new FileOutputStream(outFileName);
 	
 	// Transferimos los bytes desde el inputfile al output file
-	
 	byte [] buffer = new byte[1024];
 	int length;
 	while ((length = myInput.read(buffer))>0) {
@@ -107,9 +106,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	myOutput.flush();
 	myOutput.close();
 	myInput.close();
-	
-	
-	
 	}
 	
 	public void openDatabase() throws SQLException {
@@ -239,6 +235,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	 * @return List<Palabra>
 	 */
 	public List<Card> getPalabrasFromCategoria(int unaCategoria){
+		final String PATH_TO_IMAGES = Environment.getExternalStorageDirectory().getPath() + "/imagenes/";
+		final String PATH_TO_SOUNDS = Environment.getExternalStorageDirectory().getPath() + "/sonidos/";
 		List<Card> palabras = new ArrayList<Card>();
 		String selectQuery = "select palabra_id, palabra_letra, palabra_palabra, imagen_id, sonido_id  from palabras where categoria_id = "
 				+ unaCategoria + " " ;
@@ -246,7 +244,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		Cursor cursor = database.rawQuery(selectQuery, null);
 		if (cursor.moveToFirst()){
 			do{
-				Card unaPalabra = new Card(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
+				Card unaPalabra = new Card(cursor.getInt(0), cursor.getString(1), cursor.getString(2), PATH_TO_IMAGES + cursor.getString(3)+ ".jpg", PATH_TO_SOUNDS+cursor.getString(4)+".ogg");
 			
 				Log.d("Palbras",cursor.getColumnName(3));
 				palabras.add(unaPalabra);
@@ -255,11 +253,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		cursor.close();
 		return palabras;
 	}	
+	
+	
 	/**
-	 *  Dada una Letra y una Categoria devuelve un objeto Palabra correspondiente a la palabra que comienza con esa letra para esa Categoria
+	 *  Dada una Letra y una Categoria devuelve un objeto Card correspondiente a la palabra que comienza con esa letra para esa Categoria
 	 * @param unaLetra
 	 * @param unaCategoria
-	 * @return Palabra
+	 * @return
 	 */
 	public Card getPalabraFromLetraAndCategoria(String unaLetra, Integer unaCategoria) {
 		Card unaPalabra;
@@ -278,8 +278,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		return unaPalabra;
 	}
 	
-	
-	public Palabra getPalabraFromLetraAndCategoria1(String unaLetra, Integer unaCategoria) {
+	/**
+	 *  Dada una Letra y una Categoria devuelve un objeto Palabra correspondiente a la palabra que comienza con esa letra para esa Categoria
+	 * @param unaLetra
+	 * @param unaCategoria
+	 * @return Palabra
+	 */
+	public Palabra getPalabraFromLetraAndCategoria1(String unaLetra, String unaCategoria) {
 		Palabra unaPalabra;
 
 		String selectQuery = "select palabra_id, palabra_letra, palabra_palabra, imagen_id, sonido_id  from palabras where categoria_id = '"
@@ -288,9 +293,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		SQLiteDatabase database =  this.getWritableDatabase();
 		Cursor cursor =  database.rawQuery(selectQuery, null);
 		if (cursor.moveToFirst()) {
-			unaPalabra =  new Palabra(cursor.getInt(0), unaCategoria, cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
+			unaPalabra =  new Palabra(cursor.getString(0), unaCategoria, cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
 		} else {
-			unaPalabra = new Palabra(0,  unaCategoria, unaLetra, unaLetra, "none", "none" );
+			unaPalabra = new Palabra("0",  unaCategoria, unaLetra, unaLetra, "none", "none" );
 		}
 		cursor.close();
 		return unaPalabra;
@@ -385,7 +390,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		values.put("sonido_id",unaPalabra.getSonido());
 		values.put("imagen_id", unaPalabra.getImagen());
 		// Chequeamos si el valor existe
-		Cursor cur1= database.query("palabras", null, "palabra_id=" + unaPalabra.getId() + " and  categoria_id = " + unaPalabra.getCategoria(), null, null, null, null);
+		Cursor cur1= database.query("palabras", null, "palabra_id='" + unaPalabra.getId() + "' and  categoria_id = '" + unaPalabra.getCategoria()+"'", null, null, null, null);
 	      cur1.moveToLast();
 	      int count1=cur1.getCount();
 	      if(count1==0)
@@ -398,7 +403,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	        //course id present
 	    	Log.d("Database", "Palabra con el ID " + unaPalabra.getId() + " ya existe");
 	      }
-		database.insert("palabras",null, values);
 		database.close();	
 	}
 	
@@ -432,7 +436,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		Cursor cursor = database.rawQuery(selectQuery, null);
 		if (cursor.moveToFirst()){
 			do{
-				Palabra unaPalabra = new Palabra(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
+				Palabra unaPalabra = new Palabra(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
 						cursor.getString(5));
 				Log.d("Palbras",cursor.getColumnName(3));
 				palabras.add(unaPalabra);
@@ -449,7 +453,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		Cursor cursor = database.rawQuery(selectQuery, null);
 		if (cursor.moveToFirst()){
 			do{
-				Palabra unaPalabra = new Palabra(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
+				Palabra unaPalabra = new Palabra(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
 						cursor.getString(5));
 				Log.d("Palbras",cursor.getColumnName(3));
 				palabras.add(unaPalabra);

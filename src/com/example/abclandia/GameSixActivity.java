@@ -34,6 +34,10 @@ public static final int TOTAL_JOINS = 6;
 	private static String CLASS_NAME = "com.example.abclandia.GameOne";
 	private static int GAME_NUMBER = 6;
 
+	// Definimos las variables para saber que Maestro, Alumno y Categoria estan involucrados. 
+	private int unMaestro = 0;
+	private int unAlumno = 0;
+	private int unaCategoria = 0;
 	
 
     /**
@@ -48,10 +52,17 @@ public static final int TOTAL_JOINS = 6;
         	mCurrrentLevel = extras.getInt(GameActivity.INTENT_LEVEL_KEY);
           
         }
+        
+		// Recuperamos los valores de Maestro, Alumno y Categoria
+		Intent i = getIntent();
+		this.unMaestro = i.getIntExtra("unMaestro", 0);
+		this.unAlumno = i.getIntExtra("unAlumno", 0);
+		this.unaCategoria = i.getIntExtra("unaCategoria", 0);
        
         setFullScreen();
         setSizes();
         
+        iniciarDB();
         
         mDragController = new DragController (this);
         loadDataCard();
@@ -159,24 +170,24 @@ public static final int TOTAL_JOINS = 6;
 		
 	}
 	
-//	private void iniciarDB() {
-//		// Inicializar servicios
-//		myDbHelper = new DataBaseHelper(this);
-//		try {
-//			myDbHelper.createDatabase();
-//		} catch (IOException ioe) {
-//			throw new Error("No se pudo crear la base de datos");
-//			
-//		}
-//		
-//		try {
-//			myDbHelper.openDatabase();
-//		}catch (SQLException sqle){
-//			Log.d("POOCHIE", "No se pudo abrir la BD");
-//			throw sqle;
-//		}
-//		
-//	}
+	private void iniciarDB() {
+		// Inicializar servicios
+		myDbHelper = new DataBaseHelper(this);
+		try {
+			myDbHelper.createDatabase();
+		} catch (IOException ioe) {
+			throw new Error("No se pudo crear la base de datos");
+			
+		}
+		
+		try {
+			myDbHelper.openDatabase();
+		}catch (SQLException sqle){
+			Log.d("POOCHIE", "No se pudo abrir la BD");
+			throw sqle;
+		}
+		
+	}
 	
 
 	

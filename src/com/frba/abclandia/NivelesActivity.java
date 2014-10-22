@@ -18,6 +18,12 @@ public class NivelesActivity extends Activity implements OnClickListener{
 	
 	private Button btnNivel1, btnNivel2, btnNivel3;
 	
+	// Definimos las variables para saber que Maestro, Alumno y Categoria estan involucrados. 
+	private int unMaestro = 0;
+	private int unAlumno = 0;
+	private int unaCategoria = 0;
+
+	
 	protected void onCreate(Bundle paramBundle){
 	super.onCreate(paramBundle);
 		
@@ -27,6 +33,12 @@ public class NivelesActivity extends Activity implements OnClickListener{
       	exerciseClass = GameDataStructure.getExerciseClass(exerciseNumber);
         
       }
+      
+		// Recuperamos los valores de Maestro, Alumno y Categoria
+		Intent i = getIntent();
+		this.unMaestro = i.getIntExtra("unMaestro", 0);
+		this.unAlumno = i.getIntExtra("unAlumno", 0);
+		this.unaCategoria = i.getIntExtra("unaCategoria", 0);
       
       
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -60,6 +72,9 @@ public class NivelesActivity extends Activity implements OnClickListener{
 		Intent intent = new Intent(this, exerciseClass);
 		intent.putExtra(GameActivity.INTENT_LEVEL_KEY, levelNumber);
 		intent.putExtra(GameActivity.INTENT_SECUENCE_KEY, 1);
+		intent.putExtra("unMaestro", this.unMaestro);
+		intent.putExtra("unAlumno", this.unAlumno);
+		intent.putExtra("unaCategoria", this.unaCategoria);
 		startActivity(intent);
 		
 		

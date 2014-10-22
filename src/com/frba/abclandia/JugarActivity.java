@@ -14,11 +14,23 @@ import com.example.abclandia.GameSixActivity;
 public class JugarActivity extends Activity implements View.OnClickListener{
 	private Button btnEjercicio1, btnEjercicio2, btnEjercicio3,
 			btnEjercicio4, btnEjercicio5, btnEjercicio6;
+	
+	// Definimos las variables para saber que Maestro, Alumno y Categoria estan involucrados. 
+	private int unMaestro = 0;
+	private int unAlumno = 0;
+	private int unaCategoria = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_jugar);
+		
+		// Recuperamos los valores de Maestro, Alumno y Categoria
+		Intent i = getIntent();
+		this.unMaestro = i.getIntExtra("unMaestro", 0);
+		this.unAlumno = i.getIntExtra("unAlumno", 0);
+		this.unaCategoria = i.getIntExtra("unaCategoria", 0);
+		
 		btnEjercicio1 = (Button) findViewById(R.id.btnEjercicio1);
 		btnEjercicio2 = (Button) findViewById(R.id.btnEjercicio2);
 		btnEjercicio3 = (Button) findViewById(R.id.btnEjercicio3);
@@ -41,6 +53,9 @@ public class JugarActivity extends Activity implements View.OnClickListener{
 	public void btnEjercicio1 (View view){
 		
 		Intent intent = new Intent(this,NivelesActivity.class );
+		intent.putExtra("unMaestro", unMaestro);
+		intent.putExtra("unAlumno", unAlumno);
+		intent.putExtra("unaCategoria", unaCategoria);
 		startActivity(intent);
 //		Intent intent = new Intent(this, GameOneActivity.class);
 //		intent.putExtra(GameActivity.INTENT_LEVEL_KEY, 1);
@@ -59,6 +74,9 @@ public class JugarActivity extends Activity implements View.OnClickListener{
 		Intent intent = new Intent(this, GameFourActivity.class);
 		intent.putExtra(GameActivity.INTENT_LEVEL_KEY, 1);
 		intent.putExtra(GameActivity.INTENT_SECUENCE_KEY, 1);
+		intent.putExtra("unMaestro", unMaestro);
+		intent.putExtra("unAlumno", unAlumno);
+		intent.putExtra("unaCategoria", unaCategoria);
 		startActivity(intent);
 	}
 	public void btnEjercicio5 (View view){
@@ -68,12 +86,18 @@ public class JugarActivity extends Activity implements View.OnClickListener{
 		Intent intent = new Intent(this, GameSixActivity.class);
 		intent.putExtra(GameActivity.INTENT_LEVEL_KEY, 1);
 		intent.putExtra(GameActivity.INTENT_SECUENCE_KEY, 1);
+		intent.putExtra("unMaestro", unMaestro);
+		intent.putExtra("unAlumno", unAlumno);
+		intent.putExtra("unaCategoria", unaCategoria);
 		startActivity(intent);
 	}
 	
 	private void startNivelesActivity(int exerciseNumber){
 		Intent intent = new Intent(this, NivelesActivity.class);
 		intent.putExtra(GameActivity.INTENT_EXERCISE_NUMBER, exerciseNumber);
+		intent.putExtra("unMaestro", unMaestro);
+		intent.putExtra("unAlumno", unAlumno);
+		intent.putExtra("unaCategoria", unaCategoria);
 		startActivity(intent);
 		
 	}
