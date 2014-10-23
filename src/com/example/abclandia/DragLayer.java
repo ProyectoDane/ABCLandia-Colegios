@@ -175,5 +175,11 @@ public void toast (String msg)
     Toast.makeText (getContext (), msg, Toast.LENGTH_SHORT).show ();
 } // end toast
 
+@Override
+public void onDragEnd(boolean success, boolean isClick) {
+	// TODO Auto-generated method stub
+	
+}
+
 } // end class
 

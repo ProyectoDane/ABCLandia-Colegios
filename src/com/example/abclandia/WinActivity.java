@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.frba.abclandia.R;
 
@@ -17,9 +20,15 @@ public class WinActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_win);
+		
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		WindowManager mWindowManager = (WindowManager) getSystemService("window");
+		
+		setContentView(R.layout.win_activity);
 
-		Button button = (Button) findViewById(R.id.gadorcha);
+		ImageButton button = (ImageButton) findViewById(R.id.gadorcha);
 		Bundle extras = getIntent().getExtras();
 
 		if (extras != null) {

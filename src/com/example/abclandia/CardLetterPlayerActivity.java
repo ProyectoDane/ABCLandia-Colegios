@@ -31,6 +31,7 @@ import com.example.abclandia.graphics.Renderer;
 import com.frba.abclandia.R;
 import com.frba.abclandia.adapters.CardViewAdapter;
 import com.frba.abclandia.db.DataBaseHelper;
+import com.frba.abclandia.utils.Util;
 
 public class CardLetterPlayerActivity extends Activity
 implements View.OnTouchListener {

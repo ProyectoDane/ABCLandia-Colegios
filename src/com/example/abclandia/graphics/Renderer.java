@@ -10,7 +10,7 @@ import android.graphics.RectF;
 import android.graphics.Paint.Align;
 
 import com.example.abclandia.Card;
-import com.example.abclandia.Util;
+import com.frba.abclandia.utils.Util;
 
 public abstract class Renderer {
 

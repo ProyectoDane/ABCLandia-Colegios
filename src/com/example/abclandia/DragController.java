@@ -2,6 +2,8 @@ package com.example.abclandia;
 
 import java.util.ArrayList;
 
+import com.frba.abclandia.utils.Util;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
@@ -48,6 +50,8 @@ public class DragController {
 
     /** Whether or not we're dragging. */
     private boolean mDragging;
+    
+    private boolean mJustClick;
 
     /** X coordinate of the down event. */
     private float mMotionDownX;
@@ -117,6 +121,8 @@ public class DragController {
          * @param success TODO
          */
         public void onDragEnd(boolean success);
+        
+        public void onDragEnd(boolean success, boolean isClick);
     }
     
     /**
@@ -210,6 +216,7 @@ public class DragController {
         mTouchOffsetY = mMotionDownY - screenY;
 
         mDragging = true;
+        mJustClick = false;
         mDragSource = source;
         mDragInfo = dragInfo;
 
@@ -251,7 +258,7 @@ public class DragController {
         	mListener.onDragEnd(dropSuccess);
         	
         
-        	mContext.onDragEnd(dropSuccess);
+        	mContext.onDragEnd(dropSuccess, mJustClick);
         	
         	if (dropSuccess){
         		mDragView.remove();
@@ -299,6 +306,7 @@ public class DragController {
 
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_UP:
+            	mJustClick = true;
                 if (mDragging) {
                     boolean dropSuccess = drop(screenX, screenY);
                     endDrag(dropSuccess);
