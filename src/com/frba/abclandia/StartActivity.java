@@ -92,18 +92,15 @@ public class StartActivity extends Activity {
     protected void onResume() {
         super.onResume();
         TARGET_BASE_PATH = getExternalFilesDir(null).toString() + "/";
-        //String b = Environment.getExternalStoragePublicDirectory(null).toString();
-        String c = Environment.getExternalStorageDirectory().toString();
-        
-        copyFileOrDir("default_sounds");
-        copyFileOrDir("default_images");
 
         if (prefs.getBoolean("firstrun", true)) {
-            // Do first run stuff here then set 'firstrun' as false
-            // using the following line to edit/commit prefs
+           
         	prefs.edit().putBoolean("firstrun", false).commit();
+        	copyFileOrDir("default_sounds");
+            copyFileOrDir("default_images");
+        	
         	// Conectarse al server y descargar todos los datos
-        	// All
+        	// Alll
         	synSQLiteToServer();      	
         	Log.d("ABCLandia", "Primer Ejecucion");   
         }

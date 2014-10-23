@@ -25,10 +25,10 @@ import com.frba.abclandia.webserver.ABCLandiaRestServer;
 
 
 public class MainActivity extends Activity {
-	
+	private static final String PREFERENCE_NAME = "com.frba.abclandia";
 	private static final int DISPLAY = 3000;
 	private DataBaseHelper myDbHelper;
-	SharedPreferences prefs = null;
+	SharedPreferences preferences = null;
 	String TARGET_BASE_PATH;
 	
 	protected void callNextActivity(){
@@ -45,7 +45,7 @@ public class MainActivity extends Activity {
 		//Iniciamos la base de datos
 		iniciarDB();
 
-		prefs = getSharedPreferences("com.frba.abclandia", MODE_PRIVATE);
+		setPreferences();
 		
 		new Handler().postDelayed(new Runnable() {
 			
@@ -58,6 +58,13 @@ public class MainActivity extends Activity {
 		}, DISPLAY);
 		
 
+	}
+
+	protected void setPreferences() {
+		preferences = getSharedPreferences(PREFERENCE_NAME, MODE_PRIVATE);
+		SharedPreferences.Editor editor = preferences.edit();
+		editor.putInt("letter_type", 1);
+		editor.commit();
 	}
 	
 	/**
@@ -93,13 +100,14 @@ public class MainActivity extends Activity {
          * Esto deberia quitarse en un futuro.
          */
         
-        copyFileOrDir("default_sounds");
-        copyFileOrDir("default_images");
+        
 
-        if (prefs.getBoolean("firstrun", true)) {
+        if (preferences.getBoolean("firstrun", true)) {
             // Do first run stuff here then set 'firstrun' as false
             // using the following line to edit/commit prefs
-        	prefs.edit().putBoolean("firstrun", false).commit();
+        	preferences.edit().putBoolean("firstrun", false).commit();
+        	copyFileOrDir("default_sounds");
+            copyFileOrDir("default_images");
              	
         	Log.d("ABCLandia", "Primer Ejecucion");   
         }
@@ -173,6 +181,8 @@ public class MainActivity extends Activity {
 	        Log.e("tag", "Exception in copyFilee() "+e.toString());
 	    }
 	}
+	
+
 }
 
 
