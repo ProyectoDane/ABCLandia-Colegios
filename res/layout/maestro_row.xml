@@ -1,15 +1,28 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-    
-    <TextView 
-        android:id="@+id/lblMaestroNombre"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"/>
-    <TextView 
-        android:id="@+id/lblMaestroApellido"
-        android:layout_height="wrap_content"
+    <ImageView 
+        android:id="@+id/imgViewMaestro"
         android:layout_width="wrap_content"
-        android:layout_toRightOf="@id/lblMaestroNombre"/>
-
-</RelativeLayout>
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/imgMaestro"
+        android:src="@drawable/ic_launcher"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+	    <TextView 
+	        android:id="@+id/lblMaestroNombre"
+	        android:layout_height="wrap_content"
+	        android:layout_width="wrap_content"
+	        android:padding="3dp"
+	        android:text="@string/nombreRow"
+	        android:textSize="25sp"/>
+	    <TextView 
+	        android:id="@+id/lblMaestroApellido"
+	        android:layout_height="wrap_content"
+	        android:layout_width="wrap_content"
+	        android:padding="3dp"
+	        android:text="@string/apellidoRow"
+	        android:textSize="25sp"/>
+    </LinearLayout>
+</LinearLayout>

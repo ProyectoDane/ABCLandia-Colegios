@@ -60,10 +60,6 @@ public class GameOneActivity extends GameActivity
 	private static int GAME_NUMBER = 1;
 	
 
-	// Definimos las variables para saber que Maestro, Alumno y Categoria estan involucrados. 
-	private int unMaestro = 0;
-	private int unAlumno = 0;
-	private int unaCategoria = 0;
 	
 
     /**
