@@ -125,12 +125,16 @@ public class JugarActivity extends Activity implements View.OnClickListener{
 			Intent intent = new Intent(this, GameSixActivity.class);
 			intent.putExtra(GameActivity.INTENT_LEVEL_KEY, 1);
 			intent.putExtra(GameActivity.INTENT_SECUENCE_KEY, 1);
+
 			startActivity(intent);
 			return;
 		}
 		
 		Intent intent = new Intent(this,NivelesActivity.class );
 		intent.putExtra(GameActivity.INTENT_EXERCISE_NUMBER, exerciseNumber);
+		intent.putExtra("unMaestro", unMaestro);
+		intent.putExtra("unAlumno", unAlumno);
+		intent.putExtra("unaCategoria", unaCategoria);
 		startActivity(intent);
 		
 		

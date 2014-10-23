@@ -85,7 +85,9 @@ public class MainActivity extends Activity {
 	@Override
     protected void onResume() {
         super.onResume();
-        TARGET_BASE_PATH = getExternalFilesDir(null).toString() + "/";
+        // TODO: Acomodar bien y cambiar todo a getExternalFilesDir(null).toString()
+        // TARGET_BASE_PATH = getExternalFilesDir(null).toString() + "/";
+        TARGET_BASE_PATH = Environment.getExternalStorageDirectory().getPath() + "/";
         String c = Environment.getExternalStorageDirectory().toString();
         
         /*
@@ -93,13 +95,15 @@ public class MainActivity extends Activity {
          * Esto deberia quitarse en un futuro.
          */
         
-        copyFileOrDir("default_sounds");
-        copyFileOrDir("default_images");
+
 
         if (prefs.getBoolean("firstrun", true)) {
             // Do first run stuff here then set 'firstrun' as false
             // using the following line to edit/commit prefs
         	prefs.edit().putBoolean("firstrun", false).commit();
+        	
+            copyFileOrDir("sonidos");
+            copyFileOrDir("imagenes");
              	
         	Log.d("ABCLandia", "Primer Ejecucion");   
         }

@@ -238,15 +238,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		final String PATH_TO_IMAGES = Environment.getExternalStorageDirectory().getPath() + "/imagenes/";
 		final String PATH_TO_SOUNDS = Environment.getExternalStorageDirectory().getPath() + "/sonidos/";
 		List<Card> palabras = new ArrayList<Card>();
-		String selectQuery = "select palabra_id, palabra_letra, palabra_palabra, imagen_id, sonido_id  from palabras where categoria_id = "
-				+ unaCategoria + " " ;
+		String selectQuery = "select palabra_id, palabra_letra, palabra_palabra, imagen_id, sonido_id  from palabras where categoria_id = '"
+				+ unaCategoria + "' " ;
 		SQLiteDatabase database = this.getWritableDatabase();
 		Cursor cursor = database.rawQuery(selectQuery, null);
 		if (cursor.moveToFirst()){
 			do{
 				Card unaPalabra = new Card(cursor.getInt(0), cursor.getString(1), cursor.getString(2), PATH_TO_IMAGES + cursor.getString(3)+ ".jpg", PATH_TO_SOUNDS+cursor.getString(4)+".ogg");
 			
-				Log.d("Palbras",cursor.getColumnName(3));
+				Log.d("Palabras",cursor.getString(2));
 				palabras.add(unaPalabra);
 			} while(cursor.moveToNext());
 		}
@@ -263,14 +263,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	 */
 	public Card getPalabraFromLetraAndCategoria(String unaLetra, Integer unaCategoria) {
 		Card unaPalabra;
-
+		final String PATH_TO_IMAGES = Environment.getExternalStorageDirectory().getPath()+ "/imagenes/";
+		final String PATH_TO_SOUNDS = Environment.getExternalStorageDirectory().getPath() + "/sonidos/";
 		String selectQuery = "select palabra_id, palabra_letra, palabra_palabra, imagen_id, sonido_id  from palabras where categoria_id = '"
 				+ unaCategoria + "'and palabra_letra = '" + unaLetra + "'";
 
 		SQLiteDatabase database =  this.getWritableDatabase();
 		Cursor cursor =  database.rawQuery(selectQuery, null);
 		if (cursor.moveToFirst()) {
-			unaPalabra =  new Card(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
+			unaPalabra =  new Card(cursor.getInt(0), cursor.getString(1), cursor.getString(2), PATH_TO_IMAGES + cursor.getString(3)+ ".jpg", PATH_TO_SOUNDS+cursor.getString(4)+".ogg");
 		} else {
 			unaPalabra = new Card(0,  unaLetra, unaLetra, "none", "none" );
 		}

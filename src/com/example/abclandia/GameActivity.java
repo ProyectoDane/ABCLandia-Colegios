@@ -55,9 +55,9 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 	protected int secuence = 0;
 	
 	// Definimos las variables para saber que Maestro, Alumno y Categoria estan involucrados. 
-	private int unMaestro = 0;
-	private int unAlumno = 0;
-	private int unaCategoria = 0;
+	protected int unMaestro = 0;
+	protected int unAlumno = 0;
+	protected int unaCategoria = 0;
 
 
 
@@ -100,7 +100,7 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 		char[] secuences = GameDataStructure.getSecuence(mGameNumber,
 				mCurrrentLevel, secuence);
 		for (int i = 0; i < secuences.length; i++) {
-			String letter = String.valueOf(secuences[i]).toUpperCase();
+			String letter = String.valueOf(secuences[i]);
 			Card card = myDbHelper.getPalabraFromLetraAndCategoria(letter, unaCategoria);
 			card.setLetterType(2);
 			data.add(card);

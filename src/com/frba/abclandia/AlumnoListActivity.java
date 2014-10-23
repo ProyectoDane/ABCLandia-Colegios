@@ -59,7 +59,8 @@ public class AlumnoListActivity extends ListActivity {
 		iniciarPrgDialog();
 		
 		//Sincronizamos los Alumnos
-		syncAlumnos();
+		if (this.unMaestro != 0)
+			syncAlumnos();
 		
 		
 	}

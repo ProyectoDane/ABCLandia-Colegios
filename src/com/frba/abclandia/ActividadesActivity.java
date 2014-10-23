@@ -59,13 +59,13 @@ public class ActividadesActivity extends Activity {
 		// Iniciar ProgressDialog
 		iniciarPrgDialog();
 		
-		
-		syncAlumnoDatos();
-		
+		if (this.unAlumno != 0){
+			syncAlumnoDatos();
+		}
 	}
 	
 	private String getSoundPath() {
-		return Environment.getExternalStorageDirectory().getPath() + "/sonidos/";
+		return Environment.getExternalStorageDirectory().getPath()+ "/sonidos/";
 	}
 	
 	protected String getImagePath() {
@@ -108,8 +108,8 @@ public class ActividadesActivity extends Activity {
 							Log.d("Palabra bug", unaPalabra.getString("id"));
 							//alumnoPalabras.add(new Palabra(unaPalabra.getInt("id"), categoria.getInt("id"), unaPalabra.getString("letra").toUpperCase(),
 									//unaPalabra.getString("palabra"), unaPalabra.getString("imagen_id"), unaPalabra.getString("sonido_id")));
-							Palabra miPalabra = new Palabra(unaPalabra.getString("id"), categoria.getString("id"), unaPalabra.getString("letra").toUpperCase(),
-									unaPalabra.getString("palabra").toUpperCase(), unaPalabra.getString("imagen_id"), unaPalabra.getString("sonido_id"));
+							Palabra miPalabra = new Palabra(unaPalabra.getString("id"), categoria.getString("id"), unaPalabra.getString("letra"),
+									unaPalabra.getString("palabra"), unaPalabra.getString("imagen_id"), unaPalabra.getString("sonido_id"));
 							myDbHelper.insertPalabra(miPalabra);
 							final String imagenId = unaPalabra.getString("imagen_id");
 							final String sonidoId =  unaPalabra.getString("sonido_id");
