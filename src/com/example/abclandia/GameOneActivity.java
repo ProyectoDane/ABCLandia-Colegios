@@ -80,7 +80,7 @@ public class GameOneActivity extends GameActivity
 		mGridViewRight.setAdapter(new CardViewAdapter(data, this,
 				new JustLetterRenderer(this), R.layout.game_one_card_view));
 		mGridViewLeft.setAdapter(new CardViewAdapter(data, this,
-				new JustLetterRenderer(this), R.layout.game_one_card_view));
+				new JustImageRenderer(this), R.layout.game_one_card_view));
 
 		mDragLayer = (DragLayer) findViewById(R.id.drag_layer);
 		mDragLayer.setDragController(mDragController);

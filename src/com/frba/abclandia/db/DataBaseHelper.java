@@ -21,6 +21,7 @@ import android.util.Log;
 import com.example.abclandia.Card;
 import com.frba.abclandia.dtos.Alumno;
 import com.frba.abclandia.dtos.Categoria;
+import com.frba.abclandia.dtos.Estadistica;
 import com.frba.abclandia.dtos.Maestro;
 import com.frba.abclandia.dtos.Palabra;
 
@@ -429,6 +430,30 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		database.close();
 		
 	}
+	
+	
+	/**
+	 * Dado un objeto Estadistica la inserta en la base de datos.
+	 * @param unaEstadistica
+	 */
+	public void insertEstadistica(Estadistica unaEstadistica) {
+		SQLiteDatabase database =  this.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		values.put("alumno_id", unaEstadistica.getAlumno_id());
+		values.put("maestro_id", unaEstadistica.getMaestro_id());
+		values.put("categoria_id", unaEstadistica.getCategoria_id());
+		values.put("ejercicio", unaEstadistica.getEjercicio());
+		values.put("nivel", unaEstadistica.getNivel());
+		values.put("secuencia", unaEstadistica.getSecuencia());
+		values.put("tiempo",unaEstadistica.getTiempo());
+		values.put("cantidad_aciertos", unaEstadistica.getCantidad_aciertos());
+		values.put("cantidad_fallas", unaEstadistica.getCantidad_fallas());
+		values.put("timestamp", unaEstadistica.getTimestamp());
+		database.insert("estadisticas",null, values);
+		database.close();
+		
+		
+	}
 
 	public List<Palabra> getAllPalabras() {
 		List<Palabra> palabras = new ArrayList<Palabra>();
@@ -463,4 +488,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		cursor.close();
 		return palabras;
 	}
+
+
 }

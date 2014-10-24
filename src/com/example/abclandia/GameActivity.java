@@ -300,5 +300,9 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 		return unaCategoria;
 	}
 	
+	public int getNivel(){
+		return mCurrrentLevel;
+	}
+	
 
 }
