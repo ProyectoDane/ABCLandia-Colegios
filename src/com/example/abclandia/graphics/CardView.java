@@ -21,9 +21,9 @@ import com.example.abclandia.DropTarget;
 import com.example.abclandia.GameActivity;
 import com.example.abclandia.GameOneActivity;
 import com.example.abclandia.GameSixActivity;
-import com.example.abclandia.Util;
 import com.frba.abclandia.R;
 import com.frba.abclandia.adapters.CardViewAdapter;
+import com.frba.abclandia.utils.Util;
 
 
 

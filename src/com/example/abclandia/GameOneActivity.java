@@ -16,29 +16,16 @@
 package com.example.abclandia;
 
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import android.content.Intent;
-import android.database.SQLException;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.GridView;
-
 import com.example.abclandia.audio.Audio;
 import com.example.abclandia.graphics.EOneMatchedRenderer;
 import com.example.abclandia.graphics.JustImageRenderer;
 import com.example.abclandia.graphics.JustLetterRenderer;
 import com.frba.abclandia.R;
 import com.frba.abclandia.adapters.CardViewAdapter;
-import com.frba.abclandia.db.DataBaseHelper;
-import com.frba.abclandia.dtos.Alumno;
-import com.frba.abclandia.dtos.Maestro;
-import com.frba.abclandia.dtos.Palabra;
 
 
 
@@ -67,27 +54,16 @@ public class GameOneActivity extends GameActivity
      */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		
+		mGameNumber = GAME_NUMBER;
+		mGameClassName = CLASS_NAME;
 		super.onCreate(savedInstanceState);
 
-		Bundle extras = getIntent().getExtras();
-		mGameNumber = GAME_NUMBER;
-		if (extras != null) {
-			mCurrrentLevel = extras.getInt(GameActivity.INTENT_LEVEL_KEY);
-
-			secuence = extras.getInt(INTENT_SECUENCE_KEY);
-		}
-
-		// Recuperamos los valores de Maestro, Alumno y Categoria
-		Intent i = getIntent();
-		this.unMaestro = i.getIntExtra("unMaestro", 0);
-		this.unAlumno = i.getIntExtra("unAlumno", 0);
-		this.unaCategoria = i.getIntExtra("unaCategoria", 0);
+	
 		
-		mDragController = new DragController(this);
-
-		loadDataCard();
-
+		
 		setContentView(R.layout.game_one_activity);
+		mDragController = new DragController(this);
 		mDragLayer = (DragLayer) findViewById(R.id.drag_layer);
 		mDragLayer.setDragController(mDragController);
 		mDragController.setDragListener(mDragLayer);
@@ -102,7 +78,7 @@ public class GameOneActivity extends GameActivity
 		mGridViewRight = (GridView) findViewById(R.id.gridViewRight);
 
 		mGridViewRight.setAdapter(new CardViewAdapter(data, this,
-				new JustImageRenderer(this), R.layout.game_one_card_view));
+				new JustLetterRenderer(this), R.layout.game_one_card_view));
 		mGridViewLeft.setAdapter(new CardViewAdapter(data, this,
 				new JustLetterRenderer(this), R.layout.game_one_card_view));
 
@@ -117,68 +93,24 @@ public class GameOneActivity extends GameActivity
 
 	}
 
-
-
-	
-
-		
-		
-
-	
-   
-
-	
-
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
 	    return super.onTouch(v, event);
 	}
 
-	public boolean startDrag (View v)
-	{
+	public boolean startDrag(View v) {
 		super.startDrag(v);
-	    
 
-	    return true;
+		return true;
 	}
-	
-	
-
 
 	@Override
 	public void onDragEnd(boolean success) {
-		if (success) {
-			mAudio.playCorrectSound();
-		countHits++;
-		if (countHits == TOTAL_JOINS) {
-			 Handler handler = new Handler();
-		     handler.postDelayed(new Runnable() {
-		    	 public void run() {
-		    		 int nextLevel = mCurrrentLevel + 1;
-		    		 if (GameDataStructure.isExcersiseComplete(GAME_NUMBER, mCurrrentLevel, secuence)){
-		    			 Intent intent = new Intent(GameOneActivity.this, GameWinActivity.class);
-		    			 startActivity(intent);
-		    			 
-		    		 } else {
-		    			
-			            	Intent intent = new Intent(GameOneActivity.this, WinActivity.class);
-			            	
-			    			intent.putExtra(GameActivity.INTENT_LEVEL_KEY, mCurrrentLevel);
-			    			intent.putExtra(GameActivity.INTENT_SECUENCE_KEY, secuence);
-			    			intent.putExtra(GameActivity.INTENT_CLASS_LAUNCHER_KEY, CLASS_NAME);
-			    			startActivity(intent);
-		    			 
-		    		 }
-		               
-		            }
-		        }, 500);
-		    }
-			
-//			finish();
-			   
-			
-		}
-		}
+		super.onDragEnd(success);
+	}
+	
+
+		
 	
 
 	

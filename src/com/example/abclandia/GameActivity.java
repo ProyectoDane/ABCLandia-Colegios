@@ -20,6 +20,7 @@ import android.content.res.Configuration;
 import android.database.SQLException;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,6 +31,7 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 		DragController.DragListener {
 
 	public static final int TOTAL_JOINS = 5;
+
 	public static final String PACKAGE_NAME = "com.example.abclandia";
 	public static final String INTENT_LEVEL_KEY = "level";
 	public static final String INTENT_SECUENCE_KEY = "secuence";
@@ -53,11 +55,14 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 	protected int mCurrentSecuence = 0;
 	protected int mGameNumber = 0;
 	protected int secuence = 0;
+	protected String mGameClassName;
 	
 	// Definimos las variables para saber que Maestro, Alumno y Categoria estan involucrados. 
 	protected int unMaestro = 0;
 	protected int unAlumno = 0;
 	protected int unaCategoria = 0;
+	
+	protected GameStatistics mGameStatistics;
 
 
 
@@ -67,12 +72,13 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
 		setFullScreen();
 		setSizes();
-		
-
-		
 		iniciarDB();
+		getExtraData();
+		loadDataCard();
+		mGameStatistics = new GameStatistics(this);
 
 	}
 
@@ -126,8 +132,18 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 			
 		}
 		
-	protected void getExtraData(){
-		
+	protected void getExtraData() {
+		Bundle extras = getIntent().getExtras();
+
+		if (extras != null) {
+			mCurrrentLevel = extras.getInt(GameActivity.INTENT_LEVEL_KEY, 1);
+			secuence = extras.getInt(INTENT_SECUENCE_KEY, 1);
+			unMaestro = extras.getInt("unMaestro", 0);
+			unAlumno = extras.getInt("unAlumno", 0);
+			unaCategoria = extras.getInt("unaCategoria", 0);
+
+		}
+
 	}
 
 
@@ -177,11 +193,112 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 
 	}
 
+
+	
 	@Override
 	public void onDragEnd(boolean success) {
+		if (success) {
+			mAudio.playCorrectSound();
+			countHits++;
+			mGameStatistics.countHit();
+			if (countHits == TOTAL_JOINS) {
+				mGameStatistics.saveStatistics();
+				Handler handler = new Handler();
+				handler.postDelayed(new Runnable() {
+					public void run() {
 
+						if (GameDataStructure.isExcersiseComplete(mGameNumber,
+								mCurrrentLevel, secuence)) {
+							Intent intent = new Intent(GameActivity.this,
+									GameWinActivity.class);
+							startActivity(intent);
+
+						} else {
+
+							Intent intent = new Intent(GameActivity.this,
+									WinActivity.class);
+
+							intent.putExtra(GameActivity.INTENT_LEVEL_KEY,
+									mCurrrentLevel);
+							intent.putExtra(GameActivity.INTENT_SECUENCE_KEY,
+									secuence);
+							intent.putExtra(
+									GameActivity.INTENT_CLASS_LAUNCHER_KEY,
+									mGameClassName);
+							startActivity(intent);
+
+						}
+
+					}
+				}, 500);
+			}
+
+		} else 
+			mGameStatistics.countFail();
 	}
-	
+
+	@Override
+	public void onDragEnd(boolean success, boolean isClick) {
+		if (success) {
+			mAudio.playCorrectSound();
+			countHits++;
+			mGameStatistics.countHit();
+			if (countHits == TOTAL_JOINS) {
+				mGameStatistics.saveStatistics();
+				Handler handler = new Handler();
+				handler.postDelayed(new Runnable() {
+					public void run() {
+
+						if (GameDataStructure.isExcersiseComplete(mGameNumber,
+								mCurrrentLevel, secuence)) {
+							Intent intent = new Intent(GameActivity.this,
+									GameWinActivity.class);
+							startActivity(intent);
+
+						} else {
+
+							Intent intent = new Intent(GameActivity.this,
+									WinActivity.class);
+
+							intent.putExtra(GameActivity.INTENT_LEVEL_KEY,
+									mCurrrentLevel);
+							intent.putExtra(GameActivity.INTENT_SECUENCE_KEY,
+									secuence);
+							intent.putExtra(
+									GameActivity.INTENT_CLASS_LAUNCHER_KEY,
+									mGameClassName);
+							startActivity(intent);
+
+						}
+
+					}
+				}, 500);
+			}
+
+		} else if (!isClick)
+			mGameStatistics.countFail();
+		
+	}
+
+	public int getmGameNumber() {
+		return mGameNumber;
+	}
+
+	public int getSecuence() {
+		return secuence;
+	}
+
+	public int getUnMaestro() {
+		return unMaestro;
+	}
+
+	public int getUnAlumno() {
+		return unAlumno;
+	}
+
+	public int getUnaCategoria() {
+		return unaCategoria;
+	}
 	
 
 }
