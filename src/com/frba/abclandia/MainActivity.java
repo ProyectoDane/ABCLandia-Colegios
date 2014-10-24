@@ -104,8 +104,8 @@ public class MainActivity extends Activity {
             // using the following line to edit/commit prefs
 
         	preferences.edit().putBoolean("firstrun", false).commit();
-        	copyFileOrDir("default_sounds");
-            copyFileOrDir("default_images");
+        	copyFileOrDir("sonidos");
+            copyFileOrDir("imagenes");
 
              	
         	Log.d("ABCLandia", "Primer Ejecucion");   
