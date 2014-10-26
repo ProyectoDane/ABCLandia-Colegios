@@ -28,7 +28,7 @@ public class GameDataStructure {
 		e1L1Secuences.put(1, new char[] { 'a', 'e', 'i', 'o', 'u' });
 		e1L1Secuences.put(2, new char[] { 'a', 'e', 'm', 's', 'p' });
 		e1L1Secuences.put(3, new char[] { 'i', 'o', 'u', 'm', 's' });
-		e1L1Secuences.put(4, new char[] { 's', 'm', 'p', 'a', '0' });
+		e1L1Secuences.put(4, new char[] { 's', 'm', 'p', 'a', 'o' });
 		e1L1Secuences.put(5, new char[] { 'i', 'u', 'l', 's', 'p' });
 		e1L1Secuences.put(6, new char[] { 'l', 'p', 's', 'm', 't' });
 		e1L1Secuences.put(7, new char[] { 't', 's', 'l', 'p', 'f' });
@@ -53,8 +53,8 @@ public class GameDataStructure {
 		e1L3Secuences.put(5, new char[] { 'v', 'h', 'y', 'x', 'z' });
 		e1L3Secuences.put(6, new char[] { 'z', 'y', 'x', 'w', 'ñ' });
 		e1L3Secuences.put(7, new char[] { 'x', 'y', 'w', 'ñ', 'k' });
-		e1L3Secuences.put(8, new char[] { 'y', 'w', 'ñ', 'k' });
-		e1L3Secuences.put(9, new char[] { 'ñ', 'w', 'k', 'y' });
+		e1L3Secuences.put(8, new char[] { 'y', 'w', 'ñ', 'k','v' });
+		e1L3Secuences.put(9, new char[] { 'ñ', 'w', 'k', 'y','v' });
 
 		e45L1Secuences = new HashMap<Integer, char[]>();
 		e45L1Secuences.put(1, new char[] { 'a', 'e', 'o' });
@@ -63,8 +63,8 @@ public class GameDataStructure {
 		e45L1Secuences.put(4, new char[] { 't', 'j', 'f' });
 
 		e45L2Secuences = new HashMap<Integer, char[]>();
-		e45L1Secuences.put(1, new char[] { 'v', 'c', 'w' });
-		e45L1Secuences.put(2, new char[] { 'x', 'z', 'ñ' });
+		e45L2Secuences.put(1, new char[] { 'v', 'c', 'w' });
+		e45L2Secuences.put(2, new char[] { 'x', 'z', 'ñ' });
 
 		e45L3Secuences = new HashMap<Integer, char[]>();
 		e45L3Secuences.put(1, new char[] { 'q', 'y', 'r' });
@@ -72,14 +72,14 @@ public class GameDataStructure {
 		e45L3Secuences.put(3, new char[] { 'd', 'k', 'n' });
 
 		e6L1Secuences = new HashMap<Integer, char[]>();
-		e45L3Secuences.put(1, new char[] { 'a', 'e', 'o' });
-		e45L3Secuences.put(2, new char[] { 'm', 'u', 's' });
-		e45L3Secuences.put(3, new char[] { 'p', 'i', 'l' });
-		e45L3Secuences.put(4, new char[] { 'd', 'b', 'f' });
-		e45L3Secuences.put(5, new char[] { 'e', 'a', 'o' });
-		e45L3Secuences.put(6, new char[] { 'a', 'o', 'e' });
-		e45L3Secuences.put(7, new char[] { 'o', 'n', 'r' });
-		e45L3Secuences.put(8, new char[] { 'i', 'o', 'n' });
+		e6L1Secuences.put(1, new char[] { 'a', 'e', 'o' });
+		e6L1Secuences.put(2, new char[] { 'm', 'u', 's' });
+		e6L1Secuences.put(3, new char[] { 'p', 'i', 'l' });
+		e6L1Secuences.put(4, new char[] { 'd', 'b', 'f' });
+		e6L1Secuences.put(5, new char[] { 'e', 'a', 'o' });
+		e6L1Secuences.put(6, new char[] { 'a', 'o', 'e' });
+		e6L1Secuences.put(7, new char[] { 'o', 'n', 'r' });
+		e6L1Secuences.put(8, new char[] { 'i', 'o', 'n' });
 
 	}
 	static {

@@ -87,17 +87,27 @@
             android:screenOrientation="landscape" >
         </activity>
         <activity
-            android:name="com.example.abclandia.WinActivity"
-            android:screenOrientation="landscape" >
-        </activity>
-        <activity
             android:name="com.example.abclandia.GameFourActivity"
             android:screenOrientation="landscape" >
         </activity>
+         <activity
+            android:name="com.example.abclandia.GameFiveActivity"
+            android:screenOrientation="landscape" >
+        </activity>
+        
         <activity
             android:name="com.example.abclandia.GameSixActivity"
             android:screenOrientation="landscape" >
         </activity>
+        <activity
+            android:name="com.example.abclandia.WinActivity"
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name="com.example.abclandia.GameWinActivity"
+            android:screenOrientation="landscape" >
+        </activity>
+        
         <activity
             android:name=".Game"
             android:label="@string/title_activity_game" >

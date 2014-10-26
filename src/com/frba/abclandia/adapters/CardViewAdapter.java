@@ -53,7 +53,7 @@ public class CardViewAdapter extends BaseAdapter {
 	@Override
 	public int getCount() {
 		return mData.size();
-//		return 9;
+
 	}
 
 	@Override
@@ -69,68 +69,60 @@ public class CardViewAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View view;
-		
+
 		Card dataCard = mData.get(position);
-	
-		if (convertView == null){
+
+		if (convertView == null) {
 			LayoutInflater inflater = (LayoutInflater) mContext
-			        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			  		view = inflater.inflate(mLayoutCardView, parent, false);
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			view = inflater.inflate(mLayoutCardView, parent, false);
 		} else {
 			view = convertView;
 		}
-		
+
 		CardView cardView = (CardView) view;
-		
-		if (mContext.getClass() == GameSixActivity.class){
+
+		if (mContext.getClass() == GameSixActivity.class) {
 			cardView.setDoubleMatching(true);
-			
+
 		}
-		
-		
+
 		cardView.myCellnumber = position;
 		cardView.mAdapter = this;
 		cardView.setCard(dataCard);
-		
+
 		if (dataCard.isEmptyCard()) {
 			cardView.setRenderer(mEmptyRenderer);
 			cardView.setAllowDrag(false);
 		} else {
 			cardView.setRenderer(mRenderer);
 		}
-		
-		
 
-		cardView.setOnTouchListener ((View.OnTouchListener) mContext);
-		
-	
-		  
-		  
-		  
+		cardView.setOnTouchListener((View.OnTouchListener) mContext);
 
-		   
 		return view;
-		
+
 	}
-	private void adaptDataToScreen(List<Card> data){
-		
+
+	private void adaptDataToScreen(List<Card> data) {
+
 		if (mContext.getClass().getSuperclass() == GameActivity.class) {
-		Collections.shuffle(data);
+			 Collections.shuffle(data);
 		}
-		if (data.size() == 5){
+		if (data.size() == 5) {
 			int j = 0;
-			for (int i=0;i <9; i++){
-				if (i % 2 == 0){
+			for (int i = 0; i < 9; i++) {
+				if (i % 2 == 0) {
 					mData.add(data.get(j));
 					j++;
 				} else {
 					mData.add(new Card());
 				}
 			}
-		} else { {
-			mData = data;
+		} else {
+			for(Card card:data)
+			mData.add(card);		
 		}
-	}
 
-}
+	}
 }

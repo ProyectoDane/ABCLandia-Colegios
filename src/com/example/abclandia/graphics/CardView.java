@@ -96,6 +96,9 @@ public class CardView extends View implements DragSource, DropTarget {
 	public void setDoubleMatching(boolean flag){
 		isDoubleMatching = flag;
 	}
+	public boolean isFirstMatching(){
+		return firstMatching;
+	}
 	
 	@Override
 	public boolean isDropTarget(){
@@ -171,14 +174,17 @@ public class CardView extends View implements DragSource, DropTarget {
 	public void onDrop(DragSource source, int x, int y, int xOffset,
 			int yOffset, DragShadow dragView, Object dragInfo) {
 	
+			CardView cardSource = (CardView) source;
 			
-			mRenderer = ((GameActivity) mContext).getMatchedRenderer();
-			if (isDoubleMatching && !firstMatching){
+			if (isDoubleMatching && !firstMatching && !cardSource.isFirstMatching()  ){
 				firstMatching = true;
 				mRenderer = ((GameSixActivity) mContext).getFirstMatchedRenderer();
 			}
-			else
+			else {
+				mRenderer = ((GameActivity) mContext).getMatchedRenderer();
 				this.mAllowDrag = false;
+			}
+				
 			
 			invalidate();
 			

@@ -10,6 +10,7 @@ import android.graphics.RectF;
 import android.graphics.Paint.Align;
 
 import com.example.abclandia.Card;
+import com.frba.abclandia.stringformatter.WordFormatter;
 import com.frba.abclandia.utils.Util;
 
 public abstract class Renderer {
@@ -23,6 +24,7 @@ public abstract class Renderer {
 	protected Paint mBorderRectPaint, mFillRectPaint, mSuccessBorderRectPaint,
 			mTextLetterPaint, mTextWordPaint;
 	protected Context mContext;
+	protected WordFormatter wordFormatter;
 
 	public Renderer(Context context) {
 		mContext = context;
@@ -51,6 +53,9 @@ public abstract class Renderer {
 				TEXT_WORD_SIZE));
 
 	}
+	public void setWordFormatter(WordFormatter formatter){
+		wordFormatter = formatter;
+	}
 
 	public void Render(Canvas canvas, int rectangleWidth, int rectangleHeight,
 			Paint borderRectanglePaint, Paint textPaint, Card card,
@@ -68,6 +73,10 @@ public abstract class Renderer {
 		canvas.drawRoundRect(rectangle, radiusX, radiusY, mFillRectPaint);
 		canvas.drawRoundRect(rectangle, radiusX, radiusY, rectangleBorderPaint);
 
+	}
+	
+	public void setRectangleColorBorder(int color){
+		mBorderRectPaint.setColor(color);
 	}
 
 	protected void drawImage(Canvas canvas, Card card, int rectangleWidth,
@@ -94,6 +103,12 @@ public abstract class Renderer {
 	protected void drawWord(Canvas canvas, Card card, int rectangleWidth,
 			int rectangleHeight) {
 		canvas.drawText(card.getWord(), (float) (rectangleWidth * 0.5),
+				(float) (rectangleHeight * 0.9), mTextWordPaint);
+	}
+	
+	protected void drawWord(Canvas canvas, String word, int rectangleWidth,
+			int rectangleHeight) {
+		canvas.drawText(word, (float) (rectangleWidth * 0.5),
 				(float) (rectangleHeight * 0.9), mTextWordPaint);
 	}
 

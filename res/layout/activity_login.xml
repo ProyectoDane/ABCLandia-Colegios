@@ -11,7 +11,7 @@
         android:id="@+id/login_maestro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btnlogin_padre"
+       
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="70dp"
         android:onClick="loginMaestro"
@@ -23,6 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
+        android:layout_below="@id/login_maestro"
         android:layout_marginBottom="164dp"
         android:onClick="loginPadre"
         android:text="@string/login_padre" />

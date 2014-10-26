@@ -7,7 +7,7 @@ import java.util.List;
 
 import com.example.abclandia.audio.Audio;
 import com.example.abclandia.graphics.CardView;
-import com.example.abclandia.graphics.EOneMatchedRenderer;
+import com.example.abclandia.graphics.LetterImageRenderer;
 import com.example.abclandia.graphics.JustLetterRenderer;
 import com.example.abclandia.graphics.Renderer;
 import com.frba.abclandia.R;
@@ -30,7 +30,7 @@ import android.view.WindowManager;
 public class GameActivity extends Activity implements View.OnTouchListener,
 		DragController.DragListener {
 
-	public static final int TOTAL_JOINS = 5;
+	public static final int TOTAL_JOINS = 1;
 
 	public static final String PACKAGE_NAME = "com.example.abclandia";
 	public static final String INTENT_LEVEL_KEY = "level";
@@ -62,6 +62,8 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 	protected int unAlumno = 0;
 	protected int unaCategoria = 0;
 	
+	protected int mTotalJoins;
+	
 	protected GameStatistics mGameStatistics;
 
 
@@ -78,8 +80,16 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 		iniciarDB();
 		getExtraData();
 		loadDataCard();
+		setSounds();
 		mGameStatistics = new GameStatistics(this);
 
+	}
+
+	protected void setSounds() {
+		mAudio = new Audio(this);
+		mAudio.loadWordSounds(data);
+	
+		mAudio.loadDefaultSounds();
 	}
 
 	protected void setFullScreen() {
@@ -195,47 +205,7 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 
 
 	
-	@Override
-	public void onDragEnd(boolean success) {
-		if (success) {
-			mAudio.playCorrectSound();
-			countHits++;
-			mGameStatistics.countHit();
-			if (countHits == TOTAL_JOINS) {
-				mGameStatistics.saveStatistics();
-				Handler handler = new Handler();
-				handler.postDelayed(new Runnable() {
-					public void run() {
 
-						if (GameDataStructure.isExcersiseComplete(mGameNumber,
-								mCurrrentLevel, secuence)) {
-							Intent intent = new Intent(GameActivity.this,
-									GameWinActivity.class);
-							startActivity(intent);
-
-						} else {
-
-							Intent intent = new Intent(GameActivity.this,
-									WinActivity.class);
-
-							intent.putExtra(GameActivity.INTENT_LEVEL_KEY,
-									mCurrrentLevel);
-							intent.putExtra(GameActivity.INTENT_SECUENCE_KEY,
-									secuence);
-							intent.putExtra(
-									GameActivity.INTENT_CLASS_LAUNCHER_KEY,
-									mGameClassName);
-							startActivity(intent);
-
-						}
-
-					}
-				}, 500);
-			}
-
-		} else 
-			mGameStatistics.countFail();
-	}
 
 	@Override
 	public void onDragEnd(boolean success, boolean isClick) {
@@ -243,7 +213,7 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 			mAudio.playCorrectSound();
 			countHits++;
 			mGameStatistics.countHit();
-			if (countHits == TOTAL_JOINS) {
+			if (countHits == mTotalJoins) {
 				mGameStatistics.saveStatistics();
 				Handler handler = new Handler();
 				handler.postDelayed(new Runnable() {
@@ -253,6 +223,9 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 								mCurrrentLevel, secuence)) {
 							Intent intent = new Intent(GameActivity.this,
 									GameWinActivity.class);
+							intent.putExtra(
+									GameActivity.INTENT_CLASS_LAUNCHER_KEY,
+									mGameClassName);
 							startActivity(intent);
 
 						} else {
@@ -302,6 +275,12 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 	
 	public int getNivel(){
 		return mCurrrentLevel;
+	}
+
+	@Override
+	public void onDragEnd(boolean success) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 

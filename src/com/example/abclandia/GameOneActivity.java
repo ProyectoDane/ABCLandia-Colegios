@@ -16,12 +16,13 @@
 package com.example.abclandia;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.GridView;
 import com.example.abclandia.audio.Audio;
-import com.example.abclandia.graphics.EOneMatchedRenderer;
+import com.example.abclandia.graphics.LetterImageRenderer;
 import com.example.abclandia.graphics.JustImageRenderer;
 import com.example.abclandia.graphics.JustLetterRenderer;
 import com.frba.abclandia.R;
@@ -34,10 +35,8 @@ import com.frba.abclandia.adapters.CardViewAdapter;
 public class GameOneActivity extends GameActivity 
 	
 {
-	public static final int TOTAL_JOINS = 1;
-	
-	
-	private DragLayer mDragLayer;
+	public static final int TOTAL_JOINS = 5;
+
 	private GridView mGridViewLeft;
 	private GridView mGridViewRight;
 	
@@ -57,6 +56,7 @@ public class GameOneActivity extends GameActivity
 		
 		mGameNumber = GAME_NUMBER;
 		mGameClassName = CLASS_NAME;
+		mTotalJoins = TOTAL_JOINS;
 		super.onCreate(savedInstanceState);
 
 	
@@ -67,12 +67,12 @@ public class GameOneActivity extends GameActivity
 		mDragLayer = (DragLayer) findViewById(R.id.drag_layer);
 		mDragLayer.setDragController(mDragController);
 		mDragController.setDragListener(mDragLayer);
-		mDroppedRenderer = new EOneMatchedRenderer(this);
+	
 
-		mAudio = new Audio(this);
-		mAudio.loadWordSounds(data);
+	
+	
 		mAudio.loadLetterSoungs(data);
-		mAudio.loadDefaultSounds();
+	
 
 		mGridViewLeft = (GridView) findViewById(R.id.gridViewLeft);
 		mGridViewRight = (GridView) findViewById(R.id.gridViewRight);
@@ -89,25 +89,16 @@ public class GameOneActivity extends GameActivity
 		mDragLayer.setGridViewRight(mGridViewRight);
 
 		mDragController.setDragListener(mDragLayer);
-		mDroppedRenderer = new EOneMatchedRenderer(this);
+		mDroppedRenderer = new LetterImageRenderer(this);
+		mDroppedRenderer.setRectangleColorBorder(Color.GREEN);
 
 	}
 
-	@Override
-	public boolean onTouch(View v, MotionEvent event) {
-	    return super.onTouch(v, event);
-	}
+	
 
-	public boolean startDrag(View v) {
-		super.startDrag(v);
 
-		return true;
-	}
 
-	@Override
-	public void onDragEnd(boolean success) {
-		super.onDragEnd(success);
-	}
+	
 	
 
 		
