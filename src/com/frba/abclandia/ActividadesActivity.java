@@ -12,8 +12,11 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.database.SQLException;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Base64;
@@ -59,9 +62,19 @@ public class ActividadesActivity extends Activity {
 		// Iniciar ProgressDialog
 		iniciarPrgDialog();
 		
-		if (this.unAlumno != 0){
+		if (this.unAlumno != 0 && this.unMaestro != 0  && isNetworkAvailable() != false ){
+			// Sincronizamos los datos del alumno
 			syncAlumnoDatos();
+		} else {
+			Log.d("ABCLandia", "No hay conectividad, no sincronizamos.");
 		}
+	}
+	
+	private boolean isNetworkAvailable() {
+	    ConnectivityManager connectivityManager 
+	          = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+	    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+	    return activeNetworkInfo != null && activeNetworkInfo.isConnected();
 	}
 	
 	private String getSoundPath() {

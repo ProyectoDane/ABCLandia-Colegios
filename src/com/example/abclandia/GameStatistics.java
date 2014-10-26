@@ -1,13 +1,14 @@
 package com.example.abclandia;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.database.SQLException;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.frba.abclandia.db.DataBaseHelper;
 import com.frba.abclandia.dtos.Estadistica;
@@ -37,6 +38,8 @@ public class GameStatistics {
 	//Aca tenes que hacer el insert en la BD. Fijate que hice un par de metodos get en GameActivity
 	// para obtener categoria, alumno, etc. Fijate que esta la variable mGame para pedirle los datos
 	public void saveStatistics(){
+		
+		
 		mElapsedTime = System.currentTimeMillis() - mStartTime;
 		JSONObject jsonEstadisticas = new JSONObject();
 //        alumno_id,maestro_id,categoria_id,letra,ejercicio,nivel,secuencia,tiempo,cantidad_aciertos,cantidad_fallas
@@ -50,7 +53,7 @@ public class GameStatistics {
 			jsonEstadisticas.put("tiempo", mElapsedTime);
 			jsonEstadisticas.put("cantidad_aciertos", hitsCount - failsCount);
 			jsonEstadisticas.put("cantidad_fallas", failsCount);
-			jsonEstadisticas.put("timestamp", mStartTime);
+			jsonEstadisticas.put("timestamp", getCurrentTimeStamp());
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -59,6 +62,25 @@ public class GameStatistics {
 		Estadistica unaEstadistica =  new Estadistica(jsonEstadisticas);
 		myDbHelper.insertEstadistica(unaEstadistica);
 	}
+	
+	/**
+	 * 
+	 * @return yyyy-MM-dd HH:mm:ss formate date as string
+	 */
+	public static String getCurrentTimeStamp(){
+	    try {
+
+	        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	        String currentTimeStamp = dateFormat.format(new Date()); // Find todays date
+
+	        return currentTimeStamp;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+
+	        return null;
+	    }
+	}
+	
 	
 	private void postStats(JSONObject jsonEstadisticas) {
 		// TODO Auto-generated method stub
