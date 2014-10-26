@@ -441,7 +441,7 @@ public class ABCLandiaRestServer {
 	
 
 	private String getSoundPath() {
-		return Environment.getExternalStorageDirectory().getPath() + "/sonidos/";
+		return mContext.getFilesDir() + "/sonidos/";
 	}
 	private boolean fileExists(String string) {
 		File unArchivo = new File(string);
@@ -453,7 +453,7 @@ public class ABCLandiaRestServer {
 	}
 	protected String getImagePath() {
 		// TODO Auto-generated method stub
-		return Environment.getExternalStorageDirectory().getPath() + "/imagenes/";
+		return mContext.getFilesDir() + "/imagenes/";
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////

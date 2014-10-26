@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.ObjectInputStream.GetField;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,14 +32,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	private static String DB_NAME = "gelemerv1.sqlite";
 	private static Integer DATABASE_VERSION = 1;
 	private SQLiteDatabase myDataBase;
-	private final Context myContext;
+	private final Context mContext;
 	private static AbcLandiaContract abcLandia = new AbcLandiaContract();
 
 	// Creamos el constructor llamando a 
 	public DataBaseHelper(Context context) {
 		super(context, DB_NAME, null, DATABASE_VERSION);
-		this.myContext = context;
-		this.DB_PATH = this.DB_PATH + this.myContext.getApplicationContext().getPackageName() +"/databases/";
+		this.mContext = context;
+		this.DB_PATH = this.DB_PATH + this.mContext.getApplicationContext().getPackageName() +"/databases/";
 		
 	}
 	
@@ -71,7 +72,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		SQLiteDatabase checkDB = null;
 		
 		try {
-			File fdb =  this.myContext.getDatabasePath(DB_NAME);
+			File fdb =  this.mContext.getDatabasePath(DB_NAME);
 			checkDB = SQLiteDatabase.openDatabase(fdb.getAbsolutePath(), null, SQLiteDatabase.OPEN_READONLY);
 		} catch (SQLiteException e){
 			// La base de datos no existe todavia
@@ -89,7 +90,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	 */
 	private void copyDatabase() throws IOException {
 	// Abrimos la db local como un input stream
-	InputStream myInput = myContext.getAssets().open(DB_NAME);
+	InputStream myInput = mContext.getAssets().open(DB_NAME);
 	
 	// Path a la base que creamos recien
 	String outFileName =  DB_PATH + DB_NAME;
@@ -112,7 +113,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	public void openDatabase() throws SQLException {
 		// Abrimos la DB
 		//String myPath = DB_PATH + DB_NAME;
-		File fdb= this.myContext.getDatabasePath(DB_NAME);
+		File fdb= this.mContext.getDatabasePath(DB_NAME);
 		myDataBase =  SQLiteDatabase.openDatabase(fdb.getAbsolutePath(), null, SQLiteDatabase.OPEN_READONLY);
 		
 	}
@@ -236,8 +237,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	 * @return List<Palabra>
 	 */
 	public List<Card> getPalabrasFromCategoria(int unaCategoria){
-		final String PATH_TO_IMAGES = Environment.getExternalStorageDirectory().getPath() + "/imagenes/";
-		final String PATH_TO_SOUNDS = Environment.getExternalStorageDirectory().getPath() + "/sonidos/";
+		final String PATH_TO_IMAGES = mContext.getFilesDir() + "/imagenes/";
+		final String PATH_TO_SOUNDS = mContext.getFilesDir() + "/sonidos/";
 		List<Card> palabras = new ArrayList<Card>();
 		String selectQuery = "select palabra_id, palabra_letra, palabra_palabra, imagen_id, sonido_id  from palabras where categoria_id = '"
 				+ unaCategoria + "' " ;
@@ -264,8 +265,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	 */
 	public Card getPalabraFromLetraAndCategoria(String unaLetra, Integer unaCategoria) {
 		Card unaPalabra;
-		final String PATH_TO_IMAGES = Environment.getExternalStorageDirectory().getPath()+ "/imagenes/";
-		final String PATH_TO_SOUNDS = Environment.getExternalStorageDirectory().getPath() + "/sonidos/";
+		final String PATH_TO_IMAGES = mContext.getFilesDir() + "/imagenes/";
+		final String PATH_TO_SOUNDS = mContext.getFilesDir() + "/sonidos/";
 		String selectQuery = "select palabra_id, palabra_letra, palabra_palabra, imagen_id, sonido_id  from palabras where categoria_id = '"
 				+ unaCategoria + "'and palabra_letra = '" + unaLetra + "'";
 
