@@ -78,11 +78,11 @@ public class ActividadesActivity extends Activity {
 	}
 	
 	private String getSoundPath() {
-		return Environment.getExternalStorageDirectory().getPath()+ "/sonidos/";
+		return getFilesDir() +"/sonidos/";
 	}
 	
 	protected String getImagePath() {
-		return Environment.getExternalStorageDirectory().getPath() + "/imagenes/";
+		return getFilesDir()  + "/imagenes/";
 	}
 	
 	private boolean fileExists(String string) {
@@ -136,7 +136,7 @@ public class ActividadesActivity extends Activity {
 									RequestParams imagenParams = new RequestParams();
 									imagen.get("http://yaars.com.ar/abclandia/public/index.php/api/imagenes/" + imagenId, imagenParams, new AsyncHttpResponseHandler() {
 												public void onSuccess(String response) {
-													final String PATH_TO_SOUNDS = Environment.getExternalStorageDirectory().getPath() + "/imagenes/";
+													final String PATH_TO_SOUNDS = getFilesDir() + "/imagenes/";
 													String  nuevaImagenNombre = imagenId+".jpg";
 													File unaImagen = new File(PATH_TO_SOUNDS,nuevaImagenNombre);
 													// Bajar la Imagen
@@ -179,7 +179,7 @@ public class ActividadesActivity extends Activity {
 											RequestParams sonidoParams =  new RequestParams();
 											sonido.get("http://yaars.com.ar/abclandia/public/index.php/api/sonidos/" + sonidoId, sonidoParams, new AsyncHttpResponseHandler() {
 													public void onSuccess(String response) {
-														final String PATH_TO_IMAGES = Environment.getExternalStorageDirectory().getPath() + "/sonidos/";
+														final String PATH_TO_IMAGES = getFilesDir() + "/sonidos/";
 														String  nuevaImagenNombre = sonidoId+".ogg";
 														File unaImagen = new File(PATH_TO_IMAGES,nuevaImagenNombre);
 														// Bajar el sonido
