@@ -4,40 +4,32 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.animation.Animator.AnimatorListener;
 import android.animation.Animator;
+import android.animation.Animator.AnimatorListener;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.SQLException;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
-import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
-import android.view.animation.Animation;
-import android.view.animation.Animation.AnimationListener;
-import android.view.animation.AnimationUtils;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterViewFlipper;
-import android.widget.ViewFlipper;
 
 import com.example.abclandia.audio.Audio;
 import com.example.abclandia.graphics.CompleteCardRenderer;
-import com.example.abclandia.graphics.JustLetterRenderer;
 import com.example.abclandia.graphics.Renderer;
 import com.frba.abclandia.R;
 import com.frba.abclandia.adapters.Adapterprueba;
-import com.frba.abclandia.adapters.CardViewAdapter;
 import com.frba.abclandia.db.DataBaseHelper;
+import com.frba.abclandia.dtos.Categoria;
 
 public class AbcPlayerActivity extends Activity implements View.OnTouchListener {
 
@@ -179,18 +171,9 @@ public class AbcPlayerActivity extends Activity implements View.OnTouchListener 
 	private void loadDataCard() {
 
 		data = new ArrayList<Card>();
+		Categoria miCategoria = myDbHelper.getCagetoriaFromAlumno(unAlumno);
+		this.unaCategoria = miCategoria.getCategoriaID();
 		data = myDbHelper.getPalabrasFromCategoria(unaCategoria);
-//		Card card1 = new Card(1, "A",
-//				"Auto", "/storage/emulated/0/Images/Auto.jpg", "Auto.ogg", "");
-//		Card card2 = new Card(1, "B",
-//				"Botella", "/storage/emulated/0/Images/Botella.jpg", "Botella.ogg", "");
-//		Card card3 = new Card(1, "C",
-//				"Conejo", "storage/emulated/0/Images/Conejo.jpg", "Conejo.ogg", "");
-//
-//		data.add(card1);
-//		data.add(card2);
-//		data.add(card3);
-
 	}
 
 	class SwipeGestureDetector extends SimpleOnGestureListener {

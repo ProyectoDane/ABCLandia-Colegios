@@ -2,23 +2,12 @@ package com.example.abclandia;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-
-import com.example.abclandia.audio.Audio;
-import com.example.abclandia.graphics.CardView;
-import com.example.abclandia.graphics.LetterImageRenderer;
-import com.example.abclandia.graphics.JustLetterRenderer;
-import com.example.abclandia.graphics.Renderer;
-import com.frba.abclandia.R;
-import com.frba.abclandia.adapters.CardViewAdapter;
-import com.frba.abclandia.db.DataBaseHelper;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.SQLException;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -26,6 +15,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+
+import com.example.abclandia.audio.Audio;
+import com.example.abclandia.graphics.CardView;
+import com.example.abclandia.graphics.JustLetterRenderer;
+import com.example.abclandia.graphics.Renderer;
+import com.frba.abclandia.db.DataBaseHelper;
+import com.frba.abclandia.dtos.Categoria;
 
 public class GameActivity extends Activity implements View.OnTouchListener,
 		DragController.DragListener {
@@ -73,8 +69,7 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		
+		super.onCreate(savedInstanceState);	
 		setFullScreen();
 		setSizes();
 		iniciarDB();
@@ -82,7 +77,6 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 		loadDataCard();
 		setSounds();
 		mGameStatistics = new GameStatistics(this);
-
 	}
 
 	protected void setSounds() {
@@ -115,10 +109,11 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 		data = new ArrayList<Card>();
 		char[] secuences = GameDataStructure.getSecuence(mGameNumber,
 				mCurrrentLevel, secuence);
+		Categoria estaCategoria = myDbHelper.getCagetoriaFromAlumno(unAlumno);
 		for (int i = 0; i < secuences.length; i++) {
 			String letter = String.valueOf(secuences[i]);
-			Card card = myDbHelper.getPalabraFromLetraAndCategoria(letter, unaCategoria);
-			card.setLetterType(2);
+			Card card = myDbHelper.getPalabraFromLetraAndCategoria(letter, estaCategoria.getCategoriaID());
+			card.setLetterType(estaCategoria.getCategoriaTipoLetra());
 			data.add(card);
 		}
 	}

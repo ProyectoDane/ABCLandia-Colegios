@@ -89,10 +89,11 @@ public class GameStatistics {
 		RequestParams params = new RequestParams();
 		params.put("estadisticas", jsonEstadisticas.toString());
 		Log.d("PARAM", params.toString());
-		client.post("http://yaars.com.ar/abclandia/public/index.php/api/", params, new AsyncHttpResponseHandler() {
+		client.post("http://yaars.com.ar/abclandia/public/index.php/api/estadisticas", params, new AsyncHttpResponseHandler() {
 			@Override
 			public void onSuccess(String response) {
 				Log.d("Post", "stats enviadas");
+				Log.d("Post",response);
 				
 			}
 

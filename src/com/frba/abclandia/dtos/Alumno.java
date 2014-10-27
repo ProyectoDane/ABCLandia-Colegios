@@ -4,16 +4,21 @@ public class Alumno {
 	
 	private String nombre;
 	private String apellido;
-	private int profesor;
-	private int legajo;
+	private int maestro = 0;
+	private int id;
 	
-	public Alumno(int legajo, String apellido, String nombre, int profesor){
-		this.setLegajo(legajo);
+	public Alumno(int id, String apellido, String nombre, int maestro){
+		this.setId(id);
 		this.setApellido(apellido);
 		this.setNombre(nombre);
-		this.setProfesor(profesor);
+		this.setMaestro(maestro);
 	}
 
+	public Alumno(int id, String apellido, String nombre){
+		this.setId(id);
+		this.setApellido(apellido);
+		this.setNombre(nombre);
+	}
 	public String getNombre() {
 		return nombre;
 	}
@@ -30,20 +35,20 @@ public class Alumno {
 		this.apellido = apellido;
 	}
 
-	public int getProfesor() {
-		return profesor;
+	public int getMaestro() {
+		return maestro;
 	}
 
-	public void setProfesor(int profesor) {
-		this.profesor = profesor;
+	public void setMaestro(int profesor) {
+		this.maestro = profesor;
 	}
 
-	public int getLegajo() {
-		return legajo;
+	public int getId() {
+		return id;
 	}
 
-	public void setLegajo(int legajo) {
-		this.legajo = legajo;
+	public void setId(int legajo) {
+		this.id = legajo;
 	}
 
 }

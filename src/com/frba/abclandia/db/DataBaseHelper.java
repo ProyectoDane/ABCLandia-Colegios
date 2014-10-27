@@ -218,11 +218,27 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	public Categoria getAlumnoCategoria(Alumno unAlumno){
 		//Categoria categoria;
 		Categoria unaCategoria;
-		String selectQuery =  "Select categoria_id, categoria_nombre, categoria_descripcion from categorias where categoria_id = " + unAlumno.getLegajo() + " ";
+		String selectQuery =  "Select categoria_id, categoria_nombre, categoria_descripcion from categorias where categoria_id = " + unAlumno.getId() + " ";
 		SQLiteDatabase database =  this.getWritableDatabase();
 		Cursor cursor =  database.rawQuery(selectQuery, null);
 		if(cursor.moveToFirst()){
 			unaCategoria = new Categoria(cursor.getInt(0),cursor.getString(1), cursor.getString(2));
+		} else {
+			unaCategoria = new Categoria(0,"Default", "Default");
+		}
+		cursor.close();
+		return unaCategoria;
+	}
+	
+	
+	public Categoria getCagetoriaFromAlumno(int unAlumnoId){
+		Categoria unaCategoria;
+		String selectQuery = "select categoria_id, categoria_intervalo, categoria_tipo_letra, categoria_alumno_id " +
+				"from categorias where categoria_alumno_id = '" + unAlumnoId +"'";
+		SQLiteDatabase database = this.getWritableDatabase();
+		Cursor cursor =  database.rawQuery(selectQuery, null);
+		if(cursor.moveToFirst()){
+			unaCategoria = new Categoria(cursor.getInt(0),cursor.getInt(1), cursor.getInt(2), cursor.getInt(3));
 		} else {
 			unaCategoria = new Categoria(0,"Default", "Default");
 		}
@@ -256,6 +272,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		return palabras;
 	}	
 	
+	
+
 	
 	/**
 	 *  Dada una Letra y una Categoria devuelve un objeto Card correspondiente a la palabra que comienza con esa letra para esa Categoria
@@ -358,11 +376,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	public void insertAlumno(Alumno unAlumno){
 		SQLiteDatabase database = this.getWritableDatabase();
 		ContentValues  values = new ContentValues();
-		values.put("alumno_id", unAlumno.getLegajo());
+		values.put("alumno_id", unAlumno.getId());
 		values.put("nombre", unAlumno.getNombre());
 		values.put("apellido", unAlumno.getApellido());
 		// Chequeamos si el valor existe
-		Cursor cur1= database.query("alumnos", null, "alumno_id=" + unAlumno.getLegajo(), null, null, null, null);
+		Cursor cur1= database.query("alumnos", null, "alumno_id=" + unAlumno.getId(), null, null, null, null);
 	      cur1.moveToLast();
 	      int count1=cur1.getCount();
 	      if(count1==0)
@@ -373,7 +391,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	      else
 	      {
 	        //course id present
-	    	Log.d("Database", "Alumno con el ID " + unAlumno.getLegajo() + " ya existe");
+	    	Log.d("Database", "Alumno con el ID " + unAlumno.getId() + " ya existe");
 	      }
 
 		database.close();
@@ -409,6 +427,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		database.close();	
 	}
 	
+	/**
+	 * Recibe el ID de un Alumno y el ID de un Maesto y los inserta en la tabla pivot.
+	 * @param alumno_id
+	 * @param maestro_id
+	 */	
 	public void insertAlumnoMaestroRelationship(int alumno_id, int maestro_id){
 		SQLiteDatabase database =  this.getWritableDatabase();
 		ContentValues values =  new ContentValues();
@@ -431,6 +454,33 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		database.close();
 		
 	}
+	
+	
+	/**
+	 * Recibe un objeto Categoria y lo inserta en la base de datos.
+	 * @param nuevaCategoria
+	 */
+	public void insertCategoria(Categoria nuevaCategoria) {
+		// TODO Auto-generated method stub
+		SQLiteDatabase database = this.getWritableDatabase();
+		ContentValues values =  new ContentValues();
+		values.put("categoria_id", nuevaCategoria.getCategoriaID());
+		values.put("categoria_alumno_id", nuevaCategoria.getCategoriaAlumno());
+		values.put("categoria_tipo_letra", nuevaCategoria.getCategoriaTipoLetra());
+		values.put("categoria_intervalo",nuevaCategoria.getCategoriaIntervalo());
+		// Chequeamos si existe la configuracion
+		Cursor cur1 = database.query("categorias", null, "categoria_id = '" + nuevaCategoria.getCategoriaID() +"' and categoria_alumno_id = '" + nuevaCategoria.getCategoriaAlumno() + "'",
+				null,null,null,null);
+		int count1 =  cur1.getCount();
+		if (count1 == 0){
+			database.insert("categorias", null, values);
+		} else {
+			Log.d("Categoria", cur1.toString());
+		}
+		
+	}
+	
+	
 	
 	
 	/**
@@ -489,6 +539,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		cursor.close();
 		return palabras;
 	}
+
+
 
 
 }
