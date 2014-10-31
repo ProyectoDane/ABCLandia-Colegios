@@ -12,22 +12,22 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.database.SQLException;
-import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.Toast;
 
 import com.example.abclandia.AbcPlayerActivity;
 import com.example.abclandia.CardLetterPlayerActivity;
 import com.frba.abclandia.db.DataBaseHelper;
+import com.frba.abclandia.dtos.Categoria;
 import com.frba.abclandia.dtos.Palabra;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -64,17 +64,27 @@ public class ActividadesActivity extends Activity {
 		// Iniciar ProgressDialog
 		iniciarPrgDialog();
 		
-		if (this.unAlumno != 0){
+		if (this.unAlumno != 0 && this.unMaestro != 0  && isNetworkAvailable() != false ){
+			// Sincronizamos los datos del alumno
 			syncAlumnoDatos();
+		} else {
+			Log.d("ABCLandia", "No hay conectividad, no sincronizamos.");
 		}
 	}
 	
+	private boolean isNetworkAvailable() {
+	    ConnectivityManager connectivityManager 
+	          = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+	    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+	    return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+	}
+	
 	private String getSoundPath() {
-		return Environment.getExternalStorageDirectory().getPath()+ "/sonidos/";
+		return getFilesDir() +"/sonidos/";
 	}
 	
 	protected String getImagePath() {
-		return Environment.getExternalStorageDirectory().getPath() + "/imagenes/";
+		return getFilesDir()  + "/imagenes/";
 	}
 	
 	private boolean fileExists(String string) {
@@ -93,16 +103,23 @@ public class ActividadesActivity extends Activity {
 		RequestParams params = new RequestParams();
 		// Show ProgressBar
 		prgDialog.show();
+		Log.d("Actividades", "Sincronizando informacion del alumno " + unAlumno);
 		client.get("http://yaars.com.ar/abclandia/public/index.php/api/alumnos/" + unAlumno, params, new JsonHttpResponseHandler(){
+			
+			public void onSuccess(String response){
+				prgDialog.hide();
+				Log.d("Sincro Alumno", response.toString());
+			}
+			
 			@Override
 			public void onSuccess (int statusCCode, Header [] headers, JSONObject alumnoCategoriaWeb){
 			try {
-				
-				// TODO: Hay que ver dde guardamos la "Configuracon" y los datos de la categoria.
 				Integer intervaloEntreTarjetas =  alumnoCategoriaWeb.getInt("intervalo_entre_tarjetas");
 				Integer tipoLetra =  alumnoCategoriaWeb.getInt("tipo_letra");
 				JSONObject categoria = alumnoCategoriaWeb.getJSONObject("categoria");
 				unaCategoria = categoria.getInt("id");
+				Categoria nuevaCategoria =  new Categoria(unaCategoria,tipoLetra,intervaloEntreTarjetas, unAlumno);
+				myDbHelper.insertCategoria(nuevaCategoria);
 				JSONArray palabras = categoria.getJSONArray("palabras");
 				final String PATH_TO_SOUNDS = getSoundPath();
 				final String PATH_TO_IMAGES = getImagePath();
@@ -128,7 +145,7 @@ public class ActividadesActivity extends Activity {
 									RequestParams imagenParams = new RequestParams();
 									imagen.get("http://yaars.com.ar/abclandia/public/index.php/api/imagenes/" + imagenId, imagenParams, new AsyncHttpResponseHandler() {
 												public void onSuccess(String response) {
-													final String PATH_TO_SOUNDS = Environment.getExternalStorageDirectory().getPath() + "/imagenes/";
+													final String PATH_TO_SOUNDS = getFilesDir() + "/imagenes/";
 													String  nuevaImagenNombre = imagenId+".jpg";
 													File unaImagen = new File(PATH_TO_SOUNDS,nuevaImagenNombre);
 													// Bajar la Imagen
@@ -157,7 +174,10 @@ public class ActividadesActivity extends Activity {
 														Log.d("ABCLandia - Server", "Something went wrong at server end");
 													} else {
 														Log.d("ABCLandia - Server", "Unexpected Error occcured! [Most common Error: Device might not be connected to Internet]");
+														
 													}
+													Log.d("Error","Error: " + statusCode);
+													prgDialog.hide();
 												}
 											});
 							}
@@ -171,7 +191,7 @@ public class ActividadesActivity extends Activity {
 											RequestParams sonidoParams =  new RequestParams();
 											sonido.get("http://yaars.com.ar/abclandia/public/index.php/api/sonidos/" + sonidoId, sonidoParams, new AsyncHttpResponseHandler() {
 													public void onSuccess(String response) {
-														final String PATH_TO_IMAGES = Environment.getExternalStorageDirectory().getPath() + "/sonidos/";
+														final String PATH_TO_IMAGES = getFilesDir() + "/sonidos/";
 														String  nuevaImagenNombre = sonidoId+".ogg";
 														File unaImagen = new File(PATH_TO_IMAGES,nuevaImagenNombre);
 														// Bajar el sonido
@@ -220,16 +240,16 @@ public class ActividadesActivity extends Activity {
 			@Override
 			public void onFailure(int statusCode, Throwable error, String content) {
 				// TODO Auto-generated method stub
-				// Hide ProgressBar
-				prgDialog.hide();
+				// Hide ProgressBar		
 				if (statusCode == 404) {
-					Toast.makeText(getApplicationContext(), "Requested resource not found", Toast.LENGTH_LONG).show();
+					Log.d("ABCLandia - Server", "Requested resource not found");
 				} else if (statusCode == 500) {
-					Toast.makeText(getApplicationContext(), "Something went wrong at server end", Toast.LENGTH_LONG).show();
+					Log.d("ABCLandia - Server", "Something went wrong at server end");
 				} else {
-					Toast.makeText(getApplicationContext(), "Unexpected Error occcured! [Most common Error: Device might not be connected to Internet]",
-							Toast.LENGTH_LONG).show();
+					Log.d("ABCLandia - Server", "Unexpected Error occcured! [Most common Error: Device might not be connected to Internet]");
+					Log.d("Sonidos", statusCode + " ");
 				}
+				prgDialog.hide();
 			}
 		});
 		

@@ -12,7 +12,6 @@ import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
@@ -31,6 +30,7 @@ import com.example.abclandia.graphics.Renderer;
 import com.frba.abclandia.R;
 import com.frba.abclandia.adapters.CardViewAdapter;
 import com.frba.abclandia.db.DataBaseHelper;
+import com.frba.abclandia.dtos.Categoria;
 import com.frba.abclandia.utils.Util;
 
 public class CardLetterPlayerActivity extends Activity
@@ -239,6 +239,8 @@ implements View.OnTouchListener {
 	private void loadDataCard() {
 
 		data = new ArrayList<Card>();
+		Categoria miCategoria = myDbHelper.getCagetoriaFromAlumno(unAlumno);
+		this.unaCategoria = miCategoria.getCategoriaID();
 		data = myDbHelper.getPalabrasFromCategoria(unaCategoria);
 
 

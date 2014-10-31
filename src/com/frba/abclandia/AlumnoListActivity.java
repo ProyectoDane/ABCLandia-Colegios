@@ -13,6 +13,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.SQLException;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -58,11 +60,20 @@ public class AlumnoListActivity extends ListActivity {
 		// Iniciar ProgressDialog
 		iniciarPrgDialog();
 		
-		//Sincronizamos los Alumnos
-		if (this.unMaestro != 0)
+		
+		if (this.unMaestro != 0 && isNetworkAvailable() != false){
+			//Sincronizamos los Alumnos
 			syncAlumnos();
+		}else {
+			Log.d("ABCLandia", "No hay conectividad, no sincronizamos.");
+		}
 		
-		
+	}
+	private boolean isNetworkAvailable() {
+	    ConnectivityManager connectivityManager 
+	          = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+	    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+	    return activeNetworkInfo != null && activeNetworkInfo.isConnected();
 	}
 	
 	private void iniciarPrgDialog() {
@@ -89,7 +100,7 @@ public class AlumnoListActivity extends ListActivity {
 				try {
 					Alumno unAlumno = new Alumno(response.getInt("id"), response.getString("apellido"), response.getString("nombre"), (Integer) unMaestro);
 					myDbHelper.insertAlumno(unAlumno);
-					myDbHelper.insertAlumnoMaestroRelationship(unAlumno.getLegajo(), unMaestro);
+					myDbHelper.insertAlumnoMaestroRelationship(unAlumno.getId(), unMaestro);
 					prgDialog.hide();
 					setListAdapter(new AlumnoListAdapter(getApplicationContext()));
 					
@@ -126,8 +137,8 @@ public class AlumnoListActivity extends ListActivity {
 				} else if (statusCode == 500) {
 					Toast.makeText(getApplicationContext(), "Something went wrong at server end", Toast.LENGTH_LONG).show();
 				} else {
-					Toast.makeText(getApplicationContext(), "Unexpected Error occcured! [Most common Error: Device might not be connected to Internet]",
-							Toast.LENGTH_LONG).show();
+					Log.d("Alumnos Sync", "Unexpected Error occcured! [Most common Error: Device might not be connected to Internet]");
+							
 				}
 				setListAdapter(new AlumnoListAdapter(getApplicationContext()));
 			}
@@ -164,7 +175,7 @@ public class AlumnoListActivity extends ListActivity {
 		Toast.makeText(this,  alumno.getNombre() + " " + alumno.getApellido() + " Seleccionado", Toast.LENGTH_LONG).show();
 		Intent i = new Intent(this, ActividadesActivity.class);
 		i.putExtra("unMaestro", unMaestro);
-		i.putExtra("unAlumno", alumno.getLegajo());
+		i.putExtra("unAlumno", alumno.getId());
 		startActivity(i);
 	}
 	
@@ -199,7 +210,7 @@ public class AlumnoListActivity extends ListActivity {
 		public long getItemId(int arg0) {
 			// TODO Auto-generated method stub
 			Alumno alumno = mAlumnos.get(arg0);
-			return alumno.getLegajo();
+			return alumno.getId();
 		}
 
 		@Override

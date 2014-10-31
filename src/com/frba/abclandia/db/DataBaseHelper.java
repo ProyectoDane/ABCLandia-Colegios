@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.ObjectInputStream.GetField;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,14 +32,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	private static String DB_NAME = "gelemerv1.sqlite";
 	private static Integer DATABASE_VERSION = 1;
 	private SQLiteDatabase myDataBase;
-	private final Context myContext;
+	private final Context mContext;
 	private static AbcLandiaContract abcLandia = new AbcLandiaContract();
 
 	// Creamos el constructor llamando a 
 	public DataBaseHelper(Context context) {
 		super(context, DB_NAME, null, DATABASE_VERSION);
-		this.myContext = context;
-		this.DB_PATH = this.DB_PATH + this.myContext.getApplicationContext().getPackageName() +"/databases/";
+		this.mContext = context;
+		this.DB_PATH = this.DB_PATH + this.mContext.getApplicationContext().getPackageName() +"/databases/";
 		
 	}
 	
@@ -71,7 +72,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		SQLiteDatabase checkDB = null;
 		
 		try {
-			File fdb =  this.myContext.getDatabasePath(DB_NAME);
+			File fdb =  this.mContext.getDatabasePath(DB_NAME);
 			checkDB = SQLiteDatabase.openDatabase(fdb.getAbsolutePath(), null, SQLiteDatabase.OPEN_READONLY);
 		} catch (SQLiteException e){
 			// La base de datos no existe todavia
@@ -89,7 +90,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	 */
 	private void copyDatabase() throws IOException {
 	// Abrimos la db local como un input stream
-	InputStream myInput = myContext.getAssets().open(DB_NAME);
+	InputStream myInput = mContext.getAssets().open(DB_NAME);
 	
 	// Path a la base que creamos recien
 	String outFileName =  DB_PATH + DB_NAME;
@@ -112,7 +113,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	public void openDatabase() throws SQLException {
 		// Abrimos la DB
 		//String myPath = DB_PATH + DB_NAME;
-		File fdb= this.myContext.getDatabasePath(DB_NAME);
+		File fdb= this.mContext.getDatabasePath(DB_NAME);
 		myDataBase =  SQLiteDatabase.openDatabase(fdb.getAbsolutePath(), null, SQLiteDatabase.OPEN_READONLY);
 		
 	}
@@ -217,11 +218,27 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	public Categoria getAlumnoCategoria(Alumno unAlumno){
 		//Categoria categoria;
 		Categoria unaCategoria;
-		String selectQuery =  "Select categoria_id, categoria_nombre, categoria_descripcion from categorias where categoria_id = " + unAlumno.getLegajo() + " ";
+		String selectQuery =  "Select categoria_id, categoria_nombre, categoria_descripcion from categorias where categoria_id = " + unAlumno.getId() + " ";
 		SQLiteDatabase database =  this.getWritableDatabase();
 		Cursor cursor =  database.rawQuery(selectQuery, null);
 		if(cursor.moveToFirst()){
 			unaCategoria = new Categoria(cursor.getInt(0),cursor.getString(1), cursor.getString(2));
+		} else {
+			unaCategoria = new Categoria(0,"Default", "Default");
+		}
+		cursor.close();
+		return unaCategoria;
+	}
+	
+	
+	public Categoria getCagetoriaFromAlumno(int unAlumnoId){
+		Categoria unaCategoria;
+		String selectQuery = "select categoria_id, categoria_intervalo, categoria_tipo_letra, categoria_alumno_id " +
+				"from categorias where categoria_alumno_id = '" + unAlumnoId +"'";
+		SQLiteDatabase database = this.getWritableDatabase();
+		Cursor cursor =  database.rawQuery(selectQuery, null);
+		if(cursor.moveToFirst()){
+			unaCategoria = new Categoria(cursor.getInt(0),cursor.getInt(1), cursor.getInt(2), cursor.getInt(3));
 		} else {
 			unaCategoria = new Categoria(0,"Default", "Default");
 		}
@@ -236,8 +253,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	 * @return List<Palabra>
 	 */
 	public List<Card> getPalabrasFromCategoria(int unaCategoria){
-		final String PATH_TO_IMAGES = Environment.getExternalStorageDirectory().getPath() + "/imagenes/";
-		final String PATH_TO_SOUNDS = Environment.getExternalStorageDirectory().getPath() + "/sonidos/";
+		final String PATH_TO_IMAGES = mContext.getFilesDir() + "/imagenes/";
+		final String PATH_TO_SOUNDS = mContext.getFilesDir() + "/sonidos/";
 		List<Card> palabras = new ArrayList<Card>();
 		String selectQuery = "select palabra_id, palabra_letra, palabra_palabra, imagen_id, sonido_id  from palabras where categoria_id = '"
 				+ unaCategoria + "' " ;
@@ -256,6 +273,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	}	
 	
 	
+
+	
 	/**
 	 *  Dada una Letra y una Categoria devuelve un objeto Card correspondiente a la palabra que comienza con esa letra para esa Categoria
 	 * @param unaLetra
@@ -264,8 +283,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	 */
 	public Card getPalabraFromLetraAndCategoria(String unaLetra, Integer unaCategoria) {
 		Card unaPalabra;
-		final String PATH_TO_IMAGES = Environment.getExternalStorageDirectory().getPath()+ "/imagenes/";
-		final String PATH_TO_SOUNDS = Environment.getExternalStorageDirectory().getPath() + "/sonidos/";
+		final String PATH_TO_IMAGES = mContext.getFilesDir() + "/imagenes/";
+		final String PATH_TO_SOUNDS = mContext.getFilesDir() + "/sonidos/";
 		String selectQuery = "select palabra_id, palabra_letra, palabra_palabra, imagen_id, sonido_id  from palabras where categoria_id = '"
 				+ unaCategoria + "'and palabra_letra = '" + unaLetra + "'";
 
@@ -357,11 +376,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	public void insertAlumno(Alumno unAlumno){
 		SQLiteDatabase database = this.getWritableDatabase();
 		ContentValues  values = new ContentValues();
-		values.put("alumno_id", unAlumno.getLegajo());
+		values.put("alumno_id", unAlumno.getId());
 		values.put("nombre", unAlumno.getNombre());
 		values.put("apellido", unAlumno.getApellido());
 		// Chequeamos si el valor existe
-		Cursor cur1= database.query("alumnos", null, "alumno_id=" + unAlumno.getLegajo(), null, null, null, null);
+		Cursor cur1= database.query("alumnos", null, "alumno_id=" + unAlumno.getId(), null, null, null, null);
 	      cur1.moveToLast();
 	      int count1=cur1.getCount();
 	      if(count1==0)
@@ -372,7 +391,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	      else
 	      {
 	        //course id present
-	    	Log.d("Database", "Alumno con el ID " + unAlumno.getLegajo() + " ya existe");
+	    	Log.d("Database", "Alumno con el ID " + unAlumno.getId() + " ya existe");
 	      }
 
 		database.close();
@@ -408,6 +427,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		database.close();	
 	}
 	
+	/**
+	 * Recibe el ID de un Alumno y el ID de un Maesto y los inserta en la tabla pivot.
+	 * @param alumno_id
+	 * @param maestro_id
+	 */	
 	public void insertAlumnoMaestroRelationship(int alumno_id, int maestro_id){
 		SQLiteDatabase database =  this.getWritableDatabase();
 		ContentValues values =  new ContentValues();
@@ -430,6 +454,33 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		database.close();
 		
 	}
+	
+	
+	/**
+	 * Recibe un objeto Categoria y lo inserta en la base de datos.
+	 * @param nuevaCategoria
+	 */
+	public void insertCategoria(Categoria nuevaCategoria) {
+		// TODO Auto-generated method stub
+		SQLiteDatabase database = this.getWritableDatabase();
+		ContentValues values =  new ContentValues();
+		values.put("categoria_id", nuevaCategoria.getCategoriaID());
+		values.put("categoria_alumno_id", nuevaCategoria.getCategoriaAlumno());
+		values.put("categoria_tipo_letra", nuevaCategoria.getCategoriaTipoLetra());
+		values.put("categoria_intervalo",nuevaCategoria.getCategoriaIntervalo());
+		// Chequeamos si existe la configuracion
+		Cursor cur1 = database.query("categorias", null, "categoria_id = '" + nuevaCategoria.getCategoriaID() +"' and categoria_alumno_id = '" + nuevaCategoria.getCategoriaAlumno() + "'",
+				null,null,null,null);
+		int count1 =  cur1.getCount();
+		if (count1 == 0){
+			database.insert("categorias", null, values);
+		} else {
+			Log.d("Categoria", cur1.toString());
+		}
+		
+	}
+	
+	
 	
 	
 	/**
@@ -488,6 +539,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		cursor.close();
 		return palabras;
 	}
+
+
 
 
 }

@@ -168,7 +168,7 @@ public class ABCLandiaRestServer {
 		
 		List<Alumno> alumnos = myDbHelper.getAllAlumnos();
 		for (int j = 0; j< alumnos.size(); j++){
-			this.syncCategoriasAndPalabrasFromAlumno(alumnos.get(j).getLegajo());
+			this.syncCategoriasAndPalabrasFromAlumno(alumnos.get(j).getId());
 		}
 		List<Palabra> palabras  = myDbHelper.getAllPalabrasUniques();
 		for (int i =0; i< palabras.size(); i++){
@@ -286,7 +286,7 @@ public class ABCLandiaRestServer {
 				try {
 					Alumno unAlumno = new Alumno(response.getInt("id"), response.getString("apellido"), response.getString("nombre"), (Integer) unMaestroId);
 					myDbHelper.insertAlumno(unAlumno);
-					myDbHelper.insertAlumnoMaestroRelationship(unAlumno.getLegajo(), unMaestroId);
+					myDbHelper.insertAlumnoMaestroRelationship(unAlumno.getId(), unMaestroId);
 					} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -441,7 +441,7 @@ public class ABCLandiaRestServer {
 	
 
 	private String getSoundPath() {
-		return Environment.getExternalStorageDirectory().getPath() + "/sonidos/";
+		return mContext.getFilesDir() + "/sonidos/";
 	}
 	private boolean fileExists(String string) {
 		File unArchivo = new File(string);
@@ -453,7 +453,7 @@ public class ABCLandiaRestServer {
 	}
 	protected String getImagePath() {
 		// TODO Auto-generated method stub
-		return Environment.getExternalStorageDirectory().getPath() + "/imagenes/";
+		return mContext.getFilesDir() + "/imagenes/";
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////
@@ -483,7 +483,7 @@ public class ABCLandiaRestServer {
 			List<Alumno> alumnos = myDbHelper.getAllAlumnos();
 			for (int j = 0; j< alumnos.size(); j++){
 				try {
-					ABCLandiaRestServer.this.syncCategoriasAndPalabrasFromAlumno(alumnos.get(j).getLegajo());
+					ABCLandiaRestServer.this.syncCategoriasAndPalabrasFromAlumno(alumnos.get(j).getId());
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

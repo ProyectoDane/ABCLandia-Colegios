@@ -23,9 +23,13 @@ import com.example.abclandia.graphics.CardView;
 import com.example.abclandia.graphics.JustLetterRenderer;
 import com.example.abclandia.graphics.Renderer;
 import com.frba.abclandia.db.DataBaseHelper;
+
 import com.frba.abclandia.dragdrop.DragController;
 import com.frba.abclandia.dragdrop.DragLayer;
 import com.frba.abclandia.dragdrop.DragSource;
+
+import com.frba.abclandia.dtos.Categoria;
+
 
 public class GameActivity extends Activity implements View.OnTouchListener,
 		DragController.DragListener {
@@ -73,8 +77,7 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		
+		super.onCreate(savedInstanceState);	
 		setFullScreen();
 		setSizes();
 		iniciarDB();
@@ -82,7 +85,6 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 		loadDataCard();
 		setSounds();
 		mGameStatistics = new GameStatistics(this);
-
 	}
 
 	protected void setSounds() {
@@ -115,10 +117,11 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 		data = new ArrayList<Card>();
 		char[] secuences = GameDataStructure.getSecuence(mGameNumber,
 				mCurrrentLevel, secuence);
+		Categoria estaCategoria = myDbHelper.getCagetoriaFromAlumno(unAlumno);
 		for (int i = 0; i < secuences.length; i++) {
 			String letter = String.valueOf(secuences[i]);
-			Card card = myDbHelper.getPalabraFromLetraAndCategoria(letter, unaCategoria);
-			card.setLetterType(2);
+			Card card = myDbHelper.getPalabraFromLetraAndCategoria(letter, estaCategoria.getCategoriaID());
+			card.setLetterType(estaCategoria.getCategoriaTipoLetra());
 			data.add(card);
 		}
 	}

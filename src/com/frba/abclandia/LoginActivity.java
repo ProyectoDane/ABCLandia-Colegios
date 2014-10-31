@@ -23,11 +23,7 @@ public class LoginActivity extends Activity {
 	protected void onCreate(Bundle paramBundle){
 		super.onCreate(paramBundle);
 		requestWindowFeature(1);
-		setContentView(R.layout.activity_login);	
-
-		
-		
-		
+		setContentView(R.layout.activity_login);
 		}
 	
 	public void loginMaestro(View view){

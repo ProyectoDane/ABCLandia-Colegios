@@ -94,8 +94,8 @@ public class MainActivity extends Activity {
         super.onResume();
         // TODO: Acomodar bien y cambiar todo a getExternalFilesDir(null).toString()
         // TARGET_BASE_PATH = getExternalFilesDir(null).toString() + "/";
-        TARGET_BASE_PATH = Environment.getExternalStorageDirectory().getPath() + "/";
-        String c = Environment.getExternalStorageDirectory().toString();
+        //TARGET_BASE_PATH = Environment.getExternalStorageDirectory().getPath() + "/";
+        TARGET_BASE_PATH =  getFilesDir() + "/";
 
         
 
