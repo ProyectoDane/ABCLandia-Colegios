@@ -40,6 +40,9 @@ public class Card {
 	public String getLetter() {
 		return mLetter;
 	}
+	public int getId(){
+		return mId;
+	}
 
 
 	public String getWord() {

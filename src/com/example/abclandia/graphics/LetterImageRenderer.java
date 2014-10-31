@@ -23,7 +23,7 @@ public class LetterImageRenderer extends Renderer{
 		super.Render(canvas, rectangleWidth, rectangleHeight, borderRectanglePaint, textPaint, card, imageBitmap);
 		  
 		drawImage(canvas, card, rectangleWidth, rectangleHeight, imageBitmap);
-		drawLetter(canvas, card, rectangleWidth, rectangleHeight);
+		drawLetter(canvas, card.getLetter(), rectangleWidth, rectangleHeight);
 		   
 		   
 		   }

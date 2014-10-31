@@ -1,17 +1,21 @@
 package com.frba.abclandia;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.example.abclandia.GameActivity;
-import com.example.abclandia.GameFourActivity;
+import com.example.abclandia.GameDataStructure;
 import com.example.abclandia.GameSixActivity;
+import com.frba.abclandia.NivelesDialogFragment.DialogLevelListener;
 
-public class JugarActivity extends Activity implements View.OnClickListener{
+public class JugarActivity extends Activity 
+		implements View.OnClickListener, DialogLevelListener{
 	private Button btnEjercicio1, btnEjercicio2, btnEjercicio3,
 			btnEjercicio4, btnEjercicio5, btnEjercicio6;
 	
@@ -19,11 +23,19 @@ public class JugarActivity extends Activity implements View.OnClickListener{
 	private int unMaestro = 0;
 	private int unAlumno = 0;
 	private int unaCategoria = 0;
+	
+	private Class<?> exerciseClass;
+	
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_jugar);
+		
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
+		WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		setContentView(R.layout.ejercicios_activity);
 		
 		// Recuperamos los valores de Maestro, Alumno y Categoria
 		Intent i = getIntent();
@@ -50,57 +62,7 @@ public class JugarActivity extends Activity implements View.OnClickListener{
 
 
 	
-	public void btnEjercicio1 (View view){
-		
-		Intent intent = new Intent(this,NivelesActivity.class );
-		intent.putExtra("unMaestro", unMaestro);
-		intent.putExtra("unAlumno", unAlumno);
-		intent.putExtra("unaCategoria", unaCategoria);
-		startActivity(intent);
-//		Intent intent = new Intent(this, GameOneActivity.class);
-//		intent.putExtra(GameActivity.INTENT_LEVEL_KEY, 1);
-//		intent.putExtra(GameActivity.INTENT_SECUENCE_KEY, 1);
-//		startActivity(intent);
 	
-	}
-	
-	public void btnEjercicio2 (View view){
-		Toast.makeText(this, "Ejercicio 2 no implementado", Toast.LENGTH_LONG).show();
-	}
-	public void btnEjercicio3 (View view){
-		Toast.makeText(this, "Ejercicio 3 no implementado", Toast.LENGTH_LONG).show();
-	}
-	public void btnEjercicio4 (View view){
-		Intent intent = new Intent(this, GameFourActivity.class);
-		intent.putExtra(GameActivity.INTENT_LEVEL_KEY, 1);
-		intent.putExtra(GameActivity.INTENT_SECUENCE_KEY, 1);
-		intent.putExtra("unMaestro", unMaestro);
-		intent.putExtra("unAlumno", unAlumno);
-		intent.putExtra("unaCategoria", unaCategoria);
-		startActivity(intent);
-	}
-	public void btnEjercicio5 (View view){
-		Toast.makeText(this, "Ejercicio 5 no implementado", Toast.LENGTH_LONG).show();
-	}
-	public void btnEjercicio6 (View view){
-		Intent intent = new Intent(this, GameSixActivity.class);
-		intent.putExtra(GameActivity.INTENT_LEVEL_KEY, 1);
-		intent.putExtra(GameActivity.INTENT_SECUENCE_KEY, 1);
-		intent.putExtra("unMaestro", unMaestro);
-		intent.putExtra("unAlumno", unAlumno);
-		intent.putExtra("unaCategoria", unaCategoria);
-		startActivity(intent);
-	}
-	
-	private void startNivelesActivity(int exerciseNumber){
-		Intent intent = new Intent(this, NivelesActivity.class);
-		intent.putExtra(GameActivity.INTENT_EXERCISE_NUMBER, exerciseNumber);
-		intent.putExtra("unMaestro", unMaestro);
-		intent.putExtra("unAlumno", unAlumno);
-		intent.putExtra("unaCategoria", unaCategoria);
-		startActivity(intent);
-		
-	}
 
 
 	@Override
@@ -131,16 +93,33 @@ public class JugarActivity extends Activity implements View.OnClickListener{
 
 			startActivity(intent);
 			return;
+			
 		}
+		exerciseClass = GameDataStructure.getExerciseClass(exerciseNumber);
 		
-		Intent intent = new Intent(this,NivelesActivity.class );
-		intent.putExtra(GameActivity.INTENT_EXERCISE_NUMBER, exerciseNumber);
-		intent.putExtra("unMaestro", unMaestro);
-		intent.putExtra("unAlumno", unAlumno);
-		intent.putExtra("unaCategoria", unaCategoria);
+
+		
+		FragmentManager fm = getFragmentManager();
+        NivelesDialogFragment editNameDialog = new NivelesDialogFragment();
+        editNameDialog.show(fm, "fragment_edit_name");
+		
+		
+		
+	}
+
+
+
+
+
+	@Override
+	public void onChooseLevel(int levelNumber) {
+		Intent intent = new Intent(this, exerciseClass);
+		intent.putExtra(GameActivity.INTENT_LEVEL_KEY, levelNumber);
+		intent.putExtra(GameActivity.INTENT_SECUENCE_KEY, 1);
+		intent.putExtra("unMaestro", this.unMaestro);
+		intent.putExtra("unAlumno", this.unAlumno);
+		intent.putExtra("unaCategoria", this.unaCategoria);
 		startActivity(intent);
-		
-		
 		
 	}
 	

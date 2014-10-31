@@ -1,7 +1,8 @@
-package com.example.abclandia;
+package com.frba.abclandia.dragdrop;
 
 import java.util.ArrayList;
 
+import com.example.abclandia.GameActivity;
 import com.frba.abclandia.utils.Util;
 
 import android.content.Context;
@@ -104,7 +105,7 @@ public class DragController {
     /**
      * Interface to receive notifications when a drag starts or stops
      */
-    interface DragListener {
+    public interface DragListener {
         
         /**
          * A drag has begun

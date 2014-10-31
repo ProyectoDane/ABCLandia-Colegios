@@ -1,0 +1,40 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#48CFAE"
+    tools:context="com.frba.abclandia.MaestroListActivity" >
+    
+      <LinearLayout
+        style="@style/TopBar"
+     	android:orientation="horizontal" 
+     	android:background="#33BD9B" >
+     	
+         <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_abclandia"
+            android:background="#0000"></ImageButton>
+     	
+        <TextView
+            style="@style/TitleTopBar"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/title_activity_maestros" />
+</LinearLayout>
+
+    
+
+    <ListView
+        android:id="@id/android:list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="41dp"
+        android:layout_marginTop="25dp"
+        android:divider="@null" >
+    </ListView>
+
+</LinearLayout>
+

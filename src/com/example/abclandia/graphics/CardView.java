@@ -15,14 +15,14 @@ import android.view.View;
 import android.widget.GridView;
 
 import com.example.abclandia.Card;
-import com.example.abclandia.DragShadow;
-import com.example.abclandia.DragSource;
-import com.example.abclandia.DropTarget;
 import com.example.abclandia.GameActivity;
 import com.example.abclandia.GameOneActivity;
 import com.example.abclandia.GameSixActivity;
 import com.frba.abclandia.R;
 import com.frba.abclandia.adapters.CardViewAdapter;
+import com.frba.abclandia.dragdrop.DragShadow;
+import com.frba.abclandia.dragdrop.DragSource;
+import com.frba.abclandia.dragdrop.DropTarget;
 import com.frba.abclandia.utils.Util;
 
 
@@ -73,8 +73,12 @@ public class CardView extends View implements DragSource, DropTarget {
      
     }
 	
-	public String getCardId(){
+	public int getCardId(){
+		return mCard.getId();
+	}
+	public String getCardLetter(){
 		return mCard.getLetter();
+		
 	}
 	public boolean isEmptyCard(){
 		return mCard.isEmptyCard();

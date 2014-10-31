@@ -13,6 +13,7 @@ import com.frba.abclandia.R;
 
 public class Audio {
 	private static final String SOUND_FX_CORRECT = "correct";
+	private static final String SOUND_FX_COMPLETE = "complete";
 	private static final String SOUND_FX_WIN = "win";
 	private static final String PLUS_ID_WORD = "0";
 	private static final String PLUS_ID_LETTER = "1";
@@ -83,6 +84,9 @@ public class Audio {
 
 		mSoundMap.put(SOUND_FX_CORRECT,
 				mSoundPool.load(mContext, R.raw.correct, 1));
+		mSoundMap.put(SOUND_FX_COMPLETE,
+				mSoundPool.load(mContext, R.raw.complete, 1));
+		
 
 	}
 
@@ -90,6 +94,13 @@ public class Audio {
 		float streamVolume = mAudioManager
 				.getStreamVolume(AudioManager.STREAM_MUSIC);
 		mSoundPool.play(mSoundMap.get(SOUND_FX_CORRECT), streamVolume,
+				streamVolume, 1, 0, 1f);
+	}
+	
+	public void playCompleteSound() {
+		float streamVolume = mAudioManager
+				.getStreamVolume(AudioManager.STREAM_MUSIC);
+		mSoundPool.play(mSoundMap.get(SOUND_FX_COMPLETE), streamVolume,
 				streamVolume, 1, 0, 1f);
 	}
 

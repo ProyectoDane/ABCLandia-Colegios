@@ -24,7 +24,7 @@ public class LetterWordRenderer extends Renderer {
 		
 		
 			 
-			drawLetter(canvas, card, rectangleWidth, rectangleHeight);
+			drawLetter(canvas, card.getLetter(), rectangleWidth, rectangleHeight);
 			drawWord(canvas, card, rectangleWidth, rectangleHeight);
 		   
 		

@@ -26,8 +26,14 @@ Se puede usar como actividad de repaso complementando otras realizadas con difer
     <string name="msgAceptar">Aceptar</string>
     <string name="msgCancelar">Cancelar</string>
     <string name="title_activity_jugar">Juegos</string>
-    <string name="title_activity_juego2">Juego2</string>
-    <string name="title_activity_game">Game</string>
+    <string name="title_activity_login">Bienvenidos</string>
+    <string name="title_activity_maestros">Maestros</string>
+    <string name="title_activity_alumnos">Alumnos</string>
+    <string name="title_activity_actividades">Actividades</string>
+    <string name="title_activity_ejercicios">Juegos</string>
+    
+     
+   
     <string name="imgMaestro">Icono de Maestros</string>
     <string name="imgAlumno">Icono del Alumno</string>
     <string name="nombreRow">Nombre</string>

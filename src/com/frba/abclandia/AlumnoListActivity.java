@@ -47,7 +47,7 @@ public class AlumnoListActivity extends ListActivity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
 		WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		
-		setContentView(R.layout.activity_alumno_list);
+		setContentView(R.layout.alumno_activity);
 		
 		Intent i = getIntent();
 		this.unMaestro = i.getIntExtra("unMaestro", 0);

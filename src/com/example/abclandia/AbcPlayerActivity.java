@@ -28,6 +28,7 @@ import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterViewFlipper;
+import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.example.abclandia.audio.Audio;
@@ -61,6 +62,7 @@ public class AbcPlayerActivity extends Activity implements View.OnTouchListener 
 	private Audio mAudio;
 	AnimatorListener mAnimatorListener;
 	DataBaseHelper myDbHelper;
+	TextView lblWord;
 
 	@SuppressWarnings("deprecation")
 	private final GestureDetector detector = new GestureDetector(
@@ -83,13 +85,14 @@ public class AbcPlayerActivity extends Activity implements View.OnTouchListener 
 
 		Configuration config = getResources().getConfiguration();
 		if (config.smallestScreenWidthDp >= 720) {
-			Renderer.TEXT_LETTER_SIZE = 30;
-			Renderer.TEXT_WORD_SIZE = 25;
+			Renderer.TEXT_LETTER_SIZE = 48;
+			Renderer.TEXT_WORD_SIZE = 48;
 		} else if (config.smallestScreenWidthDp >= 600) {
 			Renderer.TEXT_LETTER_SIZE = 20;
 			Renderer.TEXT_WORD_SIZE = 18;
 		}
 		setContentView(R.layout.abc_player_activity);
+		 lblWord = (TextView) findViewById(R.id.lblWord);
 	
 		mAdapterViewFlipper = (AdapterViewFlipper) this
 				.findViewById(R.id.view_flipper);
@@ -119,6 +122,7 @@ public class AbcPlayerActivity extends Activity implements View.OnTouchListener 
 				mOutAnimator = new ObjectAnimator();
 				mOutAnimator.setPropertyName("translationX");
 				mOutAnimator.setFloatValues(0, -width);
+//				mInAnimator.addListener(mAnimatorListener);
 
 				mInAnimator = new ObjectAnimator();
 				mInAnimator.setPropertyName("translationX");
@@ -158,6 +162,7 @@ public class AbcPlayerActivity extends Activity implements View.OnTouchListener 
 				int indexView = mAdapterViewFlipper.getDisplayedChild();
 
 				mAudio.playSoundWord(data.get(indexView).getLetter());
+				lblWord.setText(data.get(indexView).getWord());
 
 			}
 
@@ -174,22 +179,14 @@ public class AbcPlayerActivity extends Activity implements View.OnTouchListener 
 		super.onWindowFocusChanged(focus);
 		width = mAdapterViewFlipper.getWidth();
 //		mAudio.playSoundWord(data.get(0).getLetter());
+		lblWord.setText(data.get(0).getWord());
 	}
 
 	private void loadDataCard() {
 
 		data = new ArrayList<Card>();
 		data = myDbHelper.getPalabrasFromCategoria(unaCategoria);
-//		Card card1 = new Card(1, "A",
-//				"Auto", "/storage/emulated/0/Images/Auto.jpg", "Auto.ogg", "");
-//		Card card2 = new Card(1, "B",
-//				"Botella", "/storage/emulated/0/Images/Botella.jpg", "Botella.ogg", "");
-//		Card card3 = new Card(1, "C",
-//				"Conejo", "storage/emulated/0/Images/Conejo.jpg", "Conejo.ogg", "");
-//
-//		data.add(card1);
-//		data.add(card2);
-//		data.add(card3);
+
 
 	}
 

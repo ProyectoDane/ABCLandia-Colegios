@@ -1,24 +1,15 @@
 package com.example.abclandia;
 
+
+
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-
-import com.example.abclandia.audio.Audio;
-import com.example.abclandia.graphics.CardView;
-import com.example.abclandia.graphics.LetterImageRenderer;
-import com.example.abclandia.graphics.JustLetterRenderer;
-import com.example.abclandia.graphics.Renderer;
-import com.frba.abclandia.R;
-import com.frba.abclandia.adapters.CardViewAdapter;
-import com.frba.abclandia.db.DataBaseHelper;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.SQLException;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -26,6 +17,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+
+import com.example.abclandia.audio.Audio;
+import com.example.abclandia.graphics.CardView;
+import com.example.abclandia.graphics.JustLetterRenderer;
+import com.example.abclandia.graphics.Renderer;
+import com.frba.abclandia.db.DataBaseHelper;
+import com.frba.abclandia.dragdrop.DragController;
+import com.frba.abclandia.dragdrop.DragLayer;
+import com.frba.abclandia.dragdrop.DragSource;
 
 public class GameActivity extends Activity implements View.OnTouchListener,
 		DragController.DragListener {
@@ -171,9 +171,9 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 
 			if (!cardView.isEmptyCard() && cardView.allowDrag()) {
 				if (cardView.getRenderer().getClass() == JustLetterRenderer.class){
-				mAudio.playSoundLetter(cardView.getCardId().toLowerCase());
+				mAudio.playSoundLetter(cardView.getCardLetter().toLowerCase());
 				} else 
-					mAudio.playSoundWord(cardView.getCardId());
+					mAudio.playSoundWord(cardView.getCardLetter());
 
 			}
 
@@ -229,6 +229,7 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 							startActivity(intent);
 
 						} else {
+							mAudio.playCompleteSound();
 
 							Intent intent = new Intent(GameActivity.this,
 									WinActivity.class);

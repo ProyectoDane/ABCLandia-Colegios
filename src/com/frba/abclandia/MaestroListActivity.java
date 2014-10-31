@@ -47,7 +47,7 @@ public class MaestroListActivity extends ListActivity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
 		WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		
-		setContentView(R.layout.activity_maestro_list);
+		setContentView(R.layout.maestros_activity);
 		//ListView listView = (ListView) findViewById(R.id.list_maestro);
 		
 		// Iniciamos la BD

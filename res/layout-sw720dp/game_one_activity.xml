@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<com.example.abclandia.DragLayer xmlns:android="http://schemas.android.com/apk/res/android"
+<com.frba.abclandia.dragdrop.DragLayer xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/drag_layer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF" >
+    android:background="#4FC0E8" >
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -14,24 +13,25 @@
 
         <GridView
             android:id="@+id/gridViewLeft"
-              android:background="#00FFFF"
             android:layout_width="600dp"
-            android:layout_height="wrap_content"
-           	android:layout_marginRight="10dp"
-            android:horizontalSpacing="10dp"
+            android:layout_height="700dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/gridview_shape"
+            android:padding="25dp"
             android:numColumns="3"
             android:verticalSpacing="25dp" >
         </GridView>
 
         <GridView
             android:id="@+id/gridViewRight"
-            android:background="#FF00FF"
             android:layout_width="600dp"
-            android:layout_height="wrap_content"
+            android:layout_height="700dp"
             android:layout_marginLeft="20dp"
+            android:background="@drawable/gridview_shape"
+            android:padding="25dp"
             android:numColumns="3"
             android:verticalSpacing="25dp" >
         </GridView>
     </LinearLayout>
 
-</com.example.abclandia.DragLayer>
+</com.frba.abclandia.dragdrop.DragLayer>

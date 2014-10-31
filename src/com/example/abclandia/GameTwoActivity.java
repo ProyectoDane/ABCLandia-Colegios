@@ -11,6 +11,8 @@ import com.example.abclandia.graphics.JustWordRenderer;
 import com.example.abclandia.graphics.LetterWordRenderer;
 import com.frba.abclandia.R;
 import com.frba.abclandia.adapters.CardViewAdapter;
+import com.frba.abclandia.dragdrop.DragController;
+import com.frba.abclandia.dragdrop.DragLayer;
 
 public class GameTwoActivity extends GameActivity {
 	

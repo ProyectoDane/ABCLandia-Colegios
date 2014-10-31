@@ -14,6 +14,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.SQLException;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Base64;
@@ -21,6 +22,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.abclandia.AbcPlayerActivity;
@@ -47,8 +49,11 @@ public class ActividadesActivity extends Activity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
 		WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		
-		setContentView(R.layout.activity_actividades);
-		
+		setContentView(R.layout.actividades_activity);
+//		Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf");
+//		Button btnReproducirAbcdario = (Button) findViewById(R.id.btnReproducirABC);
+//		btnReproducirAbcdario.setTypeface(font);
+//		
 		Intent i = getIntent();
 		this.unMaestro = i.getIntExtra("unMaestro", 0);
 		this.unAlumno = i.getIntExtra("unAlumno", 0);

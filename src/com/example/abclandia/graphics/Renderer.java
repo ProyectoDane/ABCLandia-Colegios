@@ -1,5 +1,7 @@
 package com.example.abclandia.graphics;
 
+
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -31,7 +33,7 @@ public abstract class Renderer {
 
 		mBorderRectPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-		mBorderRectPaint.setColor(Color.BLACK);
+		mBorderRectPaint.setColor(Color.parseColor("#454954"));
 		mBorderRectPaint.setStyle(Paint.Style.STROKE);
 		mBorderRectPaint.setStrokeWidth(Util.getTextSizeDensityDependent(
 				mContext, 2));
@@ -93,9 +95,9 @@ public abstract class Renderer {
 
 	}
 
-	protected void drawLetter(Canvas canvas, Card card, int rectangleWidth,
+	protected void drawLetter(Canvas canvas, String letter, int rectangleWidth,
 			int rectangleHeight) {
-		canvas.drawText(card.getLetter(), (float) (rectangleWidth * 0.5),
+		canvas.drawText(letter, (float) (rectangleWidth * 0.5),
 				(float) (rectangleHeight * 0.2), mTextLetterPaint);
 
 	}

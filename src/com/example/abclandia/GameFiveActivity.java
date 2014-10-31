@@ -4,12 +4,15 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.GridView;
 
+import com.example.abclandia.graphics.JustLetterFiveRenderer;
 import com.example.abclandia.graphics.JustLetterRenderer;
 import com.example.abclandia.graphics.JustWordRenderer;
 import com.example.abclandia.graphics.LetterWordRenderer;
 import com.example.abclandia.graphics.Renderer;
 import com.frba.abclandia.R;
 import com.frba.abclandia.adapters.CardViewAdapter;
+import com.frba.abclandia.dragdrop.DragController;
+import com.frba.abclandia.dragdrop.DragLayer;
 import com.frba.abclandia.stringformatter.StringWithoutLastLetter;
 
 public class GameFiveActivity extends GameActivity {
@@ -38,7 +41,7 @@ public class GameFiveActivity extends GameActivity {
 		mGridViewLeft = (GridView) findViewById(R.id.gridViewLeft);
 		mGridViewRight = (GridView) findViewById(R.id.gridViewRight);
 		mGridViewLeft.setAdapter(new CardViewAdapter(data, this,
-				new JustLetterRenderer(this), R.layout.game_one_card_view));
+				new JustLetterFiveRenderer(this), R.layout.game_one_card_view));
 		
 		Renderer justWordRenderer = new JustWordRenderer(this);
 		justWordRenderer.setWordFormatter(new StringWithoutLastLetter());

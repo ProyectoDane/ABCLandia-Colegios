@@ -240,16 +240,7 @@ implements View.OnTouchListener {
 
 		data = new ArrayList<Card>();
 		data = myDbHelper.getPalabrasFromCategoria(unaCategoria);
-//		Card card1 = new Card(1, "A",
-//				"Auto", "/storage/emulated/0/Images/Auto.jpg", "Auto.ogg", "");
-//		Card card2 = new Card(1, "B",
-//				"Botella", "/storage/emulated/0/Images/Botella.jpg", "Botella.ogg", "");
-//		Card card3 = new Card(1, "C",
-//				"Conejo", "storage/emulated/0/Images/Conejo.jpg", "Conejo.ogg", "");
-//
-//		data.add(card1);
-//		data.add(card2);
-//		data.add(card3);
+
 
 	}
 }

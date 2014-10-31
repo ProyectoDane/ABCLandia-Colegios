@@ -25,6 +25,8 @@ import com.example.abclandia.graphics.Renderer;
 import com.frba.abclandia.R;
 import com.frba.abclandia.adapters.CardViewAdapter;
 import com.frba.abclandia.db.DataBaseHelper;
+import com.frba.abclandia.dragdrop.DragController;
+import com.frba.abclandia.dragdrop.DragLayer;
 import com.frba.abclandia.stringformatter.StringWithoutdAllOccurrencesOfAnyLetter;
 
 public class GameSixActivity extends GameActivity {

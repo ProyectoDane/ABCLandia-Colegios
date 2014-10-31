@@ -10,6 +10,8 @@ import com.example.abclandia.graphics.LetterWordRenderer;
 import com.example.abclandia.graphics.Renderer;
 import com.frba.abclandia.R;
 import com.frba.abclandia.adapters.CardViewAdapter;
+import com.frba.abclandia.dragdrop.DragController;
+import com.frba.abclandia.dragdrop.DragLayer;
 import com.frba.abclandia.stringformatter.StringWithoutFirstLetter;
 
 public class GameFourActivity extends GameActivity {

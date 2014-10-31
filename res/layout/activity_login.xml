@@ -3,29 +3,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_single"
     android:orientation="vertical"
-    tools:context=".LoginActivity" >
+    android:background="#656D78"
+     tools:context=".LoginActivity" >
+     
+     <LinearLayout
+        style="@style/TopBar"
+        android:background="#454954"
+        android:orientation="horizontal" >
 
-    <Button
-        android:id="@+id/login_maestro"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-       
-        android:layout_alignParentLeft="true"
-        android:layout_marginBottom="70dp"
-        android:onClick="loginMaestro"
-        android:text="@string/login_maestro" />
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_abclandia"
+            android:background="#0000"></ImageButton>
 
-    <Button
-        android:id="@+id/bntlogin_padre"
-        android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/title_activity_login"
+            android:textColor="#FFFFFF"
+            android:textSize="40sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/login_maestro"
-        android:layout_marginBottom="164dp"
-        android:onClick="loginPadre"
-        android:text="@string/login_padre" />
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/login_maestro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="36dp"
+            android:background="@drawable/btn_inicio_shape"
+            android:onClick="loginMaestro"
+            android:text="@string/login_maestro"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/bntlogin_padre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:onClick="loginPadre"
+            android:background="@drawable/btn_inicio_shape"
+            android:textSize="40sp"
+            android:text="@string/login_padre"
+            android:textStyle="bold" />
+    </LinearLayout>
 
 </RelativeLayout>
