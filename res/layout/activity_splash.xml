@@ -7,11 +7,10 @@
 
     <ImageView
         android:id="@+id/imageView1"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:background="@drawable/background_single"
         android:contentDescription="@string/logosplash"
-        android:src="@drawable/splashlogo"
-        android:background="@drawable/background_single" />
+        android:src="@drawable/splashlogo" />
 
 </LinearLayout>

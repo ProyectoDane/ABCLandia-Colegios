@@ -99,17 +99,28 @@ public class ActividadesActivity extends Activity {
 	private void syncAlumnoDatos() {
 		// Create AsycHttpClient object
 		AsyncHttpClient client = new AsyncHttpClient();
+		client.setTimeout(10);
 		// Http Request Params Object
 		RequestParams params = new RequestParams();
 		// Show ProgressBar
 		prgDialog.show();
 		Log.d("Actividades", "Sincronizando informacion del alumno " + unAlumno);
-		client.get("http://yaars.com.ar/abclandia/public/index.php/api/alumnos/" + unAlumno, params, new JsonHttpResponseHandler(){
+		String server_url = "http://104.200.20.108/abclandia/public/index.php/api/alumnos/"; 
+		client.get( server_url  + unAlumno, params, new JsonHttpResponseHandler(){
 			
-			public void onSuccess(String response){
-				prgDialog.hide();
-				Log.d("Sincro Alumno", response.toString());
-			}
+			
+		     @Override
+		     public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {		       
+		          
+		    	 Log.d("Sincro Imagenes", "Status Code: " +statusCode);
+		    	 Log.d("Sincro Imagenes", headers.toString());
+		         Log.d("Sincro Imagenes" , responseBody.toString());
+		         Log.d("Sincro Imagenes", "En la respuesta hay " +responseBody.length);
+		         String respuesta = responseBody.toString();
+		         Log.d("SINCRO", respuesta);
+		         prgDialog.hide();
+		          
+		     }
 			
 			@Override
 			public void onSuccess (int statusCCode, Header [] headers, JSONObject alumnoCategoriaWeb){
@@ -128,8 +139,6 @@ public class ActividadesActivity extends Activity {
 						for (int i=0; i< palabras.length(); i++){
 							JSONObject unaPalabra =  palabras.getJSONObject(i);
 							Log.d("Palabra bug", unaPalabra.getString("id"));
-							//alumnoPalabras.add(new Palabra(unaPalabra.getInt("id"), categoria.getInt("id"), unaPalabra.getString("letra").toUpperCase(),
-									//unaPalabra.getString("palabra"), unaPalabra.getString("imagen_id"), unaPalabra.getString("sonido_id")));
 							Palabra miPalabra = new Palabra(unaPalabra.getString("id"), categoria.getString("id"), unaPalabra.getString("letra"),
 									unaPalabra.getString("palabra"), unaPalabra.getString("imagen_id"), unaPalabra.getString("sonido_id"));
 							myDbHelper.insertPalabra(miPalabra);
@@ -142,8 +151,9 @@ public class ActividadesActivity extends Activity {
 							} else {
 									Log.d("Imagen", "Buscando imagen " + imagenId);
 									AsyncHttpClient imagen = new AsyncHttpClient();
+									imagen.setTimeout(10);
 									RequestParams imagenParams = new RequestParams();
-									imagen.get("http://yaars.com.ar/abclandia/public/index.php/api/imagenes/" + imagenId, imagenParams, new AsyncHttpResponseHandler() {
+									imagen.get("http://104.200.20.108/abclandia/public/index.php/api/imagenes/" + imagenId, imagenParams, new AsyncHttpResponseHandler() {
 												public void onSuccess(String response) {
 													final String PATH_TO_SOUNDS = getFilesDir() + "/imagenes/";
 													String  nuevaImagenNombre = imagenId+".jpg";
@@ -189,7 +199,7 @@ public class ActividadesActivity extends Activity {
 								Log.d("Sonido", "Buscando Sonido" + sonidoId);
 											AsyncHttpClient sonido =  new AsyncHttpClient();
 											RequestParams sonidoParams =  new RequestParams();
-											sonido.get("http://yaars.com.ar/abclandia/public/index.php/api/sonidos/" + sonidoId, sonidoParams, new AsyncHttpResponseHandler() {
+											sonido.get("http://104.200.20.108/abclandia/public/index.php/api/sonidos/" + sonidoId, sonidoParams, new AsyncHttpResponseHandler() {
 													public void onSuccess(String response) {
 														final String PATH_TO_IMAGES = getFilesDir() + "/sonidos/";
 														String  nuevaImagenNombre = sonidoId+".ogg";
@@ -252,7 +262,7 @@ public class ActividadesActivity extends Activity {
 				prgDialog.hide();
 			}
 		});
-		
+		//prgDialog.hide();
 	}
 
 	private void iniciarPrgDialog() {

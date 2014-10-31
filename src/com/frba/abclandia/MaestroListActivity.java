@@ -94,7 +94,7 @@ public class MaestroListActivity extends ListActivity {
 		try {
 			myDbHelper.openDatabase();
 		}catch (SQLException sqle){
-			Log.d("POOCHIE", "No se pudo abrir la BD");
+			Log.d("ABCLandia", "No se pudo abrir la BD");
 			throw sqle;
 		}
 		
@@ -114,7 +114,7 @@ public class MaestroListActivity extends ListActivity {
 		RequestParams params = new RequestParams();
 		// Show ProgressBar
 		prgDialog.show();
-		client.get("http://yaars.com.ar/abclandia/public/index.php/api/maestros", params, new JsonHttpResponseHandler() {
+		client.get("http://104.200.20.108/abclandia/public/index.php/api/maestros", params, new JsonHttpResponseHandler() {
 	       
 	    	@Override
 	        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {

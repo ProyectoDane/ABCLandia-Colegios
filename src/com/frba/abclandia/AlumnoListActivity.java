@@ -38,7 +38,6 @@ public class AlumnoListActivity extends ListActivity {
 	
 	private DataBaseHelper myDbHelper;
 	private Integer unMaestro = 0;
-	private ABCLandiaRestServer server = new ABCLandiaRestServer();
 	ProgressDialog prgDialog;
 	
 	
@@ -89,11 +88,13 @@ public class AlumnoListActivity extends ListActivity {
 		// TODO Auto-generated method stub
 		// Create AsycHttpClient object
 		AsyncHttpClient client = new AsyncHttpClient();
+		client.setTimeout(10);
 		// Http Request Params Object
 		RequestParams params = new RequestParams();
 		// Show ProgressBar
 		prgDialog.show();
-		client.get("http://yaars.com.ar/abclandia/public/index.php/api/maestros/"+unMaestro+"/alumnos", params, new JsonHttpResponseHandler() {
+		String server_url = "http://104.200.20.108/abclandia/public/index.php/api/maestros/";
+		client.get(server_url + unMaestro + "/alumnos" , params, new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess (int statusCode, Header[] headers, JSONObject response){
 				// Si en lugar de un array nos responde con un unico JSONObject
@@ -101,13 +102,13 @@ public class AlumnoListActivity extends ListActivity {
 					Alumno unAlumno = new Alumno(response.getInt("id"), response.getString("apellido"), response.getString("nombre"), (Integer) unMaestro);
 					myDbHelper.insertAlumno(unAlumno);
 					myDbHelper.insertAlumnoMaestroRelationship(unAlumno.getId(), unMaestro);
-					prgDialog.hide();
 					setListAdapter(new AlumnoListAdapter(getApplicationContext()));
 					
 					} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}				
+				}
+				prgDialog.hide();
 			}
 			
 			@Override
@@ -118,13 +119,13 @@ public class AlumnoListActivity extends ListActivity {
 							JSONObject unAlumno = (JSONObject) serverAlumnos.get(i);
 							myDbHelper.insertAlumno(new Alumno(unAlumno.getInt("id"), unAlumno.getString("apellido"), unAlumno.getString("nombre"), unMaestro));	
 							myDbHelper.insertAlumnoMaestroRelationship(unAlumno.getInt("id"), unMaestro);
-							prgDialog.hide();
 							setListAdapter(new AlumnoListAdapter(getApplicationContext()));
 						}
 					}
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
+				prgDialog.hide();
 			};
 			
 			@Override
@@ -156,11 +157,10 @@ public class AlumnoListActivity extends ListActivity {
 			throw new Error("No se pudo crear la base de datos");
 			
 		}
-		
 		try {
 			myDbHelper.openDatabase();
 		}catch (SQLException sqle){
-			Log.d("POOCHIE", "No se pudo abrir la BD");
+			Log.d("ABCLandia", "No se pudo abrir la BD");
 			throw sqle;
 		}
 		

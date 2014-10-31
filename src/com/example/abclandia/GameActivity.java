@@ -139,7 +139,7 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 			try {
 				myDbHelper.openDatabase();
 			}catch (SQLException sqle){
-				Log.d("POOCHIE", "No se pudo abrir la BD");
+				Log.d("ABCLandia", "No se pudo abrir la BD");
 				throw sqle;
 			}
 			
