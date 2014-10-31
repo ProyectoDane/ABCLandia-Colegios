@@ -45,8 +45,8 @@
                 android:text="@string/reproducirAbecedario"
                 android:background="@drawable/btn_actividades_shape"
                 android:textSize="36sp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
                 android:onClick="btnReproducirAbecedario" />
 
             <Button
@@ -56,8 +56,8 @@
                 android:text="@string/reproducirLetra"
                 android:background="@drawable/btn_actividades_shape"
                 android:textSize="36sp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
                 android:onClick="btnReproducirLetra" />
 
             <Button
@@ -67,8 +67,8 @@
                 android:text="@string/jugar" 
                 android:background="@drawable/btn_actividades_shape"
                 android:textSize="36sp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
                 android:onClick="btnJugar"/>
 
         </LinearLayout>

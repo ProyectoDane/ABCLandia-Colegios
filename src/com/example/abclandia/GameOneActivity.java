@@ -92,7 +92,7 @@ public class GameOneActivity extends GameActivity
 
 		mDragController.setDragListener(mDragLayer);
 		mDroppedRenderer = new LetterImageRenderer(this);
-		mDroppedRenderer.setRectangleColorBorder(Color.GREEN);
+		mDroppedRenderer.setRectangleColorBorder(Color.parseColor("#76C60E"));
 
 	}
 
