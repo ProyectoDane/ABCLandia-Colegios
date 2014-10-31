@@ -3,6 +3,8 @@ package com.frba.abclandia;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -18,6 +20,7 @@ public class JugarActivity extends Activity
 		implements View.OnClickListener, DialogLevelListener{
 	private Button btnEjercicio1, btnEjercicio2, btnEjercicio3,
 			btnEjercicio4, btnEjercicio5, btnEjercicio6;
+	private View mLayout;
 	
 	// Definimos las variables para saber que Maestro, Alumno y Categoria estan involucrados. 
 	private int unMaestro = 0;
@@ -43,6 +46,7 @@ public class JugarActivity extends Activity
 		this.unAlumno = i.getIntExtra("unAlumno", 0);
 		this.unaCategoria = i.getIntExtra("unaCategoria", 0);
 		
+		mLayout = findViewById(R.id.layoutJuegoActivity);
 		btnEjercicio1 = (Button) findViewById(R.id.btnEjercicio1);
 		btnEjercicio2 = (Button) findViewById(R.id.btnEjercicio2);
 		btnEjercicio3 = (Button) findViewById(R.id.btnEjercicio3);
@@ -56,6 +60,14 @@ public class JugarActivity extends Activity
 		btnEjercicio4.setOnClickListener(this);
 		btnEjercicio5.setOnClickListener(this);
 		btnEjercicio6.setOnClickListener(this);
+		
+		((GradientDrawable) btnEjercicio1.getBackground()).setColor(Color.parseColor("#AC92ED"));
+		((GradientDrawable) btnEjercicio2.getBackground()).setColor(Color.parseColor("#48CFAE"));
+		((GradientDrawable) btnEjercicio3.getBackground()).setColor(Color.parseColor("#FFCE55"));
+		((GradientDrawable) btnEjercicio4.getBackground()).setColor(Color.parseColor("#A0D468"));
+		((GradientDrawable) btnEjercicio5.getBackground()).setColor(Color.parseColor("#4FC0E8"));
+		((GradientDrawable) btnEjercicio6.getBackground()).setColor(Color.parseColor("#FB6E52"));
+			     
 	}
 
 
@@ -95,13 +107,16 @@ public class JugarActivity extends Activity
 			return;
 			
 		}
+		
 		exerciseClass = GameDataStructure.getExerciseClass(exerciseNumber);
 		
 
 		
 		FragmentManager fm = getFragmentManager();
         NivelesDialogFragment editNameDialog = new NivelesDialogFragment();
+      
         editNameDialog.show(fm, "fragment_edit_name");
+        
 		
 		
 		

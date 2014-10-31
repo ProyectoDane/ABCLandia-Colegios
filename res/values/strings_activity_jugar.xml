@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="btnEjercicio1"> Juego 1</string>
-    <string name="btnEjercicio2"> Juego 2</string>
-    <string name="btnEjercicio3"> Juego 3</string>
-    <string name="btnEjercicio4"> Juego 4</string>
-    <string name="btnEjercicio5"> Juego 5</string>
-    <string name="btnEjercicio6"> Juego 6</string>
+    <string name="btnEjercicio1"> Unir letras con imagenes</string>
+    <string name="btnEjercicio2"> Unir letras con palabras</string>
+    <string name="btnEjercicio3"> Unir palabras con imagenes</string>
+    <string name="btnEjercicio4"> Unir letras con palabras\n \tsin su primera letra</string>
+    <string name="btnEjercicio5"> Unir letras con palabras\n \t sin su ultima letra</string>
+    <string name="btnEjercicio6"> Unir letras con palabras\n \t e imagenes</string>
 </resources>

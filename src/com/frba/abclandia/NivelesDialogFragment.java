@@ -1,5 +1,6 @@
 package com.frba.abclandia;
 
+import com.frba.abclandia.utils.Util;
 import com.google.gson.internal.ObjectConstructor;
 
 import android.app.DialogFragment;
@@ -30,6 +31,7 @@ public class NivelesDialogFragment extends DialogFragment implements View.OnClic
 //    	Dialog.Window.RequestFeature(WindowFeatures.NoTitle);
     	getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         View view = inflater.inflate(R.layout.niveles_fragment, container);
+        
         btnNivel1 = (Button) view.findViewById(R.id.btnNivel1);
         btnNivel1.setOnClickListener(this);
         GradientDrawable gd1 = (GradientDrawable) btnNivel1.getBackground();
@@ -60,8 +62,8 @@ public class NivelesDialogFragment extends DialogFragment implements View.OnClic
       if (getDialog() == null)
         return;
 
-      int dialogWidth =800 ;
-      int dialogHeight = 800; 
+      int dialogWidth =Util.getTextSizeDensityDependent(getActivity(), 670);
+      int dialogHeight =Util.getTextSizeDensityDependent(getActivity(), 400);; 
 
       getDialog().getWindow().setLayout(dialogWidth, dialogHeight);
 
