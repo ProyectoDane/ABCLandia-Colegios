@@ -7,7 +7,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 public class ABCLandiaRestClient {
-	private static final String BASE_URL = "http://104.200.20.108/abclandia/public/";
+	private static final String BASE_URL = "http://127.0.0.1:8080/abclandia/public/";
 	 
 	private static AsyncHttpClient client = new AsyncHttpClient();
 
