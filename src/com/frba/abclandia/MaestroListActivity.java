@@ -114,7 +114,7 @@ public class MaestroListActivity extends ListActivity {
 		RequestParams params = new RequestParams();
 		// Show ProgressBar
 		prgDialog.show();
-		client.get("http://127.0.0.1:8080/abclandia/public/index.php/api/maestros", params, new JsonHttpResponseHandler() {
+		client.get("http://104.200.20.108/abclandia/public/index.php/api/maestros", params, new JsonHttpResponseHandler() {
 	       
 	    	@Override
 	        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {

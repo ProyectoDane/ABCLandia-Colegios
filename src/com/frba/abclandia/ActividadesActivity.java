@@ -105,7 +105,7 @@ public class ActividadesActivity extends Activity {
 		// Show ProgressBar
 		prgDialog.show();
 		Log.d("Actividades", "Sincronizando informacion del alumno " + unAlumno);
-		String server_url = "http://127.0.0.1:8080/abclandia/public/index.php/api/alumnos/"; 
+		String server_url = "http://104.200.20.108/abclandia/public/index.php/api/alumnos/"; 
 		client.get( server_url  + unAlumno, params, new JsonHttpResponseHandler(){
 			
 			
@@ -152,7 +152,7 @@ public class ActividadesActivity extends Activity {
 									Log.d("Imagen", "Buscando imagen " + imagenId);
 									AsyncHttpClient imagen = new AsyncHttpClient();
 									RequestParams imagenParams = new RequestParams();
-									imagen.get("http://127.0.0.1:8080/abclandia/public/index.php/api/imagenes/" + imagenId, imagenParams, new AsyncHttpResponseHandler() {
+									imagen.get("http://104.200.20.108/abclandia/public/index.php/api/imagenes/" + imagenId, imagenParams, new AsyncHttpResponseHandler() {
 												public void onSuccess(String response) {
 													final String PATH_TO_SOUNDS = getFilesDir() + "/imagenes/";
 													String  nuevaImagenNombre = imagenId+".jpg";
@@ -198,7 +198,7 @@ public class ActividadesActivity extends Activity {
 								Log.d("Sonido", "Buscando Sonido" + sonidoId);
 											AsyncHttpClient sonido =  new AsyncHttpClient();
 											RequestParams sonidoParams =  new RequestParams();
-											sonido.get("http://127.0.0.1:8080/abclandia/public/index.php/api/sonidos/" + sonidoId, sonidoParams, new AsyncHttpResponseHandler() {
+											sonido.get("http://104.200.20.108/abclandia/public/index.php/api/sonidos/" + sonidoId, sonidoParams, new AsyncHttpResponseHandler() {
 													public void onSuccess(String response) {
 														final String PATH_TO_IMAGES = getFilesDir() + "/sonidos/";
 														String  nuevaImagenNombre = sonidoId+".ogg";

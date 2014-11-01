@@ -92,7 +92,7 @@ public class AlumnoListActivity extends ListActivity {
 		RequestParams params = new RequestParams();
 		// Show ProgressBar
 		prgDialog.show();
-		String server_url = "http://127.0.0.1:8080/abclandia/public/index.php/api/maestros/";
+		String server_url = "http://104.200.20.108/abclandia/public/index.php/api/maestros/";
 		client.get(server_url + unMaestro + "/alumnos" , params, new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess (int statusCode, Header[] headers, JSONObject response){
