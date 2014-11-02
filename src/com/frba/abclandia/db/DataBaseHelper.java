@@ -5,7 +5,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.ObjectInputStream.GetField;
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
+import java.nio.charset.CharsetEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +20,6 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Environment;
 import android.util.Log;
 
 import com.example.abclandia.Card;
@@ -158,7 +161,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		Cursor cursor =  database.rawQuery(selectQuery, null);
 		if (cursor.moveToFirst()){
 			do {
-				Maestro m1 = new Maestro(cursor.getInt(0), cursor.getString(1), cursor.getString(2));
+				Maestro m1 = new Maestro(cursor.getInt(0), 
+						getStringFromCharset(cursor.getString(1)),
+						getStringFromCharset(cursor.getString(2)));
 				maestros.add(m1);
 			} while (cursor.moveToNext());
 		
@@ -179,7 +184,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		Cursor cursor = database.rawQuery(selectQuery, null);
 		if (cursor.moveToFirst()){
 			do{
-				Alumno a1 = new Alumno(cursor.getInt(0), cursor.getString(1), cursor.getString(2), 1);
+				Alumno a1 = new Alumno(cursor.getInt(0), getStringFromCharset(cursor.getString(1)),
+						getStringFromCharset(cursor.getString(2)), 1);
 				alumnos.add(a1);
 			} while (cursor.moveToNext());
 		}
@@ -202,7 +208,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		Cursor cursor = database.rawQuery(selectQuery, null);
 		if (cursor.moveToFirst()){
 			do{
-				Alumno unAlumno = new Alumno(cursor.getInt(0), cursor.getString(1), cursor.getString(2), unMaestro);
+				Alumno unAlumno = new Alumno(cursor.getInt(0), getStringFromCharset(cursor.getString(1)), 
+						getStringFromCharset(cursor.getString(2)), unMaestro);
 				alumnos.add(unAlumno);
 			} while(cursor.moveToNext());
 		}
@@ -218,7 +225,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	public Categoria getAlumnoCategoria(Alumno unAlumno){
 		//Categoria categoria;
 		Categoria unaCategoria;
-		String selectQuery =  "Select categoria_id, categoria_nombre, categoria_descripcion from categorias where categoria_id = " + unAlumno.getId() + " ";
+		String selectQuery =  "Select categoria_id, categoria_nombre, categoria_descripcion from categorias where categoria_id = " 
+		+ unAlumno.getId() + " ";
 		SQLiteDatabase database =  this.getWritableDatabase();
 		Cursor cursor =  database.rawQuery(selectQuery, null);
 		if(cursor.moveToFirst()){
@@ -262,7 +270,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		Cursor cursor = database.rawQuery(selectQuery, null);
 		if (cursor.moveToFirst()){
 			do{
-				Card unaPalabra = new Card(cursor.getInt(0), cursor.getString(1), cursor.getString(2), PATH_TO_IMAGES + cursor.getString(3)+ ".jpg", PATH_TO_SOUNDS+cursor.getString(4)+".ogg");
+				Card unaPalabra = new Card(cursor.getInt(0), getStringFromCharset(cursor.getString(1)), 
+						getStringFromCharset(cursor.getString(2)),
+						PATH_TO_IMAGES + cursor.getString(3)+ ".jpg", PATH_TO_SOUNDS+cursor.getString(4)+".ogg");
 			
 				Log.d("Palabras",cursor.getString(2));
 				palabras.add(unaPalabra);
@@ -291,7 +301,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		SQLiteDatabase database =  this.getWritableDatabase();
 		Cursor cursor =  database.rawQuery(selectQuery, null);
 		if (cursor.moveToFirst()) {
-			unaPalabra =  new Card(cursor.getInt(0), cursor.getString(1), cursor.getString(2), PATH_TO_IMAGES + cursor.getString(3)+ ".jpg", PATH_TO_SOUNDS+cursor.getString(4)+".ogg");
+			unaPalabra =  new Card(cursor.getInt(0), getStringFromCharset(cursor.getString(1)),
+					getStringFromCharset(cursor.getString(2)),
+					PATH_TO_IMAGES + cursor.getString(3)+ ".jpg", PATH_TO_SOUNDS+cursor.getString(4)+".ogg");
 		} else {
 			unaPalabra = new Card(0,  unaLetra, unaLetra, "none", "none" );
 		}
@@ -314,7 +326,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		SQLiteDatabase database =  this.getWritableDatabase();
 		Cursor cursor =  database.rawQuery(selectQuery, null);
 		if (cursor.moveToFirst()) {
-			unaPalabra =  new Palabra(cursor.getString(0), unaCategoria, cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
+			unaPalabra =  new Palabra(cursor.getString(0), unaCategoria, getStringFromCharset(cursor.getString(1)),
+					getStringFromCharset(cursor.getString(2)), cursor.getString(3), cursor.getString(4));
 		} else {
 			unaPalabra = new Palabra("0",  unaCategoria, unaLetra, unaLetra, "none", "none" );
 		}
@@ -335,7 +348,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		SQLiteDatabase database =  this.getWritableDatabase();
 		Cursor cursor =  database.rawQuery(selectQuery, null);
 		if (cursor.moveToFirst()) {
-			unaPalabra =  cursor.getString(0);
+			unaPalabra =  getStringFromCharset(cursor.getString(0));
 		}
 		cursor.close();
 		return unaPalabra;
@@ -513,7 +526,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		Cursor cursor = database.rawQuery(selectQuery, null);
 		if (cursor.moveToFirst()){
 			do{
-				Palabra unaPalabra = new Palabra(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
+				Palabra unaPalabra = new Palabra(cursor.getString(0), cursor.getString(1), getStringFromCharset(cursor.getString(2)), getStringFromCharset(cursor.getString(3)), cursor.getString(4),
 						cursor.getString(5));
 				Log.d("Palbras",cursor.getColumnName(3));
 				palabras.add(unaPalabra);
@@ -530,7 +543,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		Cursor cursor = database.rawQuery(selectQuery, null);
 		if (cursor.moveToFirst()){
 			do{
-				Palabra unaPalabra = new Palabra(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
+				Palabra unaPalabra = new Palabra(cursor.getString(0), getStringFromCharset(cursor.getString(1)), 
+						getStringFromCharset(cursor.getString(2)), getStringFromCharset(cursor.getString(3)), 
+						getStringFromCharset(cursor.getString(4)),
 						cursor.getString(5));
 				Log.d("Palbras",cursor.getColumnName(3));
 				palabras.add(unaPalabra);
@@ -539,6 +554,30 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		cursor.close();
 		return palabras;
 	}
+	
+	/**
+	 * @param charsetName Charset Name eg: UTF-8,US-ASCII
+	 * @param encodedString string in encoded format eg:
+	 * @return
+	 */
+	 public static String getStringFromCharset(String encodedString)
+	 {
+		String charsetName = "UTF-8"; 
+		String normal = "";
+	 try
+	 	{
+		 Charset charset = Charset.forName(charsetName);
+		 CharsetDecoder charsetDecoder = charset.newDecoder();
+		 byte[] array = encodedString.getBytes(charset.displayName());
+		 ByteBuffer byteBuffer = ByteBuffer.wrap(array);
+		 CharBuffer charBuffer = charsetDecoder.decode(byteBuffer);
+		 normal = charBuffer.toString();
+	 	} catch (Exception e) {
+	 		if(e!=null)
+	 			e.printStackTrace();
+	 	}
+	 return normal;
+	 }
 
 
 
