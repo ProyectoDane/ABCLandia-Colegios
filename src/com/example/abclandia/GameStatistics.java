@@ -51,7 +51,7 @@ public class GameStatistics {
 			jsonEstadisticas.put("nivel", mGame.getNivel());
 			jsonEstadisticas.put("secuencia", mGame.getSecuence());
 			jsonEstadisticas.put("tiempo", mElapsedTime);
-			jsonEstadisticas.put("cantidad_aciertos", hitsCount - failsCount);
+			jsonEstadisticas.put("cantidad_aciertos", hitsCount);
 			jsonEstadisticas.put("cantidad_fallas", failsCount);
 			jsonEstadisticas.put("timestamp", getCurrentTimeStamp());
 		} catch (JSONException e) {
@@ -89,7 +89,7 @@ public class GameStatistics {
 		RequestParams params = new RequestParams();
 		params.put("estadisticas", jsonEstadisticas.toString());
 		Log.d("PARAM", params.toString());
-		client.post("http://yaars.com.ar/abclandia/public/index.php/api/estadisticas", params, new AsyncHttpResponseHandler() {
+		client.post("http://104.200.20.108/abclandia/public/index.php/api/estadisticas", params, new AsyncHttpResponseHandler() {
 			@Override
 			public void onSuccess(String response) {
 				Log.d("Post", "stats enviadas");

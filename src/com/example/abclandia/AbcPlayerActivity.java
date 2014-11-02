@@ -22,10 +22,7 @@ import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterViewFlipper;
-
 import android.widget.TextView;
-import android.widget.ViewFlipper;
-
 
 import com.example.abclandia.audio.Audio;
 import com.example.abclandia.graphics.CompleteCardRenderer;
@@ -256,10 +253,10 @@ public class AbcPlayerActivity extends Activity implements View.OnTouchListener 
 		try {
 			myDbHelper.openDatabase();
 		}catch (SQLException sqle){
-			Log.d("POOCHIE", "No se pudo abrir la BD");
+			Log.d("ABCLandia", "No se pudo abrir la BD");
 			throw sqle;
-		}
-		
+		}	
 	}
+	
 
 }
