@@ -229,6 +229,9 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 							intent.putExtra(
 									GameActivity.INTENT_CLASS_LAUNCHER_KEY,
 									mGameClassName);
+							intent.putExtra("unMaestro", unMaestro);
+							intent.putExtra("unAlumno", unAlumno);
+							intent.putExtra("unaCategoria", unaCategoria);
 							startActivity(intent);
 
 						} else {
@@ -244,6 +247,9 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 							intent.putExtra(
 									GameActivity.INTENT_CLASS_LAUNCHER_KEY,
 									mGameClassName);
+							intent.putExtra("unMaestro", unMaestro);
+							intent.putExtra("unAlumno", unAlumno);
+							intent.putExtra("unaCategoria", unaCategoria);
 							startActivity(intent);
 
 						}

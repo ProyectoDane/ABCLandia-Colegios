@@ -51,7 +51,7 @@ public class GameStatistics {
 			jsonEstadisticas.put("nivel", mGame.getNivel());
 			jsonEstadisticas.put("secuencia", mGame.getSecuence());
 			jsonEstadisticas.put("tiempo", mElapsedTime);
-			jsonEstadisticas.put("cantidad_aciertos", hitsCount - failsCount);
+			jsonEstadisticas.put("cantidad_aciertos", hitsCount);
 			jsonEstadisticas.put("cantidad_fallas", failsCount);
 			jsonEstadisticas.put("timestamp", getCurrentTimeStamp());
 		} catch (JSONException e) {
