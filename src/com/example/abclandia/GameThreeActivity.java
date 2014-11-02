@@ -1,6 +1,7 @@
 package com.example.abclandia;
 
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.widget.GridView;
 
@@ -48,7 +49,10 @@ public class GameThreeActivity extends GameActivity {
 		mDragController.setDragListener(mDragLayer);
 	
 		mGridViewLeft = (GridView) findViewById(R.id.gridViewLeft);
+		((GradientDrawable) mGridViewLeft.getBackground()).setColor(Color.parseColor("#C1BCED"));
 		mGridViewRight = (GridView) findViewById(R.id.gridViewRight);
+		((GradientDrawable) mGridViewRight.getBackground()).setColor(Color.parseColor("#D4EAB0"));
+		
 		mGridViewLeft.setAdapter(new CardViewAdapter(data, this,
 				new JustWordRenderer(this), R.layout.game_one_card_view));
 		mGridViewRight.setAdapter(new CardViewAdapter(data, this,
@@ -56,7 +60,9 @@ public class GameThreeActivity extends GameActivity {
 	
 
 		mDragLayer = (DragLayer) findViewById(R.id.drag_layer);
+		
 		mDragLayer.setDragController(mDragController);
+		mDragLayer.setBackgroundColor(Color.parseColor("#F7B3A9"));
 		mDragLayer.setGridViewLeft(mGridViewLeft);
 		mDragLayer.setGridViewRight(mGridViewRight);
 		mDragController.setDragListener(mDragLayer);

@@ -17,6 +17,7 @@ package com.example.abclandia;
 
 
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -67,6 +68,7 @@ public class GameOneActivity extends GameActivity
 		setContentView(R.layout.game_one_activity);
 		mDragController = new DragController(this);
 		mDragLayer = (DragLayer) findViewById(R.id.drag_layer);
+		mDragLayer.setBackgroundColor(Color.parseColor("#CCCAEA"));
 		mDragLayer.setDragController(mDragController);
 		mDragController.setDragListener(mDragLayer);
 	
@@ -75,9 +77,10 @@ public class GameOneActivity extends GameActivity
 	
 		mAudio.loadLetterSoungs(data);
 	
-
 		mGridViewLeft = (GridView) findViewById(R.id.gridViewLeft);
+		((GradientDrawable) mGridViewLeft.getBackground()).setColor(Color.parseColor("#A3E8D4"));
 		mGridViewRight = (GridView) findViewById(R.id.gridViewRight);
+		((GradientDrawable) mGridViewRight.getBackground()).setColor(Color.parseColor("#E6E9EE"));
 
 		mGridViewRight.setAdapter(new CardViewAdapter(data, this,
 				new JustLetterRenderer(this), R.layout.game_one_card_view));

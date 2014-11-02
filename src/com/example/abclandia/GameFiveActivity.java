@@ -1,6 +1,7 @@
 package com.example.abclandia;
 
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.widget.GridView;
 
@@ -39,18 +40,23 @@ public class GameFiveActivity extends GameActivity {
 		setContentView(R.layout.game_four_five_activity);
 		
 		mGridViewLeft = (GridView) findViewById(R.id.gridViewLeft);
+		((GradientDrawable) mGridViewLeft.getBackground()).setColor(Color.parseColor("#BDDD94"));
 		mGridViewRight = (GridView) findViewById(R.id.gridViewRight);
+		((GradientDrawable) mGridViewRight.getBackground()).setColor(Color.parseColor("#EDB4B0"));
+		
 		mGridViewLeft.setAdapter(new CardViewAdapter(data, this,
-				new JustLetterFiveRenderer(this), R.layout.game_one_card_view));
+				new JustLetterFiveRenderer(this), R.layout.game_four_five_card_view));
 		
 		Renderer justWordRenderer = new JustWordRenderer(this);
 		justWordRenderer.setWordFormatter(new StringWithoutLastLetter());
 		mGridViewRight.setAdapter(new CardViewAdapter(data, this,
-				justWordRenderer, R.layout.game_one_card_view));
+				justWordRenderer, R.layout.game_four_five_card_view));
 
 		
 		mDragController = new DragController(this);
+		
 		mDragLayer = (DragLayer) findViewById(R.id.drag_layer);
+		mDragLayer.setBackgroundColor(Color.parseColor("#EFD497"));
 		mDragLayer.setDragController(mDragController);
 		mDragController.setDragListener(mDragLayer);
 		

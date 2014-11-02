@@ -7,6 +7,7 @@ import java.util.List;
 import android.content.Intent;
 import android.database.SQLException;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -61,6 +62,7 @@ public static final int TOTAL_JOINS = 6;
       
         
         mDragLayer = (DragLayer) findViewById(R.id.drag_layer);
+        mDragLayer.setBackgroundColor(Color.parseColor("#E6E9EE"));
         mDragLayer.setDragController (mDragController);
         mDragController.setDragListener (mDragLayer);
         mDroppedRenderer = new LetterImageRenderer(this);
@@ -83,15 +85,19 @@ public static final int TOTAL_JOINS = 6;
        
         
         mGridViewLeft = (GridView) findViewById(R.id.gridViewLeft);
-        mGridViewRight = (GridView) findViewById(R.id.gridViewRight);
+        ((GradientDrawable) mGridViewLeft.getBackground()).setColor(Color.parseColor("#CCE5A8"));
         mGridViewCenter = (GridView) findViewById(R.id.gridViewCenter);
+        ((GradientDrawable) mGridViewCenter.getBackground()).setColor(Color.parseColor("#F4BBB5"));
+        mGridViewRight = (GridView) findViewById(R.id.gridViewRight);
+        ((GradientDrawable) mGridViewRight.getBackground()).setColor(Color.parseColor("#F4DAA6"));
+        
        
         
-        mGridViewRight.setAdapter(new CardViewAdapter(data, this, new JustImageRenderer(this),R.layout.grid_row));
-        mGridViewLeft.setAdapter(new CardViewAdapter(data, this, new JustLetterRenderer(this),R.layout.grid_row));
+        mGridViewRight.setAdapter(new CardViewAdapter(data, this, new JustImageRenderer(this),R.layout.game_four_five_card_view));
+        mGridViewLeft.setAdapter(new CardViewAdapter(data, this, new JustLetterRenderer(this),R.layout.game_four_five_card_view));
         Renderer justWordRenderer = new JustWordRenderer(this);
         justWordRenderer.setWordFormatter(new StringWithoutdAllOccurrencesOfAnyLetter());
-        mGridViewCenter.setAdapter(new CardViewAdapter(data, this, justWordRenderer,R.layout.grid_row));
+        mGridViewCenter.setAdapter(new CardViewAdapter(data, this, justWordRenderer,R.layout.game_four_five_card_view));
         
         mDragLayer.setGridViewLeft(mGridViewLeft);
         mDragLayer.setGridViewCenter(mGridViewCenter);
@@ -101,6 +107,7 @@ public static final int TOTAL_JOINS = 6;
         mDroppedRenderer = new CompleteCardRenderer(this);
         mFirstMatchRenderer = new LetterWordRenderer(this);
         mFirstMatchRenderer.setRectangleColorBorder(Color.YELLOW);
+        mDroppedRenderer.setRectangleColorBorder(Color.parseColor("#76C60E"));
         
     
         

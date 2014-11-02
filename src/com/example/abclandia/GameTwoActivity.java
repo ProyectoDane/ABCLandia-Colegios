@@ -1,11 +1,10 @@
 package com.example.abclandia;
 
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.widget.GridView;
 
-import com.example.abclandia.graphics.LetterImageRenderer;
-import com.example.abclandia.graphics.JustImageRenderer;
 import com.example.abclandia.graphics.JustLetterRenderer;
 import com.example.abclandia.graphics.JustWordRenderer;
 import com.example.abclandia.graphics.LetterWordRenderer;
@@ -47,6 +46,7 @@ public class GameTwoActivity extends GameActivity {
 		mDragController = new DragController(this);
 		mDragLayer = (DragLayer) findViewById(R.id.drag_layer);
 		mDragLayer.setDragController(mDragController);
+		mDragLayer.setBackgroundColor(Color.parseColor("#78EACA"));
 		mDragController.setDragListener(mDragLayer);
 	
 
@@ -56,7 +56,9 @@ public class GameTwoActivity extends GameActivity {
 	
 
 		mGridViewLeft = (GridView) findViewById(R.id.gridViewLeft);
+		((GradientDrawable) mGridViewLeft.getBackground()).setColor(Color.parseColor("#F7D9A4"));
 		mGridViewRight = (GridView) findViewById(R.id.gridViewRight);
+		((GradientDrawable) mGridViewRight.getBackground()).setColor(Color.parseColor("#F4B1A8"));
 		
 		
 		mGridViewLeft.setAdapter(new CardViewAdapter(data, this,
@@ -76,6 +78,7 @@ public class GameTwoActivity extends GameActivity {
 		mDroppedRenderer.setRectangleColorBorder(Color.GREEN);
 
 	}
+	
 
 
 }
