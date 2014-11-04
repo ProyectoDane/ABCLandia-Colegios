@@ -26,8 +26,8 @@ public class JustLetterRenderer extends Renderer {
 
 		 if (!card.isLowerUpperLetter())
 			 drawLetter(canvas, card.getLetter(), rectangleWidth, rectangleHeight);
-//		else 
-//			 drawLetterLowerAndUpper(canvas, card, rectangleWidth, rectangleHeight);
+		else 
+			 drawLetterLowerAndUpper(canvas, card.getLetter(), rectangleWidth, rectangleHeight);
 		
 		 
 

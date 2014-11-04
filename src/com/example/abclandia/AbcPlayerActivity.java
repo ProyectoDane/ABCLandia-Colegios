@@ -35,7 +35,7 @@ import com.frba.abclandia.dtos.Categoria;
 public class AbcPlayerActivity extends Activity implements View.OnTouchListener {
 
 	private static final int SWIPE_MIN_DISTANCE = 120;
-	private static final int SWIPE_THRESHOLD_VELOCITY = 200;
+	private static final int SWIPE_THRESHOLD_VELOCITY = 180;
 	private static final int FLIP_INTERVAL = 2000;
 	
 	// Definimos las variables para saber que Maestro, Alumno y Categoria estan involucrados. 
@@ -80,8 +80,8 @@ public class AbcPlayerActivity extends Activity implements View.OnTouchListener 
 			Renderer.TEXT_LETTER_SIZE = 48;
 			Renderer.TEXT_WORD_SIZE = 48;
 		} else if (config.smallestScreenWidthDp >= 600) {
-			Renderer.TEXT_LETTER_SIZE = 20;
-			Renderer.TEXT_WORD_SIZE = 18;
+			Renderer.TEXT_LETTER_SIZE = 39;
+			Renderer.TEXT_WORD_SIZE = 39;
 		}
 		setContentView(R.layout.abc_player_activity);
 		 lblWord = (TextView) findViewById(R.id.lblWord);

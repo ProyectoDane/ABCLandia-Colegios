@@ -1,0 +1,109 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutJuegoActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="#CCD0D9" >
+
+    <LinearLayout
+        style="@style/TopBar"
+        android:background="#AAB2BD"
+        android:orientation="horizontal" >
+        
+           <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_abclandia"
+            android:background="#0000"></ImageButton>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/title_activity_ejercicios"
+            android:textColor="#FFFFFF"
+            android:textSize="40sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:gravity="center" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical" 
+            android:layout_marginRight="20dp">
+
+            <Button
+                android:id="@+id/btnEjercicio1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btnEjercicio1"
+                android:textColor="#FFFFFF"
+                android:textSize="25sp"
+                android:background="@drawable/btn_juegos_10_shape"
+                android:layout_marginBottom="20dp" />
+
+            <Button
+                android:id="@+id/btnEjercicio2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btnEjercicio2"
+                android:textSize="25sp"
+                 android:textColor="#FFFFFF"
+                android:background="@drawable/btn_juegos_10_shape"
+                android:layout_marginBottom="20dp" />
+
+            <Button
+                android:id="@+id/btnEjercicio3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btnEjercicio3"
+                android:textSize="25sp"
+                android:background="@drawable/btn_juegos_10_shape"
+                android:layout_marginBottom="20dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginLeft="20dp" >
+
+            <Button
+                android:id="@+id/btnEjercicio4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btnEjercicio4"
+                android:textSize="25sp"
+                android:background="@drawable/btn_juegos_10_shape"
+                android:layout_marginBottom="20dp" />
+
+            <Button
+                android:id="@+id/btnEjercicio5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btnEjercicio5"
+                android:textSize="25sp"
+                android:background="@drawable/btn_juegos_10_shape" 
+                android:layout_marginBottom="20dp"/>
+
+            <Button
+                android:id="@+id/btnEjercicio6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btnEjercicio6"
+                android:textSize="25sp"
+                android:background="@drawable/btn_juegos_10_shape"
+                android:layout_marginBottom="20dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

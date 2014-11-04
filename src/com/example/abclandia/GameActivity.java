@@ -23,11 +23,9 @@ import com.example.abclandia.graphics.CardView;
 import com.example.abclandia.graphics.JustLetterRenderer;
 import com.example.abclandia.graphics.Renderer;
 import com.frba.abclandia.db.DataBaseHelper;
-
 import com.frba.abclandia.dragdrop.DragController;
 import com.frba.abclandia.dragdrop.DragLayer;
 import com.frba.abclandia.dragdrop.DragSource;
-
 import com.frba.abclandia.dtos.Categoria;
 
 
@@ -105,10 +103,10 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 		Configuration config = getResources().getConfiguration();
 		if (config.smallestScreenWidthDp >= 720) {
 			Renderer.TEXT_LETTER_SIZE = 30;
-			Renderer.TEXT_WORD_SIZE = 25;
+			Renderer.TEXT_WORD_SIZE = 30;
 		} else if (config.smallestScreenWidthDp >= 600) {
-			Renderer.TEXT_LETTER_SIZE = 20;
-			Renderer.TEXT_WORD_SIZE = 18;
+			Renderer.TEXT_LETTER_SIZE = 24;
+			Renderer.TEXT_WORD_SIZE = 24;
 		}
 
 	}
@@ -121,7 +119,7 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 		for (int i = 0; i < secuences.length; i++) {
 			String letter = String.valueOf(secuences[i]);
 			Card card = myDbHelper.getPalabraFromLetraAndCategoria(letter, estaCategoria.getCategoriaID());
-			card.setLetterType(estaCategoria.getCategoriaTipoLetra());
+			card.setLetterType(3);
 			data.add(card);
 		}
 	}
@@ -173,7 +171,8 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 		if (action == MotionEvent.ACTION_DOWN) {
 
 			if (!cardView.isEmptyCard() && cardView.allowDrag()) {
-				if (cardView.getRenderer().getClass() == JustLetterRenderer.class){
+				Class<?> rendererClass = cardView.getRenderer().getClass();
+				if (rendererClass == JustLetterRenderer.class){
 				mAudio.playSoundLetter(cardView.getCardLetter().toLowerCase());
 				} else 
 					mAudio.playSoundWord(cardView.getCardLetter());

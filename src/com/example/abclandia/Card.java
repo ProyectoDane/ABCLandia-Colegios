@@ -79,7 +79,10 @@ public class Card {
 			mWord = mWord.toUpperCase();
 		}
 	}
-
+	
+	public void setLetter(String letter){
+		mLetter = letter;
+	}
 	
 
 }

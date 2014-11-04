@@ -23,9 +23,8 @@ public class LetterWordRenderer extends Renderer {
 		super.Render(canvas, rectangleWidth, rectangleHeight, borderRectanglePaint, textPaint, card, imageBitmap);
 		
 		
-			 
 			drawLetter(canvas, card.getLetter(), rectangleWidth, rectangleHeight);
-			drawWord(canvas, card, rectangleWidth, rectangleHeight);
+			drawWord(canvas, card.getLetter(), rectangleWidth, rectangleHeight);
 		   
 		
 		   
@@ -34,4 +33,5 @@ public class LetterWordRenderer extends Renderer {
 		   
 	}
 
+	
 }

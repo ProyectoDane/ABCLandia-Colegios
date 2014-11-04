@@ -86,7 +86,7 @@ public abstract class Renderer {
 
 		float sideImageLong = (float) (rectangleWidth * 0.8 - rectangleWidth * 0.2);
 		RectF rect = new RectF(rectangleWidth * 0.2f, rectangleHeight * 0.28f,
-				rectangleWidth * 0.28f + sideImageLong, rectangleHeight * 0.30f
+				rectangleWidth * 0.2f + sideImageLong, rectangleHeight * 0.28f
 						+ sideImageLong);
 
 		if (imageBitmap != null) {
@@ -102,11 +102,7 @@ public abstract class Renderer {
 
 	}
 
-	protected void drawWord(Canvas canvas, Card card, int rectangleWidth,
-			int rectangleHeight) {
-		canvas.drawText(card.getWord(), (float) (rectangleWidth * 0.5),
-				(float) (rectangleHeight * 0.9), mTextWordPaint);
-	}
+
 	
 	protected void drawWord(Canvas canvas, String word, int rectangleWidth,
 			int rectangleHeight) {
@@ -114,50 +110,43 @@ public abstract class Renderer {
 				(float) (rectangleHeight * 0.9), mTextWordPaint);
 	}
 
-	protected void drawWordWithoutLastCharacter(Canvas canvas, Card card,
-			int rectangleWidth, int rectangleHeight) {
-		String originalWord = card.getWord();
-		String word = card.getWord().substring(0, originalWord.length() - 1)
-				+ "_";
-		canvas.drawText(word, (float) (rectangleWidth * 0.5),
-				(float) (rectangleHeight * 0.9), mTextWordPaint);
-	}
 
-	protected void drawWordWithoutFirstLetter(Canvas canvas, Card card,
-			int rectangleWidth, int rectangleHeight) {
-		String originalWord = card.getWord();
-		String word = "_" + card.getWord().substring(1, originalWord.length());
-		canvas.drawText(word, (float) (rectangleWidth * 0.5),
-				(float) (rectangleHeight * 0.9), mTextWordPaint);
-	}
 
-	protected void dragWordWordWithoutdAllOccurrencesOfFirstLetter(
-			Canvas canvas, Card card, int rectangleWidth, int rectangleHeight) {
-		String firstLetter = card.getLetter().toLowerCase();
-		String word = card.getWord().replace(firstLetter, "_");
-		canvas.drawText(word, (float) (rectangleWidth * 0.5),
-				(float) (rectangleHeight * 0.9), mTextWordPaint);
-
-	}
 	
-	protected void drawLetterLowerAndUpper(Canvas canvas, Card card, int rectangleWidth,
+
+
+	
+	
+	protected void drawLetterLowerAndUpper(Canvas canvas, String letter, int rectangleWidth,
 			int rectangleHeight) {
-		String letter = card.getLetter();
-		canvas.drawText(letter.toUpperCase(), (float) (rectangleWidth * 0.35),
+		
+		canvas.drawText(letter.toUpperCase(), (float) (rectangleWidth * 0.38),
 				(float) (rectangleHeight * 0.16), mTextLetterPaint);
-		canvas.drawText(letter.toLowerCase(), (float) (rectangleWidth * 0.65),
+		canvas.drawText(letter.toLowerCase(), (float) (rectangleWidth * 0.62),
 				(float) (rectangleHeight * 0.16), mTextLetterPaint);
 		
 
 	}
 	
-	protected void drawWordLowerAndUpper(Canvas canvas, Card card, int rectangleWidth,
+	protected void drawWordLowerAndUpper(Canvas canvas, String word, int rectangleWidth,
 			int rectangleHeight) {
-		String word = card.getWord();
+		
 		canvas.drawText(word.toUpperCase(), (float) (rectangleWidth * 0.5),
-				(float) (rectangleHeight * 0.86), mTextWordPaint);
+				(float) (rectangleHeight * 0.83), mTextWordPaint);
 		canvas.drawText(word.toLowerCase(), (float) (rectangleWidth * 0.5),
-				(float) (rectangleHeight * 0.97), mTextWordPaint);
+				(float) (rectangleHeight * 0.96), mTextWordPaint);
+	}
+	protected void drawImageLowerAndUpper(Canvas canvas, Card card, int rectangleWidth,
+			int rectangleHeight, Bitmap imageBitmap){
+		float sideImageLong = (float) (rectangleWidth * 0.8 - rectangleWidth * 0.2);
+		RectF rect = new RectF(rectangleWidth * 0.2f, rectangleHeight * 0.24f,
+				rectangleWidth * 0.2f + sideImageLong, rectangleHeight * 0.24f
+						+ sideImageLong);
+
+		if (imageBitmap != null) {
+			canvas.drawBitmap(imageBitmap, null, rect, null);
+		}
+		
 	}
 
 	protected void successRender() {

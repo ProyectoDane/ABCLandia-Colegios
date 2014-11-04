@@ -25,8 +25,13 @@ public class JustWordRenderer extends Renderer {
 			   word = wordFormatter.formatWord(card.getLetter(), card.getWord());
 		   else
 			   word = card.getWord();
-			   
-		   drawWord(canvas, word, rectangleWidth, rectangleHeight);
+		   if (!card.isLowerUpperLetter())
+				 drawWord(canvas, word, rectangleWidth, rectangleHeight);
+			else 
+				 drawWordLowerAndUpper(canvas, word, rectangleWidth, rectangleHeight);
+			
+			 
+		 
 
 
 		   

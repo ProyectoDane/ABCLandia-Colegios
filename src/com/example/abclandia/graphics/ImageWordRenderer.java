@@ -14,15 +14,29 @@ public class ImageWordRenderer extends Renderer{
 		// TODO Auto-generated constructor stub
 	}
 	
-	
 	@Override
 	public void Render(Canvas canvas, int rectangleWidth, int rectangleHeight,
-			Paint borderRectanglePaint, Paint textPaint, Card card, Bitmap imageBitmap) {
-		
-		super.Render(canvas, rectangleWidth, rectangleHeight, borderRectanglePaint, textPaint, card, imageBitmap);
-		
-		drawImage(canvas, card, rectangleWidth, rectangleHeight, imageBitmap);
-		drawWord(canvas, card.getWord(), rectangleWidth, rectangleHeight);
-	}
+			Paint borderRectanglePaint, Paint textPaint, Card card,
+			Bitmap imageBitmap) {
 
+		super.Render(canvas, rectangleWidth, rectangleHeight,
+				borderRectanglePaint, textPaint, card, imageBitmap);
+
+		if (!card.isLowerUpperLetter()) {
+
+			drawImage(canvas, card, rectangleWidth, rectangleHeight,
+					imageBitmap);
+			drawWord(canvas, card.getWord(), rectangleWidth, rectangleHeight);
+		
+		} else {
+			drawImageLowerAndUpper(canvas, card, rectangleWidth, rectangleHeight, imageBitmap);
+					
+
+			drawWordLowerAndUpper(canvas, card.getWord(), rectangleWidth,
+					rectangleHeight);
+		}
+
+		//
+
+	}
 }

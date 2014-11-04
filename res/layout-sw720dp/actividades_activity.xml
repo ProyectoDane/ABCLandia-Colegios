@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F77A66"
+    android:orientation="horizontal" >
+    
+      <LinearLayout
+        style="@style/TopBar"
+     	android:orientation="horizontal" 
+     	android:background="#E9573E">
+     	
+            <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_abclandia"
+            android:background="#0000"></ImageButton>
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textSize="40sp"
+              android:layout_marginLeft="20dp"
+              android:layout_marginTop="15dp"
+              android:textColor="#FFFFFF"
+              android:text="@string/title_activity_actividades"
+               />
+        
+    </LinearLayout>
+
+   
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" >
+
+            <Button
+                android:id="@+id/btnReproducirABC"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/reproducirAbecedario"
+                android:background="@drawable/btn_actividades_10_shape"
+                android:textSize="36sp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:onClick="btnReproducirAbecedario" />
+
+            <Button
+                android:id="@+id/btnReproducirLetra"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/reproducirLetra"
+                android:background="@drawable/btn_actividades_10_shape"
+                android:textSize="36sp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:onClick="btnReproducirLetra" />
+
+            <Button
+                android:id="@+id/btnJugar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/jugar" 
+                android:background="@drawable/btn_actividades_10_shape"
+                android:textSize="36sp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:onClick="btnJugar"/>
+
+        </LinearLayout>
+    
+
+</RelativeLayout>

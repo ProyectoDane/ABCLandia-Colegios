@@ -5,7 +5,6 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.widget.GridView;
 
-import com.example.abclandia.graphics.JustLetterFiveRenderer;
 import com.example.abclandia.graphics.JustLetterRenderer;
 import com.example.abclandia.graphics.JustWordRenderer;
 import com.example.abclandia.graphics.LetterWordRenderer;
@@ -36,6 +35,7 @@ public class GameFiveActivity extends GameActivity {
 		mGameClassName = CLASS_NAME;
 		mTotalJoins = TOTAL_JOINS;
 		super.onCreate(savedInstanceState);
+		changeFirsLetter();
 		
 		setContentView(R.layout.game_four_five_activity);
 		
@@ -45,7 +45,7 @@ public class GameFiveActivity extends GameActivity {
 		((GradientDrawable) mGridViewRight.getBackground()).setColor(Color.parseColor("#EDB4B0"));
 		
 		mGridViewLeft.setAdapter(new CardViewAdapter(data, this,
-				new JustLetterFiveRenderer(this), R.layout.game_four_five_card_view));
+				new JustLetterRenderer(this), R.layout.game_four_five_card_view));
 		
 		Renderer justWordRenderer = new JustWordRenderer(this);
 		justWordRenderer.setWordFormatter(new StringWithoutLastLetter());
@@ -69,6 +69,14 @@ public class GameFiveActivity extends GameActivity {
 		mDroppedRenderer = new LetterWordRenderer(this);
 		mDroppedRenderer.setRectangleColorBorder(Color.GREEN);
 
+	}
+	
+	private void changeFirsLetter(){
+		for (Card card : data){
+			String word = card.getWord();
+			 card.setLetter(word.substring(word.length()-1, word.length()));
+		   
+		}
 	}
 
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#FF00FF" >
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#238CA4"
+    android:orientation="vertical" >
 
     <AdapterViewFlipper
         android:id="@+id/view_flipper"
@@ -14,6 +14,8 @@
     </AdapterViewFlipper>
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
         style="@style/ButtonContainer"
         android:orientation="horizontal" >
 
@@ -30,12 +32,29 @@
             android:layout_height="wrap_content"
             android:background="@android:drawable/ic_media_pause" />
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:layout_alignParentBottom="true"
+        android:background="#99000060"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/lblWord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:textColor="#FFFFFF"
+            android:textSize="38sp" />
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/swipe_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:layout_marginLeft="12dp"
         android:layout_centerVertical="true"
         android:src="@drawable/swipe_left" />
 
@@ -44,7 +63,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:layout_marginRight="12dp"
         android:layout_centerVertical="true"
+        
         android:src="@drawable/swipe_right" />
 
 </RelativeLayout>

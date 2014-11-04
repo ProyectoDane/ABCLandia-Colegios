@@ -8,25 +8,25 @@
      tools:context=".LoginActivity" >
      
      <LinearLayout
-        style="@style/TopBar"
+        style="@style/TopBarSeven"
         android:background="#454954"
         android:orientation="horizontal" >
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="8dp"
             android:src="@drawable/ic_abclandia"
             android:background="#0000"></ImageButton>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="10dp"
             android:text="@string/title_activity_login"
             android:textColor="#FFFFFF"
-            android:textSize="40sp" />
+            android:textSize="32sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -40,23 +40,23 @@
             android:id="@+id/login_maestro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="36dp"
-            android:background="@drawable/btn_inicio_shape"
+            android:layout_marginBottom="27dp"
+            android:background="@drawable/btn_inicio_7_shape"
             android:onClick="loginMaestro"
             android:text="@string/login_maestro"
-            android:textSize="40sp"
-            android:textStyle="bold" />
+            android:textSize="34sp"
+             />
 
         <Button
             android:id="@+id/bntlogin_padre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="27dp"
             android:onClick="loginPadre"
-            android:background="@drawable/btn_inicio_shape"
-            android:textSize="40sp"
+            android:background="@drawable/btn_inicio_7_shape"
+            android:textSize="34sp"
             android:text="@string/login_padre"
-            android:textStyle="bold" />
+             />
     </LinearLayout>
 
 </RelativeLayout>

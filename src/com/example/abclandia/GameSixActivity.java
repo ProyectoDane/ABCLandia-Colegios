@@ -68,9 +68,7 @@ public static final int TOTAL_JOINS = 6;
         mDroppedRenderer = new LetterImageRenderer(this);
         
         
-        mAudio = new Audio(this);
-		mAudio.loadWordSounds(data);
-		mAudio.loadDefaultSounds();
+      mAudio.loadLetterSoungs(data);
         
         
        

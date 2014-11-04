@@ -19,7 +19,7 @@
             android:layout_height="700dp"
             android:layout_marginRight="55dp"
             android:numColumns="1"
-            android:background="@drawable/grid_game_4_shape"
+            android:background="@drawable/grid_game_four_10_shape"
             android:gravity="center_horizontal"
            	android:verticalSpacing="20dp">
         </GridView>
@@ -29,7 +29,7 @@
             android:layout_width="400dp"
             android:layout_height="700dp"
             android:numColumns="1"
-            android:background="@drawable/grid_game_4_shape"
+            android:background="@drawable/grid_game_four_10_shape"
             android:gravity="center_horizontal"
          
             android:verticalSpacing="20dp"
