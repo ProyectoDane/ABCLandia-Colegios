@@ -246,7 +246,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		SQLiteDatabase database = this.getWritableDatabase();
 		Cursor cursor =  database.rawQuery(selectQuery, null);
 		if(cursor.moveToFirst()){
-			unaCategoria = new Categoria(cursor.getInt(0),cursor.getInt(1), cursor.getInt(2), cursor.getInt(3));
+			unaCategoria = new Categoria(cursor.getInt(0),cursor.getInt(2), cursor.getInt(1), cursor.getInt(3));
 		} else {
 			unaCategoria = new Categoria(0,"Default", "Default");
 		}
