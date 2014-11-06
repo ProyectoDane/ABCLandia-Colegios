@@ -36,7 +36,7 @@ public class AbcPlayerActivity extends Activity implements View.OnTouchListener 
 
 	private static final int SWIPE_MIN_DISTANCE = 120;
 	private static final int SWIPE_THRESHOLD_VELOCITY = 180;
-	private static final int FLIP_INTERVAL = 2000;
+	private static final int FLIP_INTERVAL = 2500;
 	
 	// Definimos las variables para saber que Maestro, Alumno y Categoria estan involucrados. 
 	private int unMaestro = 0;
@@ -55,6 +55,7 @@ public class AbcPlayerActivity extends Activity implements View.OnTouchListener 
 	AnimatorListener mAnimatorListener;
 	DataBaseHelper myDbHelper;
 	TextView lblWord;
+	private int mLastIndexView;
 
 	@SuppressWarnings("deprecation")
 	private final GestureDetector detector = new GestureDetector(
@@ -107,10 +108,9 @@ public class AbcPlayerActivity extends Activity implements View.OnTouchListener 
 		findViewById(R.id.play).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
-
+				mAudio.playSoundWord(data.get(mAdapterViewFlipper.getDisplayedChild()).getLetter());
 				mAdapterViewFlipper.setAutoStart(true);
 				mAdapterViewFlipper.setFlipInterval(FLIP_INTERVAL);
-				
 				mOutAnimator = new ObjectAnimator();
 				mOutAnimator.setPropertyName("translationX");
 				mOutAnimator.setFloatValues(0, -width);
@@ -124,6 +124,7 @@ public class AbcPlayerActivity extends Activity implements View.OnTouchListener 
 				mAdapterViewFlipper.setOutAnimation(mOutAnimator);
 				mAdapterViewFlipper.setInAnimation(mInAnimator);
 				mAdapterViewFlipper.startFlipping();
+				
 			}
 		});
 
@@ -152,9 +153,11 @@ public class AbcPlayerActivity extends Activity implements View.OnTouchListener 
 			@Override
 			public void onAnimationEnd(Animator animation) {
 				int indexView = mAdapterViewFlipper.getDisplayedChild();
-
-				mAudio.playSoundWord(data.get(indexView).getLetter());
+				
 				lblWord.setText(data.get(indexView).getWord());
+				mAudio.playSoundWord(data.get(indexView).getLetter());
+				
+				
 
 			}
 

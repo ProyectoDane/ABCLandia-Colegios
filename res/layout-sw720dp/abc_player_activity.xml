@@ -32,22 +32,20 @@
             android:layout_height="wrap_content"
             android:background="@android:drawable/ic_media_pause" />
     </LinearLayout>
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="63dp"
         android:layout_alignParentBottom="true"
-        android:background="#99000060"
-        android:gravity="center"
-        android:orientation="horizontal" >
+        android:background="#99000060" >
 
         <TextView
             android:id="@+id/lblWord"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:textColor="#FFFFFF"
-            android:textSize="48sp" />
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+           	android:textColor="#FFFFFF"
+            android:textSize="47sp" />
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/swipe_left"

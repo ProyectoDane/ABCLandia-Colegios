@@ -34,7 +34,7 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="47dp"
+        android:layout_height="48dp"
         android:layout_alignParentBottom="true"
         android:background="#99000060"
         android:gravity="center"
@@ -44,9 +44,8 @@
             android:id="@+id/lblWord"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
             android:textColor="#FFFFFF"
-            android:textSize="38sp" />
+            android:textSize="36sp" />
     </LinearLayout>
 
     <ImageView

@@ -88,8 +88,8 @@ implements View.OnTouchListener {
 		iniciarDB();
 		loadDataCard();
 		
-//		mAudio = new Audio(this);
-//		mAudio.loadWordSounds(data);
+		mAudio = new Audio(this);
+		mAudio.loadWordSounds(data);
 
 		setContentView(R.layout.card_letter_player_activity);
 		
@@ -202,7 +202,7 @@ implements View.OnTouchListener {
 	}
 	
 	public void reproduceSoundCard(CardView cardView){
-//		mAudio.playSoundWord(cardView.getCardId());
+		mAudio.playSoundWord(cardView.getCardLetter());
 		
 		
 	}
