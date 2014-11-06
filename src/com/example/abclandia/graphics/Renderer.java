@@ -22,6 +22,18 @@ public abstract class Renderer {
 	public static int TEXT_LETTER_SIZE;
 	public static int TEXT_WORD_SIZE;
 	public static int RADIUS_ROUNDED_RECTANGLE;
+	public  float X_LETTER_MULTIPLIER = 0.5f;
+	public float X_FIRST_LETTER_MULTIPLIER = 0.4f; 
+	public float SPACE_BETWEEN_LETTERS = 0.2f;
+	public  float Y_LETTER_MULTIPLIER = 0.2f;
+	public float Y_LETTER_MULTIPLIER_UL = 0.18f;
+	public  float X_WORD_MULTIPLIER = 0.5f;
+	public  float Y_WORD_MULTIPLIER = 0.9f;
+	public float Y_FIRST_WORD_MULTIPLIER = 0.8f;
+	public float SPACE_BETWEEN_WORDS = 0.13f;
+	public  int SPACEBLANCK_LETTER_MULTIPLIER;
+	public  int BOTTOM_WORD_MULTIPLIER;
+
 
 	protected Paint mBorderRectPaint, mFillRectPaint, mSuccessBorderRectPaint,
 			mTextLetterPaint, mTextWordPaint;
@@ -97,8 +109,8 @@ public abstract class Renderer {
 
 	protected void drawLetter(Canvas canvas, String letter, int rectangleWidth,
 			int rectangleHeight) {
-		canvas.drawText(letter, (float) (rectangleWidth * 0.5),
-				(float) (rectangleHeight * 0.2), mTextLetterPaint);
+		canvas.drawText(letter, (float) (rectangleWidth * X_LETTER_MULTIPLIER),
+				(float) (rectangleHeight * Y_LETTER_MULTIPLIER), mTextLetterPaint);
 
 	}
 
@@ -106,8 +118,8 @@ public abstract class Renderer {
 	
 	protected void drawWord(Canvas canvas, String word, int rectangleWidth,
 			int rectangleHeight) {
-		canvas.drawText(word, (float) (rectangleWidth * 0.5),
-				(float) (rectangleHeight * 0.9), mTextWordPaint);
+		canvas.drawText(word, (float) (rectangleWidth * X_WORD_MULTIPLIER),
+				(float) (rectangleHeight * Y_WORD_MULTIPLIER), mTextWordPaint);
 	}
 
 
@@ -120,10 +132,10 @@ public abstract class Renderer {
 	protected void drawLetterLowerAndUpper(Canvas canvas, String letter, int rectangleWidth,
 			int rectangleHeight) {
 		
-		canvas.drawText(letter.toUpperCase(), (float) (rectangleWidth * 0.38),
-				(float) (rectangleHeight * 0.16), mTextLetterPaint);
-		canvas.drawText(letter.toLowerCase(), (float) (rectangleWidth * 0.62),
-				(float) (rectangleHeight * 0.16), mTextLetterPaint);
+		canvas.drawText(letter.toUpperCase(), (float) (rectangleWidth * X_FIRST_LETTER_MULTIPLIER),
+				(float) (rectangleHeight * Y_LETTER_MULTIPLIER_UL), mTextLetterPaint);
+		canvas.drawText(letter.toLowerCase(), (float) (rectangleWidth * (X_FIRST_LETTER_MULTIPLIER + SPACE_BETWEEN_LETTERS)),
+				(float) (rectangleHeight * Y_LETTER_MULTIPLIER_UL), mTextLetterPaint);
 		
 
 	}
@@ -132,15 +144,15 @@ public abstract class Renderer {
 			int rectangleHeight) {
 		
 		canvas.drawText(word.toUpperCase(), (float) (rectangleWidth * 0.5),
-				(float) (rectangleHeight * 0.83), mTextWordPaint);
+				(float) (rectangleHeight * Y_FIRST_WORD_MULTIPLIER), mTextWordPaint);
 		canvas.drawText(word.toLowerCase(), (float) (rectangleWidth * 0.5),
-				(float) (rectangleHeight * 0.96), mTextWordPaint);
+				(float) (rectangleHeight * (Y_FIRST_WORD_MULTIPLIER + SPACE_BETWEEN_WORDS)), mTextWordPaint);
 	}
 	protected void drawImageLowerAndUpper(Canvas canvas, Card card, int rectangleWidth,
 			int rectangleHeight, Bitmap imageBitmap){
 		float sideImageLong = (float) (rectangleWidth * 0.8 - rectangleWidth * 0.2);
-		RectF rect = new RectF(rectangleWidth * 0.2f, rectangleHeight * 0.24f,
-				rectangleWidth * 0.2f + sideImageLong, rectangleHeight * 0.24f
+		RectF rect = new RectF(rectangleWidth * 0.2f, rectangleHeight * 0.22f,
+				rectangleWidth * 0.2f + sideImageLong, rectangleHeight * 0.22f
 						+ sideImageLong);
 
 		if (imageBitmap != null) {

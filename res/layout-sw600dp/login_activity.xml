@@ -16,17 +16,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
-            android:src="@drawable/ic_abclandia"
+            android:src="@drawable/ic_abclandia_7"
             android:background="#0000"></ImageButton>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
-            android:layout_marginTop="10dp"
             android:text="@string/title_activity_login"
-            android:textColor="#FFFFFF"
-            android:textSize="32sp" />
+            style="@style/TitleTopBarSeven" />
     </LinearLayout>
 
     <LinearLayout

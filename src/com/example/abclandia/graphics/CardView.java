@@ -104,6 +104,11 @@ public class CardView extends View implements DragSource, DropTarget {
 		return firstMatching;
 	}
 	
+	public void setDropeable(boolean flag){
+		isDropTarget = flag;
+		
+	}
+	
 	@Override
 	public boolean isDropTarget(){
 		return isDropTarget;

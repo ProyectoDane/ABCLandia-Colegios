@@ -30,8 +30,6 @@ public class ImageWordRenderer extends Renderer{
 		
 		} else {
 			drawImageLowerAndUpper(canvas, card, rectangleWidth, rectangleHeight, imageBitmap);
-					
-
 			drawWordLowerAndUpper(canvas, card.getWord(), rectangleWidth,
 					rectangleHeight);
 		}

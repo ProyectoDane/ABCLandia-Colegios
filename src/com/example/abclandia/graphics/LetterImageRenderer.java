@@ -22,8 +22,19 @@ public class LetterImageRenderer extends Renderer{
 		
 		super.Render(canvas, rectangleWidth, rectangleHeight, borderRectanglePaint, textPaint, card, imageBitmap);
 		  
-		drawImage(canvas, card, rectangleWidth, rectangleHeight, imageBitmap);
-		drawLetter(canvas, card.getLetter(), rectangleWidth, rectangleHeight);
+			if (!card.isLowerUpperLetter()) {
+			drawLetter(canvas, card.getLetter(), rectangleWidth,
+					rectangleHeight);
+			drawImage(canvas, card, rectangleWidth, rectangleHeight,
+					imageBitmap);
+
+		} else {
+			drawLetterLowerAndUpper(canvas, card.getLetter(), rectangleWidth,
+					rectangleHeight);
+			drawImage(canvas, card, rectangleWidth, rectangleHeight,
+					imageBitmap);
+
+		}
 		   
 		   
 		   }

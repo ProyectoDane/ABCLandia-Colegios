@@ -8,7 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.ListActivity;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -22,11 +22,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.frba.abclandia.adapters.AlumnoAdapter;
+import com.frba.abclandia.adapters.MaestroAdapter;
 import com.frba.abclandia.db.DataBaseHelper;
 import com.frba.abclandia.dtos.Maestro;
 import com.frba.abclandia.webserver.ABCLandiaRestServer;
@@ -35,11 +40,14 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 
-public class MaestroListActivity extends ListActivity {
+public class MaestrosActivity extends Activity 
+		implements OnItemClickListener {
 
 	private DataBaseHelper myDbHelper;
 	private ABCLandiaRestServer server;
 	ProgressDialog prgDialog;
+	private GridView mGridView;
+	MaestroAdapter mAdapter;
 	
 	
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +58,7 @@ public class MaestroListActivity extends ListActivity {
 		WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		
 		setContentView(R.layout.maestros_activity);
+		mGridView = (GridView) findViewById(R.id.gridViewMaestros);
 		//ListView listView = (ListView) findViewById(R.id.list_maestro);
 		
 		// Iniciamos la BD
@@ -123,7 +132,7 @@ public class MaestroListActivity extends ListActivity {
 					Maestro unMaestro = new Maestro(response.getInt("id"), response.getString("apellido"), response.getString("nombre"));
 					myDbHelper.insertMaestro(unMaestro);
 					prgDialog.hide();
-					setListAdapter(new MaestroListAdapter(getApplicationContext()));
+					initializeAdapter();
 					//syncAlumnosDBForMaestro(unMaestro.getLegajo());
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
@@ -142,7 +151,7 @@ public class MaestroListActivity extends ListActivity {
 							Maestro maestroDb = new Maestro(unMaestro.getInt("id"), unMaestro.getString("apellido"), unMaestro.getString("nombre"));
 							myDbHelper.insertMaestro(maestroDb);
 							prgDialog.hide();
-							setListAdapter(new MaestroListAdapter(getApplicationContext()));
+							initializeAdapter();
 							
 						}
 					}
@@ -165,78 +174,32 @@ public class MaestroListActivity extends ListActivity {
 					Toast.makeText(getApplicationContext(), "Unexpected Error occcured! [Most common Error: Device might not be connected to Internet]",
 							Toast.LENGTH_LONG).show();
 				}
-				setListAdapter(new MaestroListAdapter(getApplicationContext()));
+				initializeAdapter();
 			}
 	    	});
 		
 	}
 
+	
+	
+
+
 	@Override
-	public void onListItemClick(ListView l, View v, int position, long id ) {
-		//TODO: Agregar accion cuando se selecciona un profesor.
-		
-		Maestro maestro =  (Maestro) getListAdapter().getItem(position);
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		Maestro maestro =  (Maestro) mAdapter.getItem(position);
 		Toast.makeText(this, maestro.getApellido() + " " +  maestro.getLegajo() + " selected", Toast.LENGTH_LONG).show();
 		
-		// Tomar el ID del maestro
-		// Buscar los alumnos del maestro
-		Intent i = new Intent(this, AlumnoListActivity.class);
+		Intent i = new Intent(this, AlumnosActivity.class);
 		i.putExtra("unMaestro", maestro.getLegajo());
 		
 		startActivity(i);
+		
 	}
 	
-	private class MaestroListAdapter extends BaseAdapter{
-		
-		private Context mContext;
-		private List<Maestro> mMaestros;
-		
-		public MaestroListAdapter(Context context){
-			mContext = context;
-			
-			// Tenemos que tomar los maestros de la base de datos y/o actualizarla
-			mMaestros = getMaestrosData();
-		}
-
-		@Override
-		public int getCount() {
-			return mMaestros.size();
-		}
-
-		@Override
-		public Object getItem(int position) {
-			// TODO Auto-generated method stub
-			return mMaestros.get(position);
-		}
-
-		@Override
-		public long getItemId(int position) {
-			// TODO Auto-generated method stub
-			Maestro maestro = mMaestros.get(position);
-			
-			return maestro.getLegajo();
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			
-			LayoutInflater inflater = (LayoutInflater) mContext
-			        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			View rowView;
-			if (convertView == null){
-			    rowView = inflater.inflate(R.layout.maestro_row, parent, false);
-			} else {
-				rowView = convertView;
-			}
-			    TextView lblMaestroApellido = (TextView) rowView.findViewById(R.id.lblMaestroApellido);
-			    TextView lblMaestroNombre =  (TextView) rowView.findViewById(R.id.lblMaestroNombre);
-			
-			    Maestro maestro = mMaestros.get(position);
-			    
-			    lblMaestroApellido.setText(maestro.getApellido());
-			    lblMaestroNombre.setText(maestro.getNombre());
-			    
-			    return rowView;
-		}
+	protected void initializeAdapter() {
+		mAdapter = new MaestroAdapter(MaestrosActivity.this,getMaestrosData());
+		mGridView.setAdapter(mAdapter);
+		mGridView.setOnItemClickListener(MaestrosActivity.this);
 	}
 }

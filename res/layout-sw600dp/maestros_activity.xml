@@ -1,10 +1,10 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#48CFAE"
-    tools:context="com.frba.abclandia.MaestroListActivity" >
+    tools:context="com.frba.abclandia.MaestrosActivity" >
     
       <LinearLayout
         style="@style/TopBar"
@@ -19,22 +19,28 @@
             android:background="#0000"></ImageButton>
      	
         <TextView
-            style="@style/TitleTopBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="15dp"
-            android:text="@string/title_activity_maestros" />
+            android:text="@string/title_activity_maestros"
+            style="@style/TitleTopBar" />
 </LinearLayout>
 
     
 
-    <ListView
-        android:id="@id/android:list"
-        android:layout_width="wrap_content"
+    <GridView
+        android:id="@+id/gridViewMaestros"
+        android:layout_width="710dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="41dp"
-        android:layout_marginTop="25dp"
-        android:divider="@null" >
-    </ListView>
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="90dp"
+       	android:columnWidth="350dp"
+        android:numColumns="2"
+        android:verticalSpacing="6dp"
+        android:horizontalSpacing="10dp"
+        android:stretchMode="none"
+         >
+    </GridView>
 
-</LinearLayout>
+</RelativeLayout>
 

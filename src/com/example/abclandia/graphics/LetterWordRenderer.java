@@ -23,9 +23,17 @@ public class LetterWordRenderer extends Renderer {
 		super.Render(canvas, rectangleWidth, rectangleHeight, borderRectanglePaint, textPaint, card, imageBitmap);
 		
 		
-			drawLetter(canvas, card.getLetter(), rectangleWidth, rectangleHeight);
-			drawWord(canvas, card.getLetter(), rectangleWidth, rectangleHeight);
-		   
+
+		 if (!card.isLowerUpperLetter()){
+			 drawLetter(canvas, card.getLetter(), rectangleWidth, rectangleHeight);
+			 drawWord(canvas, card.getWord(), rectangleWidth, rectangleHeight);
+//		
+		 }	else {
+			 drawLetterLowerAndUpper(canvas, card.getLetter(), rectangleWidth, rectangleHeight);
+			 drawWordLowerAndUpper(canvas, card.getWord(), rectangleWidth, rectangleHeight);
+		}
+		
+		
 		
 		   
 		  

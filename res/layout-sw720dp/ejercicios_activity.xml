@@ -22,10 +22,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="15dp"
             android:text="@string/title_activity_ejercicios"
-            android:textColor="#FFFFFF"
-            android:textSize="40sp" />
+            style="@style/TitleTopBar"/>
     </LinearLayout>
 
     <LinearLayout

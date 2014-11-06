@@ -8,7 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.ListActivity;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -17,28 +17,30 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.BaseAdapter;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.GridView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.frba.abclandia.adapters.AlumnoAdapter;
 import com.frba.abclandia.db.DataBaseHelper;
 import com.frba.abclandia.dtos.Alumno;
-import com.frba.abclandia.webserver.ABCLandiaRestServer;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-public class AlumnoListActivity extends ListActivity {
+public class AlumnosActivity extends Activity
+		implements OnItemClickListener {
 	
 	private DataBaseHelper myDbHelper;
 	private Integer unMaestro = 0;
 	ProgressDialog prgDialog;
+	private GridView mGridView;
+	private AlumnoAdapter mAdapter;
 	
 	
 	protected void onCreate(Bundle savedInstanceState){
@@ -49,6 +51,7 @@ public class AlumnoListActivity extends ListActivity {
 		WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		
 		setContentView(R.layout.alumno_activity);
+		mGridView = (GridView) findViewById(R.id.gridViewAlumnos);
 		
 		Intent i = getIntent();
 		this.unMaestro = i.getIntExtra("unMaestro", 0);
@@ -101,13 +104,19 @@ public class AlumnoListActivity extends ListActivity {
 					Alumno unAlumno = new Alumno(response.getInt("id"), response.getString("apellido"), response.getString("nombre"), (Integer) unMaestro);
 					myDbHelper.insertAlumno(unAlumno);
 					myDbHelper.insertAlumnoMaestroRelationship(unAlumno.getId(), unMaestro);
-					setListAdapter(new AlumnoListAdapter(getApplicationContext()));
+					initializeAdapter();
 					
 					} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				prgDialog.hide();
+			}
+
+			protected void initializeAdapter() {
+				mAdapter = new AlumnoAdapter(AlumnosActivity.this,getAlumnosData());
+				mGridView.setAdapter(mAdapter);
+				mGridView.setOnItemClickListener(AlumnosActivity.this);
 			}
 			
 			@Override
@@ -118,8 +127,7 @@ public class AlumnoListActivity extends ListActivity {
 							JSONObject unAlumno = (JSONObject) serverAlumnos.get(i);
 							myDbHelper.insertAlumno(new Alumno(unAlumno.getInt("id"), unAlumno.getString("apellido"), unAlumno.getString("nombre"), unMaestro));	
 							myDbHelper.insertAlumnoMaestroRelationship(unAlumno.getInt("id"), unMaestro);
-							setListAdapter(new AlumnoListAdapter(getApplicationContext()));
-						}
+							initializeAdapter();						}
 					}
 				} catch (JSONException e) {
 					e.printStackTrace();
@@ -140,7 +148,7 @@ public class AlumnoListActivity extends ListActivity {
 					Log.d("Alumnos Sync", "Unexpected Error occcured! [Most common Error: Device might not be connected to Internet]");
 							
 				}
-				setListAdapter(new AlumnoListAdapter(getApplicationContext()));
+				initializeAdapter();
 			}
 		});
 		
@@ -164,76 +172,24 @@ public class AlumnoListActivity extends ListActivity {
 		}
 		
 	}
+
 	
-	
+	private List<Alumno> getAlumnosData(){
+		List<Alumno> alumnos =  myDbHelper.getAlumnosFromMaestro(this.unMaestro);
+		return alumnos;
+	}
 	@Override
-	public void onListItemClick(ListView l, View v, int position, long id){
-		//TODO: Inicia la siguiente actividad con los ejercicios y demas....
-		
-		Alumno alumno =  (Alumno) getListAdapter().getItem(position);
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		Alumno alumno =  (Alumno) mAdapter.getItem(position);
 		Toast.makeText(this,  alumno.getNombre() + " " + alumno.getApellido() + " Seleccionado", Toast.LENGTH_LONG).show();
 		Intent i = new Intent(this, ActividadesActivity.class);
 		i.putExtra("unMaestro", unMaestro);
 		i.putExtra("unAlumno", alumno.getId());
 		startActivity(i);
+		
 	}
 	
-	private List<Alumno> getAlumnosData(){
 		
-		List<Alumno> alumnos =  myDbHelper.getAlumnosFromMaestro(this.unMaestro);
-		return alumnos;
-	}
-	
-	private class AlumnoListAdapter extends BaseAdapter{
-		private Context mContext;
-		private List<Alumno> mAlumnos;
-		
-		public AlumnoListAdapter(Context context){
-			this.mContext = context;
-			this.mAlumnos = getAlumnosData();
-		}
-
-		@Override
-		public int getCount() {
-			// TODO Auto-generated method stub
-			return mAlumnos.size();
-		}
-
-		@Override
-		public Object getItem(int position) {
-			// TODO Auto-generated method stub
-			return mAlumnos.get(position);
-		}
-
-		@Override
-		public long getItemId(int arg0) {
-			// TODO Auto-generated method stub
-			Alumno alumno = mAlumnos.get(arg0);
-			return alumno.getId();
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			// TODO Auto-generated method stub
-			LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			View rowView;
-			if (convertView == null){
-				rowView = inflater.inflate(R.layout.alumno_row, parent,false);
-			} else {
-				rowView = convertView;
-			}
-			
-			TextView lblAlumnoApellido = (TextView)  rowView.findViewById(R.id.lblAlumnoApellido);
-			TextView lblAlumnoNombre = (TextView) rowView.findViewById(R.id.lblAlumnoNombre);
-			
-			Alumno alumno = this.mAlumnos.get(position);
-			
-			lblAlumnoApellido.setText(alumno.getApellido());
-			lblAlumnoNombre.setText(alumno.getNombre());
-			
-			return rowView;
-			
-		}
-	}
 
 }

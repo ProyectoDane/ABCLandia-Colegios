@@ -29,8 +29,8 @@ public class CompleteCardRenderer extends Renderer{
 			 drawWord(canvas, card.getWord(), rectangleWidth, rectangleHeight);
 //		
 		 }	else {
-			 drawImage(canvas, card, rectangleWidth, rectangleHeight, imageBitmap);
 			 drawLetterLowerAndUpper(canvas, card.getLetter(), rectangleWidth, rectangleHeight);
+			 drawImageLowerAndUpper(canvas, card, rectangleWidth, rectangleHeight, imageBitmap);
 			 drawWordLowerAndUpper(canvas, card.getWord(), rectangleWidth, rectangleHeight);
 			}
 		

@@ -3,12 +3,11 @@
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
-  
+
 
     <!-- Application theme. -->
-
 
     <style name="FullscreenTheme" parent="android:Theme.NoTitleBar">
         <item name="android:windowContentOverlay">@null</item>
@@ -26,38 +25,35 @@
     </style>
 
     <style name="ButtonBarButton" />
-    
+
     <style name="ButtonContainer">
-        
         <item name="android:layout_alignParentTop">true</item>
         <item name="android:background">#99000040</item>
-        <item name="android:gravity">center</item>        
+        <item name="android:gravity">center</item>
     </style>
-       <style name="TitleTopBar">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">38sp</item>
+
+    <style name="TitleTopBar">
+        <item name="android:textSize">40sp</item>
         <item name="android:textColor">#FFFFFF</item>
-       
-      </style>
+    </style>
     
-      <style name="TopBar">
+    <style name="TitleTopBarSeven">
+        <item name="android:textSize">32sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="TopBar">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">70dp</item>
         <item name="android:layout_alignParentTop">true</item>
-         
-      </style>
-      
-      <style name="TopBarSeven">
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="TopBarSeven">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">56dp</item>
         <item name="android:layout_alignParentTop">true</item>
-        
-      </style>
-      
-   
-      
-      
-      
+        <item name="android:gravity">center_vertical</item>
+    </style>
 
 </resources>

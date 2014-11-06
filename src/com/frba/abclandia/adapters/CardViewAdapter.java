@@ -94,6 +94,7 @@ public class CardViewAdapter extends BaseAdapter {
 		if (dataCard.isEmptyCard()) {
 			cardView.setRenderer(mEmptyRenderer);
 			cardView.setAllowDrag(false);
+			cardView.setDropeable(false);
 		} else {
 			cardView.setRenderer(mRenderer);
 		}

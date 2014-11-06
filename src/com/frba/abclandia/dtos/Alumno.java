@@ -7,7 +7,7 @@ public class Alumno {
 	private int maestro = 0;
 	private int id;
 	
-	public Alumno(int id, String apellido, String nombre, int maestro){
+	public Alumno(int id, String nombre, String apellido, int maestro){
 		this.setId(id);
 		this.setApellido(apellido);
 		this.setNombre(nombre);
