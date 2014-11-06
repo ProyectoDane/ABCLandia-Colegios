@@ -193,8 +193,7 @@ public class AlumnosActivity extends Activity
 		}catch (SQLException sqle){
 			Log.d("ABCLandia", "No se pudo abrir la BD");
 			throw sqle;
-		}
-		
+		}	
 	}
 
 	
