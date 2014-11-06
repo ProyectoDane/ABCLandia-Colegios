@@ -119,7 +119,7 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 		for (int i = 0; i < secuences.length; i++) {
 			String letter = String.valueOf(secuences[i]);
 			Card card = myDbHelper.getPalabraFromLetraAndCategoria(letter, estaCategoria.getCategoriaID());
-			card.setLetterType(estaCategoria.getCategoriaTipoLetra());
+			//card.setLetterType(estaCategoria.getCategoriaTipoLetra());
 			data.add(card);
 		}
 	}

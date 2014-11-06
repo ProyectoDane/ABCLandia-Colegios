@@ -260,6 +260,11 @@ public class ActividadesActivity extends Activity {
 				}
 				prgDialog.hide();
 			}
+			
+            @Override
+            public void onFailure(Throwable e, String response) {
+				prgDialog.hide();
+            }
 		});
 		//prgDialog.hide();
 	}

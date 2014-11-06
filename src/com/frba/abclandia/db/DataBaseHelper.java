@@ -223,7 +223,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	 * @return Categoria
 	 */
 	public Categoria getAlumnoCategoria(Alumno unAlumno){
-		//Categoria categoria;
 		Categoria unaCategoria;
 		String selectQuery =  "Select categoria_id, categoria_nombre, categoria_descripcion from categorias where categoria_id = " 
 		+ unAlumno.getId() + " ";
@@ -245,7 +244,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 				"from categorias where categoria_alumno_id = '" + unAlumnoId +"'";
 		SQLiteDatabase database = this.getWritableDatabase();
 		Cursor cursor =  database.rawQuery(selectQuery, null);
-		if(cursor.moveToFirst()){
+		int cant = cursor.getCount();
+		Log.d("Categoria",  "Hay " + cant +" entradas");
+		if(cursor.moveToLast()){
 			unaCategoria = new Categoria(cursor.getInt(0),cursor.getInt(2), cursor.getInt(1), cursor.getInt(3));
 		} else {
 			unaCategoria = new Categoria(0,"Default", "Default");
@@ -264,6 +265,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		final String PATH_TO_IMAGES = mContext.getFilesDir() + "/imagenes/";
 		final String PATH_TO_SOUNDS = mContext.getFilesDir() + "/sonidos/";
 		List<Card> palabras = new ArrayList<Card>();
+		Categoria miCategoria = this.getCategoria(unaCategoria);
 		String selectQuery = "select palabra_id, palabra_letra, palabra_palabra, imagen_id, sonido_id  from palabras where categoria_id = '"
 				+ unaCategoria + "' " ;
 		SQLiteDatabase database = this.getWritableDatabase();
@@ -273,7 +275,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 				Card unaPalabra = new Card(cursor.getInt(0), getStringFromCharset(cursor.getString(1)), 
 						getStringFromCharset(cursor.getString(2)),
 						PATH_TO_IMAGES + cursor.getString(3)+ ".jpg", PATH_TO_SOUNDS+cursor.getString(4)+".ogg");
-			
+				unaPalabra.setLetterType(miCategoria.getCategoriaTipoLetra());
 				Log.d("Palabras",cursor.getString(2));
 				palabras.add(unaPalabra);
 			} while(cursor.moveToNext());
@@ -295,20 +297,37 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		Card unaPalabra;
 		final String PATH_TO_IMAGES = mContext.getFilesDir() + "/imagenes/";
 		final String PATH_TO_SOUNDS = mContext.getFilesDir() + "/sonidos/";
+		Categoria miCategoria = this.getCategoria(unaCategoria);
 		String selectQuery = "select palabra_id, palabra_letra, palabra_palabra, imagen_id, sonido_id  from palabras where categoria_id = '"
 				+ unaCategoria + "'and palabra_letra = '" + unaLetra + "'";
-
 		SQLiteDatabase database =  this.getWritableDatabase();
 		Cursor cursor =  database.rawQuery(selectQuery, null);
 		if (cursor.moveToFirst()) {
 			unaPalabra =  new Card(cursor.getInt(0), getStringFromCharset(cursor.getString(1)),
 					getStringFromCharset(cursor.getString(2)),
 					PATH_TO_IMAGES + cursor.getString(3)+ ".jpg", PATH_TO_SOUNDS+cursor.getString(4)+".ogg");
+			unaPalabra.setLetterType(miCategoria.getCategoriaTipoLetra());
 		} else {
 			unaPalabra = new Card(0,  unaLetra, unaLetra, "none", "none" );
 		}
 		cursor.close();
 		return unaPalabra;
+	}
+	
+	public Categoria getCategoria (int categoriaId){
+		Categoria unaCategoria;
+		String selectQuery = "select categoria_id, categoria_intervalo, categoria_tipo_letra, categoria_alumno_id " +
+				"from categorias where categoria_id = '" + categoriaId +"'";
+		SQLiteDatabase database = this.getWritableDatabase();
+		Cursor cursor =  database.rawQuery(selectQuery, null);
+		if(cursor.moveToFirst()){
+			unaCategoria = new Categoria(cursor.getInt(0),cursor.getInt(2), cursor.getInt(1), cursor.getInt(3));
+		} else {
+			unaCategoria = new Categoria(0,"Default", "Default");
+		}
+		cursor.close();
+		return unaCategoria;
+		
 	}
 	
 	/**
@@ -376,7 +395,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	      else
 	      {
 	        //Maestro id present
+	    	  database.delete("maestros", "maestro_id=" + unMaestro.getLegajo(), null);
 	    	Log.d("Datbase", "Maestro con el ID " + unMaestro.getLegajo() + " ya existe");
+	    	database.insert("maestros",null, values);
 	      }
 		
 		database.close();
@@ -404,7 +425,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	      else
 	      {
 	        //course id present
+	    	database.delete("alumnos", "alumno_id=" + unAlumno.getId(), null);
 	    	Log.d("Database", "Alumno con el ID " + unAlumno.getId() + " ya existe");
+	    	database.insert("alumnos",null, values);
+	    	
 	      }
 
 		database.close();
@@ -482,13 +506,18 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		values.put("categoria_tipo_letra", nuevaCategoria.getCategoriaTipoLetra());
 		values.put("categoria_intervalo",nuevaCategoria.getCategoriaIntervalo());
 		// Chequeamos si existe la configuracion
-		Cursor cur1 = database.query("categorias", null, "categoria_id = '" + nuevaCategoria.getCategoriaID() +"' and categoria_alumno_id = '" + nuevaCategoria.getCategoriaAlumno() + "'",
+		Cursor cur1 = database.query("categorias", null, "categoria_id = '" + nuevaCategoria.getCategoriaID() 
+				+"' and categoria_alumno_id = '" + nuevaCategoria.getCategoriaAlumno() + "'",
 				null,null,null,null);
 		int count1 =  cur1.getCount();
 		if (count1 == 0){
 			database.insert("categorias", null, values);
 		} else {
 			Log.d("Categoria", cur1.toString());
+			//database.delete("categorias", "categoria_id = " + nuevaCategoria.getCategoriaID() +" and categoria_alumno_id = " + nuevaCategoria.getCategoriaAlumno() + " ", null);
+			database.rawQuery("delete from categorias where categoria_id = " + nuevaCategoria.getCategoriaID() + "  and categoria_alumno_id = "+ nuevaCategoria.getCategoriaAlumno(), null);
+			Log.d("Categoria", "Borramos la categoria para actualizar");
+			database.insert("categorias", null, values);
 		}
 		
 	}

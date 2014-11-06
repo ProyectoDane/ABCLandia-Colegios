@@ -242,10 +242,6 @@ implements View.OnTouchListener {
 		Categoria miCategoria = myDbHelper.getCagetoriaFromAlumno(unAlumno);
 		this.unaCategoria = miCategoria.getCategoriaID();
 		data = myDbHelper.getPalabrasFromCategoria(unaCategoria);
-		int typeLetter = miCategoria.getCategoriaTipoLetra();
-		for (Card card : data){
-			card.setLetterType(typeLetter);
-		}
 
 
 	}

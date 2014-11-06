@@ -150,6 +150,30 @@ public class AlumnosActivity extends Activity
 				}
 				initializeAdapter();
 			}
+			
+			@Override
+			public void onFailure(int statusCode, org.apache.http.Header[] headers, java.lang.Throwable throwable, org.json.JSONObject errorResponse){
+				// TODO Auto-generated method stub
+				// Hide ProgressBar
+				prgDialog.hide();
+				if (statusCode == 404) {
+					Toast.makeText(getApplicationContext(), "Requested resource not found", Toast.LENGTH_LONG).show();
+				} else if (statusCode == 500) {
+					Toast.makeText(getApplicationContext(), "Something went wrong at server end", Toast.LENGTH_LONG).show();
+				} else {
+					Log.d("Alumnos Sync", "Unexpected Error occcured! [Most common Error: Device might not be connected to Internet]");
+							
+				}
+				initializeAdapter();
+			}
+			
+
+            @Override
+            public void onFailure(Throwable e, String response) {
+				prgDialog.hide();
+				initializeAdapter();
+            }
+			
 		});
 		
 	}
