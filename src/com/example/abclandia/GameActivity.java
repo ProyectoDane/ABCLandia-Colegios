@@ -250,6 +250,7 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 							intent.putExtra("unAlumno", unAlumno);
 							intent.putExtra("unaCategoria", unaCategoria);
 							startActivity(intent);
+							finish();
 							
 
 						}

@@ -31,26 +31,11 @@ public class WinActivity extends Activity {
 		WindowManager mWindowManager = (WindowManager) getSystemService("window");
 		
 		setContentView(R.layout.win_activity);
-
-		ImageButton button = (ImageButton) findViewById(R.id.gadorcha);
-		Bundle extras = getIntent().getExtras();
-
-		if (extras != null) {
 		
-			gameLevel = extras.getInt(GameActivity.INTENT_LEVEL_KEY);
-			gameSecuence = extras.getInt(GameActivity.INTENT_SECUENCE_KEY);
-
-			try {
-				classLauncher = Class.forName(extras
-						.getString(GameActivity.INTENT_CLASS_LAUNCHER_KEY));
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 		getExtraData();
 
-		button.setOnClickListener(new OnClickListener() {
+		ImageButton btnJugar = (ImageButton) findViewById(R.id.btnJugar);
+		btnJugar.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -64,6 +49,7 @@ public class WinActivity extends Activity {
 				intent.putExtra("unaCategoria", unaCategoria);
 
 				startActivity(intent);
+				finish();
 				
 
 			}
@@ -72,28 +58,33 @@ public class WinActivity extends Activity {
 	
 	protected void getExtraData() {
 		Bundle extras = getIntent().getExtras();
-
+	
 		if (extras != null) {
 			unMaestro = extras.getInt("unMaestro", 0);
 			unAlumno = extras.getInt("unAlumno", 0);
 			unaCategoria = extras.getInt("unaCategoria", 0);
+			gameLevel = extras.getInt(GameActivity.INTENT_LEVEL_KEY);
+			gameSecuence = extras.getInt(GameActivity.INTENT_SECUENCE_KEY);
+
+			try {
+				classLauncher = Class.forName(extras
+						.getString(GameActivity.INTENT_CLASS_LAUNCHER_KEY));
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 		}
 
 	}
 	
 	private void nextSecuence(){
-		
-		
 		if (GameDataStructure.isLevelComplete(1, gameLevel, gameSecuence)){
 			gameLevel ++;
 			gameSecuence =1;
 		}else {
 			gameSecuence++;
 		}
-		
-			
-			
 	}
 
 }

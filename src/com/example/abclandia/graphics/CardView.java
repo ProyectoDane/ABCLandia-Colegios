@@ -86,7 +86,14 @@ public class CardView extends View implements DragSource, DropTarget {
 	
 	public void setCard(Card card){
 		mCard = card;
-		imageBitmap = BitmapFactory.decodeFile(mCard.getImagePath());
+		if (!card.isEmptyCard())
+			imageBitmap = BitmapFactory.decodeFile(mCard.getImagePath());
+		
+	}
+	public void createImageBitmap(boolean imageAttached){
+		if (!mCard.isEmptyCard() && imageAttached)
+			imageBitmap = BitmapFactory.decodeFile(mCard.getImagePath());
+		
 	}
 	public void setRenderer(Renderer renderer){
 		mRenderer = renderer;

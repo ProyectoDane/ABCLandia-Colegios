@@ -14,7 +14,10 @@ import android.widget.ImageButton;
 
 public class GameWinActivity extends Activity {
 	
-	Class<?> classLauncher;
+	private Class<?> classLauncher;
+	protected int unMaestro;
+	protected int unAlumno;
+	protected int unaCategoria;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,25 +32,17 @@ public class GameWinActivity extends Activity {
 
 		ImageButton btnMenu = (ImageButton) findViewById(R.id.btnMenu);
 		ImageButton btnVolverAJugar = (ImageButton) findViewById(R.id.btnVolverAJugar);
-		Bundle extras = getIntent().getExtras();
-
-		if (extras != null) {
-
-			try {
-				classLauncher = Class.forName(extras
-						.getString(GameActivity.INTENT_CLASS_LAUNCHER_KEY));
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
+		
+		getExtraData();
 		btnMenu.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				
 				Intent intent = new Intent(GameWinActivity.this, ActividadesActivity.class);
+				intent.putExtra("unMaestro", unMaestro);
+				intent.putExtra("unAlumno", unAlumno);
+				intent.putExtra("unaCategoria", unaCategoria);
 				startActivity(intent);
 				
 
@@ -58,14 +53,41 @@ public class GameWinActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				
+				
 				Intent intent = new Intent(GameWinActivity.this, classLauncher);
 				intent.putExtra(GameActivity.INTENT_LEVEL_KEY, 1);
 				intent.putExtra(GameActivity.INTENT_SECUENCE_KEY, 1);
+				intent.putExtra("unMaestro", unMaestro);
+				intent.putExtra("unAlumno", unAlumno);
+				intent.putExtra("unaCategoria", unaCategoria);
+				
 				startActivity(intent);
+				finish();
 				
 
 			}
 		});
+	}
+	
+	
+	protected void getExtraData() {
+		Bundle extras = getIntent().getExtras();
+	
+		if (extras != null) {
+			unMaestro = extras.getInt("unMaestro", 0);
+			unAlumno = extras.getInt("unAlumno", 0);
+			unaCategoria = extras.getInt("unaCategoria", 0);
+
+			try {
+				classLauncher = Class.forName(extras
+						.getString(GameActivity.INTENT_CLASS_LAUNCHER_KEY));
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
 	}
 	
 

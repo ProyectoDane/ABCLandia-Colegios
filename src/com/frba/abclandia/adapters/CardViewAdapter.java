@@ -25,6 +25,7 @@ public class CardViewAdapter extends BaseAdapter {
 	 private Renderer mRenderer;
 	 private Renderer mEmptyRenderer;
 	 private int mLayoutCardView;
+//	 private boolean mImageAttached = false;
 	 int j =1;
 	 
 	 
@@ -47,6 +48,7 @@ public class CardViewAdapter extends BaseAdapter {
 		mRenderer = renderer;
 		mEmptyRenderer = new EmptyRenderer(mContext);
 		mLayoutCardView = layoutCardView;
+//		mImageAttached = imageAttached;
 	}
 
 
@@ -90,6 +92,8 @@ public class CardViewAdapter extends BaseAdapter {
 		cardView.myCellnumber = position;
 		cardView.mAdapter = this;
 		cardView.setCard(dataCard);
+		
+//		cardView.createImageBitmap(mImageAttached);
 
 		if (dataCard.isEmptyCard()) {
 			cardView.setRenderer(mEmptyRenderer);
