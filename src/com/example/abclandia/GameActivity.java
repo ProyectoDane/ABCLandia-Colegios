@@ -251,7 +251,7 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 							intent.putExtra("unaCategoria", unaCategoria);
 							startActivity(intent);
 							finish();
-							
+
 
 						}
 

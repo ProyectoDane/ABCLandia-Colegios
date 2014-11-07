@@ -320,7 +320,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 				"from categorias where categoria_id = '" + categoriaId +"'";
 		SQLiteDatabase database = this.getWritableDatabase();
 		Cursor cursor =  database.rawQuery(selectQuery, null);
-		if(cursor.moveToFirst()){
+		if(cursor.moveToLast()){
 			unaCategoria = new Categoria(cursor.getInt(0),cursor.getInt(2), cursor.getInt(1), cursor.getInt(3));
 		} else {
 			unaCategoria = new Categoria(0,"Default", "Default");

@@ -147,7 +147,7 @@ public class ActividadesActivity extends Activity {
 							
 							if (fileExists(PATH_TO_IMAGES+imagenId +".jpg")){
 								// Existe
-								Log.d("ABCLandia - Server", "La imagen " + imagenId + "ya existe");
+								Log.d("ABCLandia - Server", "La imagen " + imagenId + " ya existe");
 							} else {
 									Log.d("Imagen", "Buscando imagen " + imagenId);
 									AsyncHttpClient imagen = new AsyncHttpClient();
