@@ -6,7 +6,7 @@
     android:background="@drawable/bgcutscene" >
 
        <ImageButton
-           android:id="@+id/gadorcha"
+           android:id="@+id/btnJugar"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:layout_alignParentBottom="true"
