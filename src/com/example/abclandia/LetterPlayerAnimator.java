@@ -17,8 +17,9 @@ import android.widget.ImageView;
 
 public class LetterPlayerAnimator {
 
-	private final static int ANIMATION_FORWARD_DURATION = 1500;
-	private final static int ANIMATION_REVERSE_DURATION = 2000;
+	private final static int ANIMATION_FORWARD_DURATION = 1000;
+	private final static int ANIMATION_REVERSE_DURATION = 1000;
+	private final static int ANIMATION_MIDDLE_DELAY = 550;
 	private final static float SCALE_FACTOR = 1.5f;
 
 	private Context mContext;
@@ -150,8 +151,7 @@ public class LetterPlayerAnimator {
 		animatorSetReverse.playTogether(translateXReverse, translateYReverse, fadeIn);
 		animatorSetReverse.addListener(mAnimatorReverseListener);
 		animatorSetReverse.setDuration(ANIMATION_REVERSE_DURATION);
-		animatorSetReverse.setStartDelay(300);
-		
+		animatorSetReverse.setStartDelay(ANIMATION_MIDDLE_DELAY);
 		animatorSetForward.start();
 		
 
@@ -176,12 +176,11 @@ public class LetterPlayerAnimator {
 		public void onAnimationEnd(Animator animation) {
 			 if (mViewToAnimate != null)
 			  mWindowManager.removeView(mViewToAnimate);
-			 
-			 mCardView.setAlpha(1);
+			  mCardView.setAlpha(1);
 			 
 			
 			
-//			gadorcha.start();
+
 			
 
 		}
