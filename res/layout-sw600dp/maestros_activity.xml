@@ -30,14 +30,14 @@
 
     <GridView
         android:id="@+id/gridViewMaestros"
-        android:layout_width="710dp"
+        android:layout_width="595dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="90dp"
-       	android:columnWidth="350dp"
+       	android:columnWidth="290dp"
         android:numColumns="2"
-        android:verticalSpacing="6dp"
-        android:horizontalSpacing="10dp"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="15dp"
         android:stretchMode="none"
          >
     </GridView>
