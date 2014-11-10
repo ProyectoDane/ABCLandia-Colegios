@@ -272,7 +272,7 @@ public class ActividadesActivity extends Activity {
 	private void iniciarPrgDialog() {
 		// Iniciamos las propiedades del Progress Dialog
 		prgDialog = new ProgressDialog(this);
-		prgDialog.setMessage("Sincronizando la informacion del Alumno" + this.unAlumno);
+		prgDialog.setMessage("Sincronizando la informacion del Alumno");
 		prgDialog.setCancelable(false);
 		
 	}

@@ -188,7 +188,7 @@ public class MaestrosActivity extends Activity
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		Maestro maestro =  (Maestro) mAdapter.getItem(position);
-		Toast.makeText(this, maestro.getApellido() + " " +  maestro.getLegajo() + " selected", Toast.LENGTH_LONG).show();
+//		Toast.makeText(this, maestro.getApellido() + " " +  maestro.getLegajo() + " selected", Toast.LENGTH_LONG).show();
 		
 		Intent i = new Intent(this, AlumnosActivity.class);
 		i.putExtra("unMaestro", maestro.getLegajo());

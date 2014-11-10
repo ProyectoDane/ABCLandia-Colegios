@@ -81,7 +81,7 @@ public class AlumnosActivity extends Activity
 	private void iniciarPrgDialog() {
 		// Iniciamos las propiedades del Progress Dialog
 		prgDialog = new ProgressDialog(this);
-		prgDialog.setMessage("Sincronizando la informacion de los Alumnos para el Maestro " + this.unMaestro);
+		prgDialog.setMessage("Sincronizando la informacion de los Alumnos");
 		prgDialog.setCancelable(false);
 		
 	}
@@ -101,7 +101,7 @@ public class AlumnosActivity extends Activity
 			public void onSuccess (int statusCode, Header[] headers, JSONObject response){
 				// Si en lugar de un array nos responde con un unico JSONObject
 				try {
-					Alumno unAlumno = new Alumno(response.getInt("id"), response.getString("apellido"), response.getString("nombre"), (Integer) unMaestro);
+					Alumno unAlumno = new Alumno(response.getInt("id"), response.getString("nombre"), response.getString("apellido"), (Integer) unMaestro);
 					myDbHelper.insertAlumno(unAlumno);
 					myDbHelper.insertAlumnoMaestroRelationship(unAlumno.getId(), unMaestro);
 					initializeAdapter();
@@ -125,7 +125,7 @@ public class AlumnosActivity extends Activity
 					if (serverAlumnos != null){
 						for (int i = 0; i < serverAlumnos.length(); i++){
 							JSONObject unAlumno = (JSONObject) serverAlumnos.get(i);
-							myDbHelper.insertAlumno(new Alumno(unAlumno.getInt("id"), unAlumno.getString("apellido"), unAlumno.getString("nombre"), unMaestro));	
+							myDbHelper.insertAlumno(new Alumno(unAlumno.getInt("id"), unAlumno.getString("nombre"), unAlumno.getString("apellido"), unMaestro));	
 							myDbHelper.insertAlumnoMaestroRelationship(unAlumno.getInt("id"), unMaestro);
 							initializeAdapter();						}
 					}
@@ -141,11 +141,11 @@ public class AlumnosActivity extends Activity
 				// Hide ProgressBar
 				prgDialog.hide();
 				if (statusCode == 404) {
-					Toast.makeText(getApplicationContext(), "Requested resource not found", Toast.LENGTH_LONG).show();
+					Toast.makeText(getApplicationContext(), "No se encontró el sitio", Toast.LENGTH_LONG).show();
 				} else if (statusCode == 500) {
-					Toast.makeText(getApplicationContext(), "Something went wrong at server end", Toast.LENGTH_LONG).show();
+					Toast.makeText(getApplicationContext(), "Algo falló en el servidor", Toast.LENGTH_LONG).show();
 				} else {
-					Log.d("Alumnos Sync", "Unexpected Error occcured! [Most common Error: Device might not be connected to Internet]");
+					Log.d("Alumnos Sync", "Error inesperado! [Caso más común: El dispositivo no está conectado a Internet]");
 							
 				}
 				initializeAdapter();
@@ -157,11 +157,11 @@ public class AlumnosActivity extends Activity
 				// Hide ProgressBar
 				prgDialog.hide();
 				if (statusCode == 404) {
-					Toast.makeText(getApplicationContext(), "Requested resource not found", Toast.LENGTH_LONG).show();
+					Toast.makeText(getApplicationContext(), "No se encontró el sitio", Toast.LENGTH_LONG).show();
 				} else if (statusCode == 500) {
-					Toast.makeText(getApplicationContext(), "Something went wrong at server end", Toast.LENGTH_LONG).show();
+					Toast.makeText(getApplicationContext(), "Algo falló en el servidor", Toast.LENGTH_LONG).show();
 				} else {
-					Log.d("Alumnos Sync", "Unexpected Error occcured! [Most common Error: Device might not be connected to Internet]");
+					Log.d("Alumnos Sync", "Error inesperado! [Caso más común: El dispositivo no está conectado a Internet]");
 							
 				}
 				initializeAdapter();
@@ -205,7 +205,7 @@ public class AlumnosActivity extends Activity
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		Alumno alumno =  (Alumno) mAdapter.getItem(position);
-		Toast.makeText(this,  alumno.getNombre() + " " + alumno.getApellido() + " Seleccionado", Toast.LENGTH_LONG).show();
+//		Toast.makeText(this,  alumno.getNombre() + " " + alumno.getApellido() + " Seleccionado", Toast.LENGTH_LONG).show();
 		Intent i = new Intent(this, ActividadesActivity.class);
 		i.putExtra("unMaestro", unMaestro);
 		i.putExtra("unAlumno", alumno.getId());
