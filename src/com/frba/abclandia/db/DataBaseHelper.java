@@ -150,6 +150,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // You could return cursors by doing "return myDataBase.query(....)" so it'd be easy
     // to you to create adapters for your views.
 	
+	public void deleteAllMaestros() {
+		SQLiteDatabase database = this.getWritableDatabase();
+		database.execSQL("delete from maestros");
+	}
+
+	
 	/**
 	 * Devuelve el listado de todos los profesores que hay en la Base
 	 * @return List<Maestro>
@@ -193,6 +199,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		return alumnos;
 	}
 
+	public void deleteAlumnosForMaestro(Integer unMaestro) {
+		SQLiteDatabase database = this.getWritableDatabase();
+		database.execSQL("delete from alumnos_maestros where maestro_id = " + unMaestro);
+		
+	}
 	
 	/**
 	 * Dado un Maesro devuelve todo el listado de los alumnos de ese maestro.
@@ -395,7 +406,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	      else
 	      {
 	        //Maestro id present
-	    	  database.delete("maestros", "maestro_id=" + unMaestro.getLegajo(), null);
+	    	database.execSQL("delete from maestros where maestro_id = " + unMaestro.getLegajo());
+//	    	  database.delete("maestros", "maestro_id=" + unMaestro.getLegajo(), null);
 	    	Log.d("Datbase", "Maestro con el ID " + unMaestro.getLegajo() + " ya existe");
 	    	database.insert("maestros",null, values);
 	      }
@@ -425,7 +437,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	      else
 	      {
 	        //course id present
-	    	database.delete("alumnos", "alumno_id=" + unAlumno.getId(), null);
+	    	database.execSQL("delete from alumnos where alumno_id = " +  unAlumno.getId());
+//	    	database.delete("alumnos", "alumno_id=" + unAlumno.getId(), null);
 	    	Log.d("Database", "Alumno con el ID " + unAlumno.getId() + " ya existe");
 	    	database.insert("alumnos",null, values);
 	    	
@@ -459,7 +472,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	      else
 	      {
 	        //course id present
+	    	database.execSQL("delete from palabras where palabra_id = '" + unaPalabra.getId()+ "'");
 	    	Log.d("Database", "Palabra con el ID " + unaPalabra.getId() + " ya existe");
+	    	database.insert("palabras",null, values);
 	      }
 		database.close();	
 	}
@@ -515,7 +530,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		} else {
 			Log.d("Categoria", cur1.toString());
 			//database.delete("categorias", "categoria_id = " + nuevaCategoria.getCategoriaID() +" and categoria_alumno_id = " + nuevaCategoria.getCategoriaAlumno() + " ", null);
-			database.rawQuery("delete from categorias where categoria_id = " + nuevaCategoria.getCategoriaID() + "  and categoria_alumno_id = "+ nuevaCategoria.getCategoriaAlumno(), null);
+			//database.execSQL("delete from categorias where categoria_id = " + nuevaCategoria.getCategoriaID() + "  and categoria_alumno_id = "+ nuevaCategoria.getCategoriaAlumno(), null);
 			Log.d("Categoria", "Borramos la categoria para actualizar");
 			database.insert("categorias", null, values);
 		}
@@ -607,6 +622,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	 	}
 	 return normal;
 	 }
+
+
+
 
 
 

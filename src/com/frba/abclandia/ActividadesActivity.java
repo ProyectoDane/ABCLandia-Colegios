@@ -188,6 +188,7 @@ public class ActividadesActivity extends Activity {
 													Log.d("Error","Error: " + statusCode);
 													prgDialog.hide();
 												}
+										
 											});
 							}
 							
@@ -231,7 +232,7 @@ public class ActividadesActivity extends Activity {
 															Log.d("ABCLandia - Server", "Unexpected Error occcured! [Most common Error: Device might not be connected to Internet]");
 															Log.d("Sonidos", statusCode + " " + sonidoId);
 														}
-													}
+													}												
 												});
 							}
 						}
@@ -264,6 +265,19 @@ public class ActividadesActivity extends Activity {
             @Override
             public void onFailure(Throwable e, String response) {
 				prgDialog.hide();
+            }
+            
+			@Override
+            public void onFinish() {
+                if(prgDialog.isShowing())
+                {
+                    prgDialog.hide();
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable e, JSONObject errorResponse) {
+            	prgDialog.hide();
             }
 		});
 		//prgDialog.hide();
