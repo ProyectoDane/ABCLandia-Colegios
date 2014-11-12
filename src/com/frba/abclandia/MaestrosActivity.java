@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -130,6 +131,7 @@ public class MaestrosActivity extends Activity
 	            // If the response is JSONObject instead of expected JSONArray
 	    		try {
 					Maestro unMaestro = new Maestro(response.getInt("id"), response.getString("apellido"), response.getString("nombre"));
+					myDbHelper.deleteAllMaestros();
 					myDbHelper.insertMaestro(unMaestro);
 					prgDialog.hide();
 					initializeAdapter();
@@ -146,6 +148,7 @@ public class MaestrosActivity extends Activity
 	            // maestros es un array con todos los maestros que devuelve el server.
 				try {
 					if (serverMaestros != null){
+						myDbHelper.deleteAllMaestros();
 						for (int i=0; i< serverMaestros.length(); i++){
 							JSONObject unMaestro =  (JSONObject) serverMaestros.get(i);
 							Maestro maestroDb = new Maestro(unMaestro.getInt("id"), unMaestro.getString("apellido"), unMaestro.getString("nombre"));
@@ -176,6 +179,20 @@ public class MaestrosActivity extends Activity
 				}
 				initializeAdapter();
 			}
+			
+			@Override
+            public void onFinish() {
+                if(prgDialog.isShowing())
+                {
+                    prgDialog.hide();
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable e, JSONObject errorResponse) {
+            	prgDialog.hide();
+            }
+			
 	    	});
 		
 	}

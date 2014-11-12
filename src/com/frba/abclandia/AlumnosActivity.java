@@ -81,7 +81,7 @@ public class AlumnosActivity extends Activity
 	private void iniciarPrgDialog() {
 		// Iniciamos las propiedades del Progress Dialog
 		prgDialog = new ProgressDialog(this);
-		prgDialog.setMessage("Sincronizando la informacion de los Alumnos");
+		prgDialog.setMessage("Sincronizando la información de los Alumnos");
 		prgDialog.setCancelable(false);
 		
 	}
@@ -101,6 +101,7 @@ public class AlumnosActivity extends Activity
 			public void onSuccess (int statusCode, Header[] headers, JSONObject response){
 				// Si en lugar de un array nos responde con un unico JSONObject
 				try {
+					myDbHelper.deleteAlumnosForMaestro(unMaestro);
 					Alumno unAlumno = new Alumno(response.getInt("id"), response.getString("nombre"), response.getString("apellido"), (Integer) unMaestro);
 					myDbHelper.insertAlumno(unAlumno);
 					myDbHelper.insertAlumnoMaestroRelationship(unAlumno.getId(), unMaestro);
@@ -123,6 +124,7 @@ public class AlumnosActivity extends Activity
 			public void onSuccess (int statusCode, Header[] headers, JSONArray serverAlumnos) {
 				try {
 					if (serverAlumnos != null){
+						myDbHelper.deleteAlumnosForMaestro(unMaestro);
 						for (int i = 0; i < serverAlumnos.length(); i++){
 							JSONObject unAlumno = (JSONObject) serverAlumnos.get(i);
 							myDbHelper.insertAlumno(new Alumno(unAlumno.getInt("id"), unAlumno.getString("nombre"), unAlumno.getString("apellido"), unMaestro));	
@@ -172,6 +174,19 @@ public class AlumnosActivity extends Activity
             public void onFailure(Throwable e, String response) {
 				prgDialog.hide();
 				initializeAdapter();
+            }
+            
+			@Override
+            public void onFinish() {
+                if(prgDialog.isShowing())
+                {
+                    prgDialog.hide();
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable e, JSONObject errorResponse) {
+            	prgDialog.hide();
             }
 			
 		});
