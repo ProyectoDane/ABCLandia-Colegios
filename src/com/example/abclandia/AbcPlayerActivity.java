@@ -82,7 +82,7 @@ public class AbcPlayerActivity extends Activity implements View.OnTouchListener 
 			Renderer.TEXT_WORD_SIZE = 48;
 		} else if (config.smallestScreenWidthDp >= 600) {
 			Renderer.TEXT_LETTER_SIZE = 36;
-			Renderer.TEXT_WORD_SIZE = 39;
+			Renderer.TEXT_WORD_SIZE = 36;
 		}
 		setContentView(R.layout.abc_player_activity);
 		 lblWord = (TextView) findViewById(R.id.lblWord);

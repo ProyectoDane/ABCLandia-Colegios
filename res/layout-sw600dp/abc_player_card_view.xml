@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.example.abclandia.graphics.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="265dp"
-    android:layout_height="370dp" />
+    android:layout_width="287dp"
+    android:layout_height="390dp" />

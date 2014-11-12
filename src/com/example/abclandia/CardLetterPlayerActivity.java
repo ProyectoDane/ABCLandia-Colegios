@@ -79,8 +79,11 @@ implements View.OnTouchListener {
 				Renderer.TEXT_LETTER_SIZE = 30;
 				Renderer.TEXT_WORD_SIZE = 25;
 			} else if (config.smallestScreenWidthDp >= 600) {
-				Renderer.TEXT_LETTER_SIZE = 20;
-				Renderer.TEXT_WORD_SIZE = 18;
+//				Renderer.TEXT_LETTER_SIZE = 18;
+//				Renderer.TEXT_WORD_SIZE = 18;
+				Renderer.TEXT_LETTER_SIZE = 13;
+				Renderer.TEXT_WORD_SIZE = 13;
+				
 			}
 
 		
