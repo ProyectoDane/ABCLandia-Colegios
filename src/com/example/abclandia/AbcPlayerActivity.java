@@ -35,8 +35,8 @@ import com.frba.abclandia.dtos.Categoria;
 public class AbcPlayerActivity extends Activity implements View.OnTouchListener {
 
 	private static final int SWIPE_MIN_DISTANCE = 120;
-	private static final int SWIPE_THRESHOLD_VELOCITY = 180;
-	private static final int FLIP_INTERVAL = 2500;
+	private static final int SWIPE_THRESHOLD_VELOCITY = 130;
+	private static final int FLIP_INTERVAL = 3500;
 	
 	// Definimos las variables para saber que Maestro, Alumno y Categoria estan involucrados. 
 	private int unMaestro = 0;
@@ -81,7 +81,7 @@ public class AbcPlayerActivity extends Activity implements View.OnTouchListener 
 			Renderer.TEXT_LETTER_SIZE = 48;
 			Renderer.TEXT_WORD_SIZE = 48;
 		} else if (config.smallestScreenWidthDp >= 600) {
-			Renderer.TEXT_LETTER_SIZE = 39;
+			Renderer.TEXT_LETTER_SIZE = 36;
 			Renderer.TEXT_WORD_SIZE = 39;
 		}
 		setContentView(R.layout.abc_player_activity);
@@ -108,7 +108,7 @@ public class AbcPlayerActivity extends Activity implements View.OnTouchListener 
 		findViewById(R.id.play).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				mAudio.playSoundWord(data.get(mAdapterViewFlipper.getDisplayedChild()).getLetter());
+				mAudio.playSoundWord(data.get(mAdapterViewFlipper.getDisplayedChild()).getId());
 				mAdapterViewFlipper.setAutoStart(true);
 				mAdapterViewFlipper.setFlipInterval(FLIP_INTERVAL);
 				mOutAnimator = new ObjectAnimator();
@@ -155,7 +155,7 @@ public class AbcPlayerActivity extends Activity implements View.OnTouchListener 
 				int indexView = mAdapterViewFlipper.getDisplayedChild();
 				
 				lblWord.setText(data.get(indexView).getWord());
-				mAudio.playSoundWord(data.get(indexView).getLetter());
+				mAudio.playSoundWord(data.get(indexView).getId());
 				
 				
 

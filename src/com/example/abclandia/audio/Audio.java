@@ -17,7 +17,7 @@ public class Audio {
 	private static final String SOUND_FX_WIN = "win";
 	private static final String PLUS_ID_WORD = "0";
 	private static final String PLUS_ID_LETTER = "1";
-	private SoundPool mSoundPool;;
+	private SoundPool mSoundPool;
 	private Map<String, Integer> mSoundMap = new HashMap<String, Integer>();
 	private Context mContext;
 
@@ -35,7 +35,7 @@ public class Audio {
 	public void loadWordSounds(List<Card> cards) {
 		for (Card card : cards) {
 			String soundPath = card.getSoundWordPath();
-			mSoundMap.put(card.getLetter() + "0",
+			mSoundMap.put(card.getId() + "0",
 					mSoundPool.load(soundPath, 1));
 
 		}
@@ -43,10 +43,8 @@ public class Audio {
 
 	public void loadLetterSoungs(List<Card> cards) {
 		
-			mSoundMap.put("a",
-					mSoundPool.load(mContext, R.raw.a, 1));
-			mSoundMap.put("b",
-					mSoundPool.load(mContext, R.raw.b, 1));
+			mSoundMap.put("a",mSoundPool.load(mContext, R.raw.a, 1));
+			mSoundMap.put("b",mSoundPool.load(mContext, R.raw.b, 1));
 			mSoundMap.put("c",mSoundPool.load(mContext, R.raw.c, 1));
 			mSoundMap.put("d",mSoundPool.load(mContext, R.raw.d, 1));
 			mSoundMap.put("e",mSoundPool.load(mContext, R.raw.e, 1));
@@ -65,6 +63,7 @@ public class Audio {
 			mSoundMap.put("q",mSoundPool.load(mContext, R.raw.q, 1));
 			mSoundMap.put("r",mSoundPool.load(mContext, R.raw.r, 1));
 			mSoundMap.put("s",mSoundPool.load(mContext, R.raw.s, 1));
+			mSoundMap.put("t",mSoundPool.load(mContext, R.raw.t, 1));
 			mSoundMap.put("u",mSoundPool.load(mContext, R.raw.u, 1));
 			mSoundMap.put("v",mSoundPool.load(mContext, R.raw.v, 1));
 			mSoundMap.put("w",mSoundPool.load(mContext, R.raw.w, 1));
@@ -76,7 +75,7 @@ public class Audio {
 
 
 
-	public void playSoundWord(String soundId) {
+	public void playSoundWord(Integer soundId) {
 		float streamVolume = mAudioManager
 				.getStreamVolume(AudioManager.STREAM_MUSIC);
 		streamVolume = streamVolume

@@ -17,9 +17,9 @@ import android.widget.ImageView;
 
 public class LetterPlayerAnimator {
 
-	private final static int ANIMATION_FORWARD_DURATION = 1000;
-	private final static int ANIMATION_REVERSE_DURATION = 1000;
-	private final static int ANIMATION_MIDDLE_DELAY = 550;
+	private final static int ANIMATION_FORWARD_DURATION = 800;
+	private final static int ANIMATION_REVERSE_DURATION = 800;
+	private final static int ANIMATION_MIDDLE_DELAY = 3000;
 	private final static float SCALE_FACTOR = 1.5f;
 
 	private Context mContext;

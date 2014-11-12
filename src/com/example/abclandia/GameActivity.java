@@ -175,7 +175,7 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 				if (rendererClass == JustLetterRenderer.class){
 				mAudio.playSoundLetter(cardView.getCardLetter().toLowerCase());
 				} else 
-					mAudio.playSoundWord(cardView.getCardLetter());
+					mAudio.playSoundWord(cardView.getCardId());
 
 			}
 
@@ -246,6 +246,7 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 							intent.putExtra(
 									GameActivity.INTENT_CLASS_LAUNCHER_KEY,
 									mGameClassName);
+							intent.putExtra(GameActivity.INTENT_EXERCISE_NUMBER, mGameNumber);
 							intent.putExtra("unMaestro", unMaestro);
 							intent.putExtra("unAlumno", unAlumno);
 							intent.putExtra("unaCategoria", unaCategoria);

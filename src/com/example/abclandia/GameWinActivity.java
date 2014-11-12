@@ -43,7 +43,9 @@ public class GameWinActivity extends Activity {
 				intent.putExtra("unMaestro", unMaestro);
 				intent.putExtra("unAlumno", unAlumno);
 				intent.putExtra("unaCategoria", unaCategoria);
+				
 				startActivity(intent);
+				finish();
 				
 
 			}

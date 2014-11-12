@@ -20,7 +20,7 @@
             android:background="@drawable/grid_game_four_10_shape"
             android:gravity="center_horizontal"
             android:numColumns="1"
-            android:verticalSpacing="20dp"
+            android:verticalSpacing="15dp"
             android:tag="left" >
         </GridView>
         <GridView
@@ -31,7 +31,7 @@
             android:background="@drawable/grid_game_four_10_shape"
             android:gravity="center_horizontal"
             android:numColumns="1"
-            android:verticalSpacing="20dp"
+            android:verticalSpacing="15dp"
             android:tag="center" >
         </GridView>
 
@@ -42,7 +42,7 @@
             android:background="@drawable/grid_game_four_10_shape"
             android:gravity="center_horizontal"
             android:numColumns="1"
-            android:verticalSpacing="20dp"
+            android:verticalSpacing="15dp"
             android:tag="right" >
         </GridView>
     </LinearLayout>

@@ -17,7 +17,6 @@
             android:layout_height="510dp"
             android:layout_marginRight="10dp"
             android:background="@drawable/grid_game_one_7_shape"
-            android:paddingTop="21dp"
             android:gravity="center_horizontal"
             android:numColumns="3"
             android:verticalSpacing="0dp" >
@@ -29,7 +28,6 @@
             android:layout_height="510dp"
             android:layout_marginLeft="10dp"
  			android:background="@drawable/grid_game_one_7_shape"
-            android:paddingTop="21dp"
             android:gravity="center_horizontal"
             android:numColumns="3"
             android:verticalSpacing="0dp" >

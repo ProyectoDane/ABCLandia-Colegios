@@ -48,7 +48,6 @@ public class CardView extends View implements DragSource, DropTarget {
 	private Bitmap imageBitmap; 
 	 
 	 public boolean mEmpty = true;
-	 public int myCellnumber;
 	 public CardViewAdapter mAdapter;
 	
 	 
@@ -86,10 +85,8 @@ public class CardView extends View implements DragSource, DropTarget {
 	
 	public void setCard(Card card){
 		mCard = card;
-		if (!card.isEmptyCard())
-			imageBitmap = BitmapFactory.decodeFile(mCard.getImagePath());
-		
 	}
+	
 	public void createImageBitmap(boolean imageAttached){
 		if (!mCard.isEmptyCard() && imageAttached)
 			imageBitmap = BitmapFactory.decodeFile(mCard.getImagePath());

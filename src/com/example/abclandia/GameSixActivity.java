@@ -91,11 +91,11 @@ public static final int TOTAL_JOINS = 6;
         
        
         
-        mGridViewRight.setAdapter(new CardViewAdapter(data, this, new JustImageRenderer(this),R.layout.game_four_five_card_view));
-        mGridViewLeft.setAdapter(new CardViewAdapter(data, this, new JustLetterRenderer(this),R.layout.game_four_five_card_view));
+        mGridViewRight.setAdapter(new CardViewAdapter(data, this, new JustImageRenderer(this),R.layout.game_four_five_card_view, true));
+        mGridViewLeft.setAdapter(new CardViewAdapter(data, this, new JustLetterRenderer(this),R.layout.game_four_five_card_view, true));
         Renderer justWordRenderer = new JustWordRenderer(this);
         justWordRenderer.setWordFormatter(new StringWithoutdAllOccurrencesOfAnyLetter());
-        mGridViewCenter.setAdapter(new CardViewAdapter(data, this, justWordRenderer,R.layout.game_four_five_card_view));
+        mGridViewCenter.setAdapter(new CardViewAdapter(data, this, justWordRenderer,R.layout.game_four_five_card_view, true));
         
         mDragLayer.setGridViewLeft(mGridViewLeft);
         mDragLayer.setGridViewCenter(mGridViewCenter);
