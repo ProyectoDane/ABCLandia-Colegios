@@ -79,8 +79,11 @@ implements View.OnTouchListener {
 				Renderer.TEXT_LETTER_SIZE = 30;
 				Renderer.TEXT_WORD_SIZE = 25;
 			} else if (config.smallestScreenWidthDp >= 600) {
-				Renderer.TEXT_LETTER_SIZE = 20;
-				Renderer.TEXT_WORD_SIZE = 18;
+//				Renderer.TEXT_LETTER_SIZE = 18;
+//				Renderer.TEXT_WORD_SIZE = 18;
+				Renderer.TEXT_LETTER_SIZE = 13;
+				Renderer.TEXT_WORD_SIZE = 13;
+				
 			}
 
 		
@@ -100,7 +103,7 @@ implements View.OnTouchListener {
 		
 
 		mGridView.setAdapter(new CardViewAdapter(data, this,
-				new CompleteCardRenderer(this),R.layout.card_letter_player_card_view));
+				new CompleteCardRenderer(this),R.layout.card_letter_player_card_view, true));
 		
 		mDragShadowAnimator = new LetterPlayerAnimator(this);
 		
@@ -189,10 +192,7 @@ implements View.OnTouchListener {
 			CardView view = (CardView) v;
 			mDragShadowAnimator.animate(iv,mGridView, view,loc[0], mCenterScreenX - bitmapSizeX/2,
 					loc[1], mCenterScreenY - bitmapSizeY/2, bitmapSizeX, bitmapSizeX);
-			// //
-			//
-			//
-			//
+			
 //			bitmapCard.recycle();
 
 		}
@@ -202,7 +202,7 @@ implements View.OnTouchListener {
 	}
 	
 	public void reproduceSoundCard(CardView cardView){
-		mAudio.playSoundWord(cardView.getCardLetter());
+		mAudio.playSoundWord(cardView.getCardId());
 		
 		
 	}

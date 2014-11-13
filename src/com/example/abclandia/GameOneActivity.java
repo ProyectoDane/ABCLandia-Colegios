@@ -83,9 +83,9 @@ public class GameOneActivity extends GameActivity
 		((GradientDrawable) mGridViewRight.getBackground()).setColor(Color.parseColor("#E6E9EE"));
 
 		mGridViewRight.setAdapter(new CardViewAdapter(data, this,
-				new JustLetterRenderer(this), R.layout.game_one_card_view));
+				new JustLetterRenderer(this), R.layout.game_one_card_view, true));
 		mGridViewLeft.setAdapter(new CardViewAdapter(data, this,
-				new JustImageRenderer(this), R.layout.game_one_card_view));
+				new JustImageRenderer(this), R.layout.game_one_card_view, true));
 
 		mDragLayer = (DragLayer) findViewById(R.id.drag_layer);
 		mDragLayer.setDragController(mDragController);

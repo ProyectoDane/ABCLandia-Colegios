@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import com.frba.abclandia.R;
 
 public class WinActivity extends Activity {
+	int gameNumber;
 	int gameLevel;
 	int gameSecuence;
 	Class<?> classLauncher;
@@ -63,6 +64,7 @@ public class WinActivity extends Activity {
 			unMaestro = extras.getInt("unMaestro", 0);
 			unAlumno = extras.getInt("unAlumno", 0);
 			unaCategoria = extras.getInt("unaCategoria", 0);
+			gameNumber = extras.getInt(GameActivity.INTENT_EXERCISE_NUMBER, 1);
 			gameLevel = extras.getInt(GameActivity.INTENT_LEVEL_KEY);
 			gameSecuence = extras.getInt(GameActivity.INTENT_SECUENCE_KEY);
 
@@ -79,7 +81,7 @@ public class WinActivity extends Activity {
 	}
 	
 	private void nextSecuence(){
-		if (GameDataStructure.isLevelComplete(1, gameLevel, gameSecuence)){
+		if (GameDataStructure.isLevelComplete(gameNumber, gameLevel, gameSecuence)){
 			gameLevel ++;
 			gameSecuence =1;
 		}else {

@@ -35,7 +35,7 @@ public class Adapterprueba extends BaseAdapter {
 	}
 
 	private AbcPlayerActivity mContext;
-	private View.OnDragListener mDragListener;
+
 
 	public Adapterprueba(List<Card> data, AbcPlayerActivity context, Renderer renderer, int layoutCardView) {
 		
@@ -51,7 +51,7 @@ public class Adapterprueba extends BaseAdapter {
 	@Override
 	public int getCount() {
 		return mData.size();
-//		return 9;
+
 	}
 
 	@Override
@@ -80,15 +80,9 @@ public class Adapterprueba extends BaseAdapter {
 		
 		CardView cardView = (CardView) view;
 		
-//		if (mContext.getClass() == GameSixActivity.class){
-//			cardView.setDoubleMatching(true);
-//			
-//		}
-		
-//		mContext.prueba();
-		cardView.myCellnumber = position;
-//		cardView.mAdapter = this;
+
 		cardView.setCard(dataCard);
+		cardView.createImageBitmap(true);
 		
 		if (dataCard.isEmptyCard()) {
 			cardView.setRenderer(mEmptyRenderer);
@@ -97,16 +91,6 @@ public class Adapterprueba extends BaseAdapter {
 			cardView.setRenderer(mRenderer);
 		}
 		
-		
-
-		cardView.setOnTouchListener ((View.OnTouchListener) mContext);
-		
-	
-		  
-		  
-		  
-
-		   
 		return view;
 		
 	}

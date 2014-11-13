@@ -25,7 +25,7 @@ public class CardViewAdapter extends BaseAdapter {
 	 private Renderer mRenderer;
 	 private Renderer mEmptyRenderer;
 	 private int mLayoutCardView;
-//	 private boolean mImageAttached = false;
+	 private boolean mImageAttached = false;
 	 int j =1;
 	 
 	 
@@ -40,7 +40,8 @@ public class CardViewAdapter extends BaseAdapter {
 	private Context mContext;
 	private View.OnDragListener mDragListener;
 
-	public CardViewAdapter(List<Card> data, Context context, Renderer renderer, int layoutCardView) {
+	public CardViewAdapter(List<Card> data, Context context, Renderer renderer, int layoutCardView,
+					boolean imageAttached) {
 		
 		
 		mContext = context;
@@ -48,7 +49,7 @@ public class CardViewAdapter extends BaseAdapter {
 		mRenderer = renderer;
 		mEmptyRenderer = new EmptyRenderer(mContext);
 		mLayoutCardView = layoutCardView;
-//		mImageAttached = imageAttached;
+		mImageAttached = imageAttached;
 	}
 
 
@@ -89,11 +90,10 @@ public class CardViewAdapter extends BaseAdapter {
 
 		}
 
-		cardView.myCellnumber = position;
 		cardView.mAdapter = this;
 		cardView.setCard(dataCard);
 		
-//		cardView.createImageBitmap(mImageAttached);
+		cardView.createImageBitmap(mImageAttached);
 
 		if (dataCard.isEmptyCard()) {
 			cardView.setRenderer(mEmptyRenderer);

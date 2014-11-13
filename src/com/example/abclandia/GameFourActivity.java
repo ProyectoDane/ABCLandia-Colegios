@@ -47,11 +47,11 @@ public class GameFourActivity extends GameActivity {
 		
 		
 		mGridViewLeft.setAdapter(new CardViewAdapter(data, this,
-				new JustLetterRenderer(this), R.layout.game_four_five_card_view));
+				new JustLetterRenderer(this), R.layout.game_four_five_card_view, false));
 		Renderer justWordRenderer = new JustWordRenderer(this);
 		justWordRenderer.setWordFormatter(new StringWithoutFirstLetter());
 		mGridViewRight.setAdapter(new CardViewAdapter(data, this,
-				justWordRenderer, R.layout.game_four_five_card_view));
+				justWordRenderer, R.layout.game_four_five_card_view, false));
 
 		
 		mDragController = new DragController(this);

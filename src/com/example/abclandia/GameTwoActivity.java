@@ -62,10 +62,10 @@ public class GameTwoActivity extends GameActivity {
 		
 		
 		mGridViewLeft.setAdapter(new CardViewAdapter(data, this,
-				new JustLetterRenderer(this), R.layout.game_one_card_view));
+				new JustLetterRenderer(this), R.layout.game_one_card_view, false));
 
 		mGridViewRight.setAdapter(new CardViewAdapter(data, this,
-				new JustWordRenderer(this), R.layout.game_one_card_view));
+				new JustWordRenderer(this), R.layout.game_one_card_view, false));
 	
 
 		mDragLayer = (DragLayer) findViewById(R.id.drag_layer);
