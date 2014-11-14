@@ -12,7 +12,7 @@
         android:layout_centerVertical="true"
         android:numColumns="9"
         android:padding="2dp"
-        android:verticalSpacing="37dp" >
+        android:verticalSpacing="35dp" >
     </GridView>
 
 </RelativeLayout>

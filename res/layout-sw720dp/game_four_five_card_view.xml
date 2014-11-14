@@ -2,6 +2,6 @@
 <com.example.abclandia.graphics.CardView 
     xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/cardView1"
-	android:layout_width="160dp"
-   	android:layout_height="208dp" />
+	android:layout_width="169dp"
+   	android:layout_height="219dp" />
     

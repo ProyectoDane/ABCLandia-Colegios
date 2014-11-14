@@ -14,22 +14,22 @@
         <GridView
             android:id="@+id/gridViewLeft"
             android:layout_width="320dp"
-            android:layout_height="510dp"
+            android:layout_height="540dp"
             android:layout_marginRight="44dp"
             android:numColumns="1"
             android:background="@drawable/grid_game_one_7_shape"
             android:gravity="center"
-           	android:verticalSpacing="15dp">
+           	android:verticalSpacing="7dp">
         </GridView>
 
         <GridView
             android:id="@+id/gridViewRight"
             android:layout_width="320dp"
-            android:layout_height="510dp"
+            android:layout_height="540dp"
             android:numColumns="1"
             android:background="@drawable/grid_game_one_7_shape"
             android:gravity="center"
-         	android:verticalSpacing="15dp"
+         	android:verticalSpacing="7dp"
             android:layout_marginLeft="44dp" >
         </GridView>
     </LinearLayout>

@@ -8,41 +8,40 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="25dp"
-        android:gravity="center_horizontal"
+        android:gravity="center"
         android:orientation="horizontal" >
 
         <GridView
             android:id="@+id/gridViewLeft"
             android:layout_width="380dp"
-            android:layout_height="700dp"
+            android:layout_height="715dp"
             android:layout_marginRight="40dp"
             android:background="@drawable/grid_game_four_10_shape"
             android:gravity="center_horizontal"
             android:numColumns="1"
-            android:verticalSpacing="15dp"
+            android:verticalSpacing="12dp"
             android:tag="left" >
         </GridView>
         <GridView
             android:id="@+id/gridViewCenter"
             android:layout_width="380dp"
-            android:layout_height="700dp"
+            android:layout_height="715dp"
             android:layout_marginRight="40dp"
             android:background="@drawable/grid_game_four_10_shape"
             android:gravity="center_horizontal"
             android:numColumns="1"
-            android:verticalSpacing="15dp"
+            android:verticalSpacing="12dp"
             android:tag="center" >
         </GridView>
 
         <GridView
             android:id="@+id/gridViewRight"
             android:layout_width="380dp"
-            android:layout_height="700dp"
+            android:layout_height="715dp"
             android:background="@drawable/grid_game_four_10_shape"
             android:gravity="center_horizontal"
             android:numColumns="1"
-            android:verticalSpacing="15dp"
+            android:verticalSpacing="12dp"
             android:tag="right" >
         </GridView>
     </LinearLayout>
