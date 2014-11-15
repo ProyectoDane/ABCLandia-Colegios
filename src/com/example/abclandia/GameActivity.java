@@ -102,11 +102,11 @@ public class GameActivity extends Activity implements View.OnTouchListener,
 	protected void setSizes() {
 		Configuration config = getResources().getConfiguration();
 		if (config.smallestScreenWidthDp >= 720) {
-			Renderer.TEXT_LETTER_SIZE = 30;
-			Renderer.TEXT_WORD_SIZE = 30;
+			Renderer.TEXT_LETTER_SIZE = 25;
+			Renderer.TEXT_WORD_SIZE = 23;
 		} else if (config.smallestScreenWidthDp >= 600) {
-			Renderer.TEXT_LETTER_SIZE = 24;
-			Renderer.TEXT_WORD_SIZE = 24;
+			Renderer.TEXT_LETTER_SIZE = 20;
+			Renderer.TEXT_WORD_SIZE = 18;
 		}
 
 	}

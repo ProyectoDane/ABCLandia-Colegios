@@ -76,12 +76,12 @@ implements View.OnTouchListener {
 	
 			Configuration config = getResources().getConfiguration();
 			if (config.smallestScreenWidthDp >= 720) {
-				Renderer.TEXT_LETTER_SIZE = 30;
-				Renderer.TEXT_WORD_SIZE = 25;
+				Renderer.TEXT_LETTER_SIZE = 19;
+				Renderer.TEXT_WORD_SIZE = 17;
 			} else if (config.smallestScreenWidthDp >= 600) {
 //				Renderer.TEXT_LETTER_SIZE = 18;
 //				Renderer.TEXT_WORD_SIZE = 18;
-				Renderer.TEXT_LETTER_SIZE = 13;
+				Renderer.TEXT_LETTER_SIZE = 15;
 				Renderer.TEXT_WORD_SIZE = 13;
 				
 			}

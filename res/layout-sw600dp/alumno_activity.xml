@@ -29,15 +29,17 @@
 
     <GridView
         android:id="@+id/gridViewAlumnos"
-        android:layout_width="595dp"
+        android:layout_width="665dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp"
-       	android:columnWidth="290dp"
+        android:layout_marginTop="100dp"
+       	android:columnWidth="325dp"
         android:numColumns="2"
-        android:verticalSpacing="10dp"
+        android:verticalSpacing="12dp"
         android:horizontalSpacing="15dp"
         android:stretchMode="none">
     </GridView>
+    
+  
 
 </RelativeLayout>

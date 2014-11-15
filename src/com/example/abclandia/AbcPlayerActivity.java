@@ -78,10 +78,10 @@ public class AbcPlayerActivity extends Activity implements View.OnTouchListener 
 
 		Configuration config = getResources().getConfiguration();
 		if (config.smallestScreenWidthDp >= 720) {
-			Renderer.TEXT_LETTER_SIZE = 48;
-			Renderer.TEXT_WORD_SIZE = 48;
+			Renderer.TEXT_LETTER_SIZE = 47;
+			Renderer.TEXT_WORD_SIZE = 45;
 		} else if (config.smallestScreenWidthDp >= 600) {
-			Renderer.TEXT_LETTER_SIZE = 36;
+			Renderer.TEXT_LETTER_SIZE = 38;
 			Renderer.TEXT_WORD_SIZE = 36;
 		}
 		setContentView(R.layout.abc_player_activity);
