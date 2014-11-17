@@ -14,7 +14,7 @@
         <GridView
             android:id="@+id/gridViewLeft"
             android:layout_width="380dp"
-            android:layout_height="715dp"
+            android:layout_height="718dp"
             android:layout_marginRight="40dp"
             android:background="@drawable/grid_game_four_10_shape"
             android:gravity="center_horizontal"
@@ -25,7 +25,7 @@
         <GridView
             android:id="@+id/gridViewCenter"
             android:layout_width="380dp"
-            android:layout_height="715dp"
+            android:layout_height="718dp"
             android:layout_marginRight="40dp"
             android:background="@drawable/grid_game_four_10_shape"
             android:gravity="center_horizontal"
@@ -37,7 +37,7 @@
         <GridView
             android:id="@+id/gridViewRight"
             android:layout_width="380dp"
-            android:layout_height="715dp"
+            android:layout_height="718dp"
             android:background="@drawable/grid_game_four_10_shape"
             android:gravity="center_horizontal"
             android:numColumns="1"
